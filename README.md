@@ -7,7 +7,7 @@ A minimal STAC library that contains a list of STAC fields with some metadata (t
 Add to your project with `npm install @radiantearth/stac-fields --save`
 
 Import the utilities to format values:
-`const { Formatters } = require('@radiantearth/stac-fields');`
+`const StacFields = require('@radiantearth/stac-fields');`
 
 Format a value:
 ```js
@@ -18,12 +18,18 @@ let stacItem = {
     },
     ...
 };
+
+// Option 1: Manually iterate through properties and format them
 for(let field in stacItem.properties) {
     let value = stacItem.properties[field];
-    let formatted = Formatters.format(value, field, stacItem);
-    let label = Formatters.label(field);
+    let formatted = StacFields.format(value, field, stacItem);
+    let label = StacFields.label(field);
     console.log(label, formatted);
 }
+
+// Option 2: Group by extension and format item properties
+// The second parameter is a filter function to skip specific properties, remove to get all properties
+let groups = StacFields.formatStacProperties(stacItem, key => key !== 'eo:bands');
 ```
 
 Non-JavaScript library authors can re-use the `fields.json`. It is available at:
@@ -48,6 +54,14 @@ If only a label is available, it can be passed as string instead of an object.
 
 ## formatters.js
 
+The most important methods are:
+
+* `format(value, field, spec, context = null)`: Applies the right formatting depending on the data type of the a single property.
+* label
+* extension
+* formatSummaries
+* formatItemProperties
+
 ### Pre-defined formatters (`Formatters`)
 
 * CommonMark
@@ -60,8 +74,6 @@ If only a label is available, it can be passed as string instead of an object.
 * TemporalExtent (array with two timestamps)
 * Timestamp (ISO8601 timestamp)
 * Summary
-
-Additionally, it has a method `format(value, field, spec, context = null)`, which applies the right formatting depending on the data type of the value.
 
 ### Custom formatters
 
@@ -102,6 +114,7 @@ All methods return strings, which may contain HTML. Input is sanitized.
 
 * e
 * formatKey
+* groupByExtensions
 * isObject
 * toLink
 * toList

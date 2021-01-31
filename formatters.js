@@ -158,7 +158,7 @@ var DataTypes = {
 		else if (Array.isArray(value)) {
 			return DataTypes.array(value);
 		}
-		else if (_.isObject()) {
+		else if (_.isObject(value)) {
 			return DataTypes.object(value);
 		}
 		else {
@@ -302,69 +302,112 @@ var Formatters = {
 			return Formatters.formatExtent([value.min, value.max]);
 		}
 		else if (Array.isArray(value)) {
-			return _.toList(value, !spec.complex, v => Formatters.format(v, field, spec, context));
-		}
-	},
-	
-	format(value, field, context = null, spec = null) {
-		if (spec === null) {
-			spec = Fields.metadata[field] || {};
-		}
-		let unit = typeof spec.unit === 'string' ? ` ${spec.unit}` : '';
-		if (typeof spec.formatter === 'function') {
-			return spec.formatter(value, field, spec, context) + unit;
-		}
-		else if (value === null && spec.null) {
-			return DataTypes.null(spec.null);
-		}
-		else if (Array.isArray(value) && _.isObject(spec.items)) {
-			if (Config.externalRenderer) {
-				return value;
-			}
-			else {
-				return _.toList(value, false, v => Formatters.format(v, field, context, spec));
-			}
-		}
-		else if (_.isObject(value) && _.isObject(spec.items)) {
-			if (Config.externalRenderer) {
-				return value;
-			}
-			else {
-				return _.toObject(value, (v, k) => Formatters.format(v, k, context, spec.items[k]));
-			}
-		}
-		else {
-			return DataTypes.format(value) + unit;
-		}
-	},
-
-	label(key, fields = null) {
-		let spec;
-		if (fields === null) {
-			spec = Fields.metadata[key];
-		}
-		else {
-			// TODO: Check whether this is actually useful
-			spec = fields[key];
-		}
-		if (_.isObject(spec) && typeof spec.label === 'string') {
-			if (typeof spec.explain === 'string') {
-				return `<abbr title="${_.e(spec.explain)}">${spec.label}</abbr>`;
-			}
-			else {
-				return spec.label;
-			}
-		}
-		else {
-			return _.formatKey(key);
+			return _.toList(value, !spec.complex, v => format(v, field, spec, context));
 		}
 	}
 
 };
 
+function formatGrouped(obj, prop, filter, coreKey) {
+	let groups = {};
+	for(let key in obj[prop]) {
+		let parts = key.split(':', 2);
+		if (parts.length === 1) {
+			parts.unshift(coreKey);
+		}
+		let ext = parts[0];
+		if (typeof filter === 'function' && !filter(key)) {
+			continue;
+		}
+		if (!_.isObject(groups[ext])) {
+			groups[ext] = {
+				extension: ext,
+				label: extension(ext),
+				properties: {}
+			};
+		}
+		groups[ext].properties[key] = {
+			label: label(key),
+			value: obj[prop][key],
+			formatted: format(obj[prop][key], key, obj)
+		}
+	}
+	return Object.values(groups).sort((a,b) => a.extension.localeCompare(b.extension));
+
+}
+
+function formatSummaries(collection, filter = null, coreKey = '') {
+	return formatGrouped(collection, 'summaries', filter, coreKey);
+}
+
+function formatItemProperties(item, filter = null, coreKey = '') {
+	return formatGrouped(item, 'properties', filter, coreKey);
+}
+
+function format(value, field, context = null, spec = null) {
+	if (spec === null) {
+		spec = Fields.metadata[field] || {};
+	}
+	let unit = typeof spec.unit === 'string' ? ` ${spec.unit}` : '';
+	if (typeof spec.formatter === 'function') {
+		return spec.formatter(value, field, spec, context) + unit;
+	}
+	else if (value === null && spec.null) {
+		return DataTypes.null(spec.null);
+	}
+	else if (Array.isArray(value) && _.isObject(spec.items)) {
+		if (Config.externalRenderer) {
+			return value;
+		}
+		else {
+			return _.toList(value, false, v => format(v, field, context, spec));
+		}
+	}
+	else if (_.isObject(value) && _.isObject(spec.items)) {
+		if (Config.externalRenderer) {
+			return value;
+		}
+		else {
+			return _.toObject(value, (v, k) => format(v, k, context, spec.items[k]));
+		}
+	}
+	else {
+		return DataTypes.format(value) + unit;
+	}
+}
+
+function label(key, fields = null) {
+	let spec;
+	if (fields === null) {
+		spec = Fields.metadata[key];
+	}
+	else {
+		// TODO: Check whether this is actually useful
+		spec = fields[key];
+	}
+	if (_.isObject(spec) && typeof spec.label === 'string') {
+		if (typeof spec.explain === 'string') {
+			return `<abbr title="${_.e(spec.explain)}">${spec.label}</abbr>`;
+		}
+		else if (typeof spec.label === 'string') {
+			return spec.label;
+		}
+	}
+	return _.formatKey(key);
+}
+
+function extension(key) {
+	return label(key, Fields.extensions);
+}
+
 var Fields = _.normalizeFields(require('./fields.json'));
 
 module.exports = {
+	format,
+	label,
+	extension,
+	formatSummaries,
+	formatItemProperties,
 	Fields,
 	Config,
 	Helper: _,

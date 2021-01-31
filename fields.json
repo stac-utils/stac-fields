@@ -14,6 +14,7 @@
 		"sci": "Scientific",
 		"tiles": "Tiled Assets",
 		"view": "View Geometry",
+		"gee": "Google Earth Engine",
 		"landsat": "Landsat",
 		"pl": "Planet Labs Inc.",
 		"sentinel": "Copernicus Sentinel",
@@ -385,9 +386,6 @@
 
 		"gee:type": "Type",
 		"gee:cadence": "Cadence",
-		"gee:asset_schema": {
-			"alias": "gee:schema"	
-		},
 		"gee:schema": {
 			"label": "Variables",
 			"complex": true,
@@ -399,6 +397,10 @@
 		"gee:terms_of_use": {
 			"label": "Terms of Use",
 			"format": "CommonMark",
+			"complex": true
+		},
+		"gee:visualizations": {
+			"label": "Visualizations",
 			"complex": true
 		},
 		
