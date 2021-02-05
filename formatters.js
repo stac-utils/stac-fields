@@ -196,7 +196,7 @@ var Formatters = {
 	},
 
 	formatLicense(value, field, spec, context = null) {
-		if (typeof value !== 'string') {
+		if (typeof value !== 'string' || value.length === 0) {
 			return DataTypes.null();
 		}
 
@@ -207,7 +207,7 @@ var Formatters = {
 		}
 		
 		let licenses = Array.isArray(context.links) ? context.links.filter(link => (_.isObject(link) && typeof link.href === 'string' && link.rel === 'license')) : [];
-		return _.toList(licenses, false, link => _.toLink(_.e(link.href), _.e(link.title || link.href)));
+		return _.toList(licenses, false, link => _.toLink(_.e(link.href), _.e(link.title || value)));
 	},
 
 	formatProviders(value) {
@@ -230,6 +230,9 @@ var Formatters = {
 	},
 
 	formatCommonMark(value) {
+		if (typeof value !== 'string' || value.length === 0) {
+			return DataTypes.null();
+		}
 		const commonmark = require('commonmark');
 		let reader = new commonmark.Parser();
 		let writer = new commonmark.HtmlRenderer({safe: true, smart: true});
@@ -278,17 +281,17 @@ var Formatters = {
 		if (!Array.isArray(value) || value.length < 2 || (value[0] === null && value[1] === null)) {
 			return DataTypes.formatNull();
 		}
-		else if (value[0] !== null) {
+		else if (value[0] === null) {
 			return `Until ${DataTypes.format(value[1])}`;
 		}
-		else if (value[1] !== null) {
+		else if (value[1] === null) {
 			return `From ${DataTypes.format(value[0])}`;
 		}
 		else if (value[0] === value[1]) {
 			return DataTypes.format(value[0]);
 		}
 		else {
-			return value.map(v => DataTypes.format(v)).join(' - ');
+			return value.map(v => DataTypes.format(v)).join(' to ');
 		}
 	},
 
@@ -316,7 +319,11 @@ var Formatters = {
 			return Formatters.formatExtent([value.min, value.max]);
 		}
 		else if (Array.isArray(value)) {
-			return _.toList(value, !spec.complex, v => format(v, field, spec, context));
+			return _.toList(value, !spec.complex, v => format(v, field, context, spec));
+		}
+		else {
+			// This is not allowed in the spec, we try to gracefully show it anyway
+			return format(value, field, context, spec);
 		}
 	}
 
@@ -340,11 +347,21 @@ function formatGrouped(obj, prop, filter, coreKey) {
 				properties: {}
 			};
 		}
+		let value = obj[prop][key];
+		let spec = Fields.metadata[key];
+		let formatted;
+		if (prop === 'summaries') {
+			console.log(value, key, spec);
+			formatted = Formatters.formatSummary(value, key, spec, obj);
+		}
+		else {
+			formatted = format(value, key, obj, spec);
+		}
 		groups[ext].properties[key] = {
 			label: label(key),
-			value: obj[prop][key],
-			formatted: format(obj[prop][key], key, obj)
-		}
+			value,
+			formatted
+		};
 	}
 	return Object.values(groups).sort((a,b) => a.extension.localeCompare(b.extension));
 
@@ -359,7 +376,7 @@ function formatItemProperties(item, filter = null, coreKey = '') {
 }
 
 function format(value, field, context = null, spec = null) {
-	if (spec === null) {
+	if (!_.isObject(spec)) {
 		spec = Fields.metadata[field] || {};
 	}
 	let unit = typeof spec.unit === 'string' ? ` ${spec.unit}` : '';
@@ -369,7 +386,7 @@ function format(value, field, context = null, spec = null) {
 	else if (value === null && spec.null) {
 		return DataTypes.null(spec.null);
 	}
-	else if (Array.isArray(value) && _.isObject(spec.items)) {
+	else if (Array.isArray(value)) {
 		if (Registry.externalRenderer) {
 			return value;
 		}
