@@ -1,7 +1,21 @@
-var Config = {
+var Registry = {
 
 	createTableColumns: null,
-	externalRenderer: false
+	externalRenderer: false,
+
+	addExtension(prefix, spec) {
+		Fields.extensions[prefix] = _.normalizeField(spec, Fields.extensions);
+	},
+
+	addMetadataField(field, spec) {
+		Fields.metadata[field] = _.normalizeField(spec, Fields.metadata);
+	},
+
+	addMetadataFields(specs) {
+		for(var key in specs) {
+			Registry.addMetadataField(key, specs[key]);
+		}
+	}
 
 };
 
@@ -93,14 +107,14 @@ var _ = {
 
 		// Normalize items
 		if (_.isObject(spec.items)) {
-			if (typeof Config.createTableColumn === 'function') {
+			if (typeof Registry.createTableColumn === 'function') {
 				spec.columns = [];
 			}
 			for(let key in spec.items) {
 				spec.items[key] = _.normalizeField(spec.items[key], fields);
 
-				if (typeof Config.createTableColumn === 'function') {
-					let column = Config.createTableColumn(key, spec.items[key], spec);
+				if (typeof Registry.createTableColumn === 'function') {
+					let column = Registry.createTableColumn(key, spec.items[key], spec);
 					if (spec.items[key].id) {
 						spec.columns.unshift(column);
 					}
@@ -356,7 +370,7 @@ function format(value, field, context = null, spec = null) {
 		return DataTypes.null(spec.null);
 	}
 	else if (Array.isArray(value) && _.isObject(spec.items)) {
-		if (Config.externalRenderer) {
+		if (Registry.externalRenderer) {
 			return value;
 		}
 		else {
@@ -364,7 +378,7 @@ function format(value, field, context = null, spec = null) {
 		}
 	}
 	else if (_.isObject(value) && _.isObject(spec.items)) {
-		if (Config.externalRenderer) {
+		if (Registry.externalRenderer) {
 			return value;
 		}
 		else {
@@ -409,7 +423,7 @@ module.exports = {
 	formatSummaries,
 	formatItemProperties,
 	Fields,
-	Config,
+	Registry,
 	Helper: _,
 	DataTypes,
 	Formatters

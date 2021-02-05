@@ -1,6 +1,6 @@
 # stac-fields
 
-A minimal STAC library that contains a list of STAC fields with some metadata (title, unit, prefix) and helper functions..
+A minimal STAC library that contains a list of STAC fields with some metadata (title, unit, prefix) and helper functions.
 
 ## Usage
 
@@ -12,12 +12,22 @@ Import the utilities to format values:
 Format a value:
 ```js
 let stacItem = {
+    stac_version: '1.0.0',
     id: '...',
     properties: {
+        datetime: '2020-01-01T13:55:43Z',
+        'radiant:public_access': true,
         ...
     },
     ...
 };
+
+// Add custom extension and field(s)
+StacFields.Registry.addExtension('radiant', 'Radiant Earth');
+StacFields.Registry.addMetadataField('radiant:public_access', {
+    label: "Data Access",
+    formatter: (value) => value ? "Public" : "Private"
+});
 
 // Option 1: Manually iterate through properties and format them
 for(let field in stacItem.properties) {
@@ -32,6 +42,9 @@ for(let field in stacItem.properties) {
 let groups = StacFields.formatStacProperties(stacItem, key => key !== 'eo:bands');
 ```
 
+This library is written for the latest version of the STAC specification (1.0.0-beta.2).
+It is recommended to pass your STAC data through a migration tool like `@radiantearth/stac-migrate` (WIP) before so that it complies to the latest STAC version. Otherwise some fields may not be handled correctly.
+
 Non-JavaScript library authors can re-use the `fields.json`. It is available at:
 * TODO: Add JsDelivr link
 
@@ -41,6 +54,7 @@ The following options are available in the object:
 
 * `label`: The human-readable title for the value.
 * `format`: The name of the formatter in formatters.js, but without the leading `format`.
+* `formatter`: A formatter function that is compatible to the formatters defined in formatters.js. Use this if no suitable pre-defined formatter is available to be specified in `format`.
 * `unit`: A unit to add after the value.
 * `explain`: A long form for an abbreviation that should be shown in a tooltip.
 * `complex`: A complex structure like a table that should be rendered separately, e.g. in a separate windows, tab or modal.
@@ -56,7 +70,7 @@ If only a label is available, it can be passed as string instead of an object.
 
 The most important methods are:
 
-* `format(value, field, spec, context = null)`: Applies the right formatting depending on the data type of the a single property.
+* `format(value, field, spec, context = null) => string`: Applies the right formatting depending on the data type of the a single property.
 * label
 * extension
 * formatSummaries
@@ -79,7 +93,7 @@ The most important methods are:
 
 Formatters are always functions that have the following signature:
 
-`method(value : any, field : string, spec : object, context = null)`
+`method(value : any, field : string, spec : object, context = null) => string`
 
 - `value` is the value of the field in the STAC JSON
 - `field` is the key of the field in the STAC JSON
@@ -91,10 +105,13 @@ It may contain HTML if the formatter is added to the `htmlFormats` array in `fie
 If the return value is allowed to contain HTML, ALL user input must run thorugh the `e()` function (or `parseInt` for integers, for example) to escape malicious HTML tags.
 This avoids XSS and similar security issues.
 
-### `Config`
+### `Registry`
 
 * `createTableColumn` (function\|null): Specify a function with the signature `function(field, columnSpec, parentSpec) => object` to convert a field containing `items` to a table column for your favorite table rendering component. Will be made available as a property `columns` on the same level as `items`.
 * `externalRenderer` (boolean): Set to `true` to not render objects or arrays with the renderers from this library. Values will be untouched then. Defaults to `false`.
+* `addExtension(prefix : string, spec : object) => void` - Adds a additional (custom) extension that is compliant to the fields.json, can also be used to replace existing extensions
+* `addMetadataField(field : string, spec : object) => void` - Adds a additional (custom) metdata field that is compliant to the fields.json, can also be used to replace existing fields
+* `addMetadataFields(specs : object) => void` - Adds additional (custom) metdata fields that are compliant to the fields.json, can also be used to replace existing fields
 
 ### Data Types (`DataTypes`)
 
