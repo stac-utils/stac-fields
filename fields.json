@@ -32,8 +32,7 @@
 		"title": "Title",
 		"description": {
 			"label": "Description",
-			"format": "CommonMark",
-			"complex": true
+			"format": "CommonMark"
 		},
 
 		"start_datetime": {
@@ -74,11 +73,15 @@
 
 		"providers": {
 			"label": "Providers",
+			"mergedArrays": true,
 			"format": "Providers"
 		},
 
 		"platform": "Platform",
-		"instruments": "Instruments",
+		"instruments": {
+			"label": "Instruments",
+			"mergedArrays": true
+		},
 		"constellation": "Constellation",
 		"mission": "Mission",
 		"gsd": {
@@ -92,12 +95,29 @@
 
 		"cube:dimensions": {
 			"label": "Dimensions",
-			"complex": true
+			"items": {
+				"type": "Type",
+				"axis": "Axis",
+				"description": {
+					"label": "Description",
+					"format": "CommonMark"
+				},
+				"extent": {
+					"label": "Extent",
+					"format": "Extent"
+				},
+				"values": "Values",
+				"step": "Step",
+				"reference_system": {
+					"label": "Ref. Sys.",
+					"explain": "Coordinate / Temporal / Other Reference System"
+				}
+			}
 		},
 
 		"eo:bands": {
 			"label": "Spectral Bands",
-			"complex": true,
+			"mergedArrays": true,
 			"items": {
 				"name": {
 					"label": "Name",
@@ -139,13 +159,14 @@
 			"unit": "%"
 		},
 
-		"label:property": {
+		"label:properties": {
 			"label": "Properties",
+			"mergedArrays": true,
 			"null": "raster data"
 		},
 		"label:classes": {
 			"label": "Classes",
-			"complex": true,
+			"mergedArrays": true,
 			"items": {
 				"name": {
 					"label": "Name",
@@ -158,15 +179,31 @@
 		},
 		"label:description": {
 			"label": "Description",
-			"format": "CommonMark",
-			"complex": true
+			"format": "CommonMark"
 		},
 		"label:type": "Type",
-		"label:tasks": "Tasks",
-		"label:methods": "Methods",
+		"label:tasks": {
+			"label": "Tasks",
+			"mergedArrays": true
+		},
+		"label:methods": {
+			"label": "Methods",
+			"mergedArrays": true
+		},
 		"label:overviews": {
 			"label": "Overviews",
-			"complex": true
+			"mergedArrays": true,
+			"items": {
+				"property_key": "Property Key",
+				"counts": {
+					"label": "Counts",
+					"custom": true
+				},
+				"statistics": {
+					"label": "Statistics",
+					"custom": true
+				}
+			}
 		},
 
 		"pc:count": {
@@ -177,7 +214,6 @@
 		"pc:encoding": "Format",
 		"pc:schemas": {
 			"label": "Schemas",
-			"complex": true,
 			"items": {
 				"name": {
 					"label": "Name",
@@ -198,13 +234,24 @@
 		"pc:density": "Density",
 		"pc:statistics": {
 			"label": "Statistics",
-			"complex": true
+			"items": {
+				"name": "Name",
+				"position": "Position",
+				"average": "Average",
+				"count": "Count",
+				"maximum": "Max.",
+				"minimum": "Min.",
+				"stddev": {
+					"label": "Std. Dev.",
+					"explain": "Standard Deviation"
+				},
+				"variance": "Variance"
+			}
 		},
 
 		"processing:lineage": {
 			"label": "Lineage",
-			"format": "CommonMark",
-			"complex": true
+			"format": "CommonMark"
 		},
 		"processing:level": "Level",
 		"processing:facility": "Facility",
@@ -220,31 +267,31 @@
 		"proj:wkt2": {
 			"label": "WKT2",
 			"explain": "Well-Known Text, version 2",
-			"complex": true
+			"custom": true
 		},
 		"proj:projjson": {
 			"label": "PROJJSON",
-			"complex": true
+			"custom": true
 		},
 		"proj:geometry": {
 			"label": "Footprint",
-			"complex": true
+			"custom": true
 		},
 		"proj:bbox": {
 			"label": "Bounding Box",
-			"complex": true
+			"custom": true
 		},
 		"proj:centroid": {
 			"label": "Centroid",
-			"complex": true
+			"custom": true
 		},
 		"proj:shape": {
 			"label": "Shape",
-			"complex": true
+			"custom": true
 		},
 		"proj:transform": {
 			"label": "Transform",
-			"complex": true
+			"custom": true
 		},
 
 		"sar:instrument_mode": "Instrument Mode",
@@ -253,7 +300,10 @@
 			"label": "Center Frequency",
 			"unit": "GHz"
 		},
-		"sar:polarizations": "Polarizations",
+		"sar:polarizations": {
+			"label": "Polarizations",
+			"mergedArrays": true
+		},
 		"sar:product_type": "Product Type",
 		"sar:resolution_range": {
 			"label": "Range Resolution",
@@ -304,7 +354,6 @@
 		"sci:citation": "Citation",
 		"sci:publications": {
 			"label": "Publications",
-			"complex": true,
 			"items": {
 				"citation": {
 					"label": "Publication",
@@ -320,11 +369,11 @@
 
 		"tiles:tile_matrix_sets": {
 			"label": "Tile Matrix Sets",
-			"complex": true
+			"custom": true
 		},
 		"tiles:tile_matrix_set_links": {
 			"label": "Tile Matrix Set Links",
-			"complex": true
+			"custom": true
 		},
 
 		"view:off_nadir": {
@@ -388,7 +437,6 @@
 		"gee:cadence": "Cadence",
 		"gee:schema": {
 			"label": "Variables",
-			"complex": true,
 			"items": {
 				"description": "Description",
 				"type": "Data Type"
@@ -396,12 +444,11 @@
 		},
 		"gee:terms_of_use": {
 			"label": "Terms of Use",
-			"format": "CommonMark",
-			"complex": true
+			"format": "CommonMark"
 		},
 		"gee:visualizations": {
 			"label": "Visualizations",
-			"complex": true
+			"custom": true
 		},
 		
 		"landsat:scene_id": "Scene ID",

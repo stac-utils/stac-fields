@@ -55,14 +55,15 @@ The following options are available in the object:
 * `label`: The human-readable title for the value.
 * `format`: The name of the formatter in formatters.js, but without the leading `format`.
 * `formatter`: A formatter function that is compatible to the formatters defined in formatters.js. Use this if no suitable pre-defined formatter is available to be specified in `format`.
+* `mergedArrays`: If the summaries are arrays and get merged (e.g. `eo:bands`), specify it here.
 * `unit`: A unit to add after the value.
 * `explain`: A long form for an abbreviation that should be shown in a tooltip.
-* `complex`: A complex structure like a table that should be rendered separately, e.g. in a separate windows, tab or modal.
+* `custom`: A structure that can't easily be rendered with any of the pre-defined formatters and thus needs a custom implementation (see `externalRenderer`).
 * `alias`: If a field has multiple keys, declare the field to use the specification of the other field.
 * `items`: If the value is an array of objects, a table can be created with the details in this object. It has the same structure as specified here, but in additon `sortable` and `id` are allowed:
     * `sortable`: Specfiies whether the value can be sorted (`true`, e.g. in a table) or not (`false`). Defaults to `false`.
     * `id`: Specfiies whether the value is the unique primary key (`true`) or not (`false`). Defaults to `false`.
-* `null`: The value that should be given instead of `null`. If a value is null but this property is not given, defaults to "N/A".
+* `null`: The value that should be given instead of `null`. If a value is null but this property is not given, defaults to "n/a".
 
 If only a label is available, it can be passed as string instead of an object.
 
@@ -108,7 +109,7 @@ This avoids XSS and similar security issues.
 ### `Registry`
 
 * `createTableColumn` (function\|null): Specify a function with the signature `function(field, columnSpec, parentSpec) => object` to convert a field containing `items` to a table column for your favorite table rendering component. Will be made available as a property `columns` on the same level as `items`.
-* `externalRenderer` (boolean): Set to `true` to not render objects or arrays with the renderers from this library. Values will be untouched then. Defaults to `false`.
+* `externalRenderer` (boolean): Set to `true` to not render custom objects, arrays and tables with the renderers from this library. Will return formatted values individually then. Defaults to `false`.
 * `addExtension(prefix : string, spec : object) => void` - Adds a additional (custom) extension that is compliant to the fields.json, can also be used to replace existing extensions
 * `addMetadataField(field : string, spec : object) => void` - Adds a additional (custom) metdata field that is compliant to the fields.json, can also be used to replace existing fields
 * `addMetadataFields(specs : object) => void` - Adds additional (custom) metdata fields that are compliant to the fields.json, can also be used to replace existing fields
@@ -118,7 +119,7 @@ This avoids XSS and similar security issues.
 This object has functions to format the native JSON data types: 
 * array => `array(arr, sort = false)`
 * object => `object(obj)`
-* null => `null(label = 'N/A')`
+* null => `null(label = 'n/a')`
 * number => `number(num)`
 * string => `string(str)`
 * boolean => `boolean(bool)`

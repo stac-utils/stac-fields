@@ -73,7 +73,10 @@ var _ = {
 		return (typeof obj === 'object' && obj === Object(obj) && !Array.isArray(obj));
 	},
 
-	formatKey(key) {
+	formatKey(key, prefix = true) {
+		if (prefix === false) {
+			key = key.replace(/^\w+:/i, '');
+		}
 		return _.e(key).split(/[:_\-\s]/g).map(part => part.substr(0, 1).toUpperCase() + part.substr(1)).join(' ');
 	},
 
@@ -132,45 +135,45 @@ var _ = {
 
 var DataTypes = {
 
-	array(arr, sort = false) {
-		return _.toList(arr, sort, DataTypes.format);
+	array(arr, sort = false, unit = null) {
+		return _.toList(arr, sort, v => DataTypes.format(v, unit));
 	},
 	
 	object(obj) {
 		return _.toObject(obj, DataTypes.format);
 	},
 	
-	null(label = 'N/A') {
+	null(label = 'n/a') {
 		return `<i>${label}</i>`;
 	},
 	
-	number(num) {
+	number(num, unit = null) {
 		if (typeof num !== 'number') {
 			num = parseFloat(num);
 		}
-		return num.toLocaleString();
+		return num.toLocaleString() + (unit ? ' ' + unit : '');
 	},
 
-	string(str) {
-		return _.e(str).replace(/(\r\n|\r|\n){2,}/g, '<br />');
+	string(str, unit = null) {
+		return _.e(str).replace(/(\r\n|\r|\n){2,}/g, '<br />') + (unit ? ' ' + unit : '');
 	},
 	
 	boolean(bool) {
 		return bool ? '✔️' : '❌';
 	},
 	
-	format(value) {
+	format(value, unit = null) {
 		if (typeof value === 'boolean') {
 			return DataTypes.boolean(value);
 		}
 		else if (typeof value === 'number') {
-			return DataTypes.number(value);
+			return DataTypes.number(value, unit);
 		}
 		else if (typeof value === 'string') {
-			return DataTypes.string(value);
+			return DataTypes.string(value, unit);
 		}
 		else if (Array.isArray(value)) {
-			return DataTypes.array(value);
+			return DataTypes.array(value, unit);
 		}
 		else if (_.isObject(value)) {
 			return DataTypes.object(value);
@@ -312,34 +315,24 @@ var Formatters = {
 		else {
 			return value.map(date => Formatters.formatTimestamp(date)).join(' - ');
 		}
-	},
-
-	formatSummary(value, field, spec, context = null) {
-		if (_.isObject(value) && typeof value.min !== 'undefined' && typeof value.max !== 'undefined') {
-			return Formatters.formatExtent([value.min, value.max]);
-		}
-		else if (Array.isArray(value)) {
-			return _.toList(value, !spec.complex, v => format(v, field, context, spec));
-		}
-		else {
-			// This is not allowed in the spec, we try to gracefully show it anyway
-			return format(value, field, context, spec);
-		}
 	}
 
 };
 
-function formatGrouped(obj, prop, filter, coreKey) {
+function formatGrouped(context, prop, filter, coreKey) {
+	// Group fields into extensions
 	let groups = {};
-	for(let key in obj[prop]) {
-		let parts = key.split(':', 2);
+	for(let field in context[prop]) {
+		let parts = field.split(':', 2);
 		if (parts.length === 1) {
 			parts.unshift(coreKey);
 		}
 		let ext = parts[0];
-		if (typeof filter === 'function' && !filter(key)) {
+		if (typeof filter === 'function' && !filter(field)) {
 			continue;
 		}
+
+		// Add group if missing
 		if (!_.isObject(groups[ext])) {
 			groups[ext] = {
 				extension: ext,
@@ -347,20 +340,81 @@ function formatGrouped(obj, prop, filter, coreKey) {
 				properties: {}
 			};
 		}
-		let value = obj[prop][key];
-		let spec = Fields.metadata[key];
+
+		let value = context[prop][field];
+		let spec = Fields.metadata[field];
+
+		// Fill items with missing properties
+		// ToDo: This just takes the first entry into account and doesn't care about the others so some fields may be missing
+		let items = null;
+		if (_.isObject(spec.items)) {
+			items = {};
+			let entry = spec.mergedArrays ? value : value[0];
+			let keys = Object.keys(entry);
+			if (keys.length > 0) {
+				Object.keys(entry[keys[0]]).forEach(key => {
+					if (typeof spec.items[key] === 'undefined') {
+						items[key] = {
+							label: _.formatKey(key, false),
+							explain: key
+						};
+					}
+					else {
+						items[key] = spec.items[key];
+					}
+				});
+			}
+		}
+
+		// Format values
 		let formatted;
+
+		// Handle summaries
 		if (prop === 'summaries') {
-			console.log(value, key, spec);
-			formatted = Formatters.formatSummary(value, key, spec, obj);
+			// ToDo: Migrate to RC1, where this is minimum and maximum instead of min and max
+			if (_.isObject(value) && typeof value.min !== 'undefined' && typeof value.max !== 'undefined') {
+				formatted = Formatters.formatExtent([value.min, value.max]);
+			}
+			else if (Array.isArray(value)) {
+				formatted = [];
+				if (Registry.externalRenderer && items) {
+					let summaries = spec.mergedArrays ? [value] : value;
+					// Go through each entry in a summary (this is besically a single value as defined in the Item spec)
+					for(let i1 in summaries) {
+						let summary = summaries[i1];
+						formatted.push(Array.isArray(summary) ? [] : {});
+						for(let i2 in summary) {
+							let prop = summaries[i1][i2];
+							if (Array.isArray(summary)) {
+								formatted[i1].push(Array.isArray(prop) ? [] : {});
+							}
+							else {
+								formatted[i1][i2] = Array.isArray(prop) ? [] : {};
+							}
+							for(let i3 in items) {
+								let itemSpec = items[i3];
+								formatted[i1][i2][i3] = format(prop[i3], i3, context, itemSpec);
+							}
+						}
+					}
+				}
+				else {
+					formatted = _.toList(value, !spec.custom && !spec.items, v => format(v, field, context, spec));
+				}
+			}
 		}
-		else {
-			formatted = format(value, key, obj, spec);
+
+		// Fallback to "normal" rendering if not handled by summaries yet
+		if (typeof formatted === 'undefined') {
+			formatted = format(value, field, context, spec);
 		}
-		groups[ext].properties[key] = {
-			label: label(key),
+
+		groups[ext].properties[field] = {
+			label: label(field),
 			value,
-			formatted
+			formatted,
+			items,
+			spec
 		};
 	}
 	return Object.values(groups).sort((a,b) => a.extension.localeCompare(b.extension));
@@ -379,42 +433,46 @@ function format(value, field, context = null, spec = null) {
 	if (!_.isObject(spec)) {
 		spec = Fields.metadata[field] || {};
 	}
-	let unit = typeof spec.unit === 'string' ? ` ${spec.unit}` : '';
 	if (typeof spec.formatter === 'function') {
-		return spec.formatter(value, field, spec, context) + unit;
+		return spec.formatter(value, field, spec, context) ;
 	}
 	else if (value === null && spec.null) {
 		return DataTypes.null(spec.null);
 	}
 	else if (Array.isArray(value)) {
-		if (Registry.externalRenderer) {
-			return value;
+		let callback = v => format(v, field, context, spec);
+		if (Registry.externalRenderer && (spec.custom || spec.items)) {
+			return value.map(callback);
 		}
 		else {
-			return _.toList(value, false, v => format(v, field, context, spec));
+			return _.toList(value, false, callback);
 		}
 	}
 	else if (_.isObject(value) && _.isObject(spec.items)) {
-		if (Registry.externalRenderer) {
-			return value;
+		let callback = (v, k) => format(v, k, context, spec.items[k]);
+		if (Registry.externalRenderer && (spec.custom || spec.items)) {
+			let formattedValues = {};
+			for(let key in value) {
+				formattedValues[key] = callback(value[key]);
+			}
+			return formattedValues;
 		}
 		else {
-			return _.toObject(value, (v, k) => format(v, k, context, spec.items[k]));
+			return _.toObject(value, callback);
 		}
 	}
 	else {
-		return DataTypes.format(value) + unit;
+		return DataTypes.format(value, spec.unit);
 	}
 }
 
-function label(key, fields = null) {
+function label(key, specs = null) {
 	let spec;
-	if (fields === null) {
-		spec = Fields.metadata[key];
+	if (_.isObject(specs)) {
+		spec = specs[key];
 	}
 	else {
-		// TODO: Check whether this is actually useful
-		spec = fields[key];
+		spec = Fields.metadata[key];
 	}
 	if (_.isObject(spec) && typeof spec.label === 'string') {
 		if (typeof spec.explain === 'string') {
