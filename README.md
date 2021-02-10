@@ -55,7 +55,6 @@ The following options are available in the object:
 * `label`: The human-readable title for the value.
 * `format`: The name of the formatter in formatters.js, but without the leading `format`.
 * `formatter`: A formatter function that is compatible to the formatters defined in formatters.js. Use this if no suitable pre-defined formatter is available to be specified in `format`.
-* `mergedArrays`: If the summaries are arrays and get merged (e.g. `eo:bands`), specify it here.
 * `unit`: A unit to add after the value.
 * `explain`: A long form for an abbreviation that should be shown in a tooltip.
 * `custom`: A structure that can't easily be rendered with any of the pre-defined formatters and thus needs a custom implementation (see `externalRenderer`).
@@ -64,6 +63,9 @@ The following options are available in the object:
     * `sortable`: Specfiies whether the value can be sorted (`true`, e.g. in a table) or not (`false`). Defaults to `false`.
     * `id`: Specfiies whether the value is the unique primary key (`true`) or not (`false`). Defaults to `false`.
 * `null`: The value that should be given instead of `null`. If a value is null but this property is not given, defaults to "n/a".
+* Options related to Collection Summaries:
+    * `summary`: If the fields should be added to summaries (`true`, default) or not `false`.
+    * `mergedArrays`: If the values are arrays and should be merged in summaries (`true`, e.g. `eo:bands`) or not (`false`, default).
 
 If only a label is available, it can be passed as string instead of an object.
 

@@ -26,22 +26,29 @@
 	"metadata": {
 		"datetime": {
 			"label": "Acquired",
-			"format": "Timestamp"
+			"format": "Timestamp",
+			"summary": false
 		},
 
-		"title": "Title",
+		"title": {
+			"label": "Title",
+			"summary": false
+		},
 		"description": {
 			"label": "Description",
-			"format": "CommonMark"
+			"format": "CommonMark",
+			"summary": false
 		},
 
 		"start_datetime": {
 			"label": "First Acquisition",
-			"format": "Timestamp"
+			"format": "Timestamp",
+			"summary": false
 		},
 		"end_datetime": {
 			"label": "Last Acquisition",
-			"format": "Timestamp"
+			"format": "Timestamp",
+			"summary": false
 		},
 
 		"created": {
@@ -68,13 +75,14 @@
 
 		"license": {
 			"label": "License",
-			"format": "License"
+			"format": "License",
+			"summary": false
 		},
 
 		"providers": {
 			"label": "Providers",
-			"mergedArrays": true,
-			"format": "Providers"
+			"format": "Providers",
+			"summary": false
 		},
 
 		"platform": "Platform",
@@ -90,11 +98,18 @@
 			"unit": "m"
 		},
 
-		"version": "Version",
-		"deprecated": "Deprecated",
+		"version": {
+			"label": "Version",
+			"summary": false
+		},
+		"deprecated": {
+			"label": "Deprecated",
+			"summary": false
+		},
 
 		"cube:dimensions": {
 			"label": "Dimensions",
+			"summary": false,
 			"items": {
 				"type": "Type",
 				"axis": "Axis",
@@ -161,7 +176,7 @@
 
 		"label:properties": {
 			"label": "Properties",
-			"mergedArrays": true,
+			"summary": false,
 			"null": "raster data"
 		},
 		"label:classes": {
@@ -179,7 +194,8 @@
 		},
 		"label:description": {
 			"label": "Description",
-			"format": "CommonMark"
+			"format": "CommonMark",
+			"summary": false
 		},
 		"label:type": "Type",
 		"label:tasks": {
@@ -192,7 +208,7 @@
 		},
 		"label:overviews": {
 			"label": "Overviews",
-			"mergedArrays": true,
+			"summary": false,
 			"items": {
 				"property_key": "Property Key",
 				"counts": {
@@ -234,6 +250,7 @@
 		"pc:density": "Density",
 		"pc:statistics": {
 			"label": "Statistics",
+			"summary": false,
 			"items": {
 				"name": "Name",
 				"position": "Position",
@@ -251,13 +268,15 @@
 
 		"processing:lineage": {
 			"label": "Lineage",
-			"format": "CommonMark"
+			"format": "CommonMark",
+			"summary": false
 		},
 		"processing:level": "Level",
 		"processing:facility": "Facility",
 		"processing:software": {
 			"label": "Software",
-			"format": "Software"
+			"format": "Software",
+			"summary": false
 		},
 
 		"proj:epsg": {
@@ -267,31 +286,38 @@
 		"proj:wkt2": {
 			"label": "WKT2",
 			"explain": "Well-Known Text, version 2",
-			"custom": true
+			"custom": true,
+			"summary": false
 		},
 		"proj:projjson": {
 			"label": "PROJJSON",
-			"custom": true
+			"custom": true,
+			"summary": false
 		},
 		"proj:geometry": {
 			"label": "Footprint",
-			"custom": true
+			"custom": true,
+			"summary": false
 		},
 		"proj:bbox": {
 			"label": "Bounding Box",
-			"custom": true
+			"custom": true,
+			"summary": false
 		},
 		"proj:centroid": {
 			"label": "Centroid",
-			"custom": true
+			"custom": true,
+			"summary": false
 		},
 		"proj:shape": {
 			"label": "Shape",
-			"custom": true
+			"custom": true,
+			"summary": false
 		},
 		"proj:transform": {
 			"label": "Transform",
-			"custom": true
+			"custom": true,
+			"summary": false
 		},
 
 		"sar:instrument_mode": "Instrument Mode",
@@ -351,9 +377,13 @@
 			"label": "DOI",
 			"format": "DOI"
 		},
-		"sci:citation": "Citation",
+		"sci:citation": {
+			"label": "Citation",
+			"summary": false
+		},
 		"sci:publications": {
 			"label": "Publications",
+			"summary": false,
 			"items": {
 				"citation": {
 					"label": "Publication",
@@ -369,11 +399,13 @@
 
 		"tiles:tile_matrix_sets": {
 			"label": "Tile Matrix Sets",
-			"custom": true
+			"custom": true,
+			"summary": false
 		},
 		"tiles:tile_matrix_set_links": {
 			"label": "Tile Matrix Set Links",
-			"custom": true
+			"custom": true,
+			"summary": false
 		},
 
 		"view:off_nadir": {
@@ -415,7 +447,10 @@
 			"label": "Pixel resolution",
 			"unit": "m"
 		},
-		"pl:provider": "Provider",
+		"pl:provider": {
+			"label": "Provider",
+			"summary": false
+		},
 		"pl:published": {
 			"alias": "published"
 		},
@@ -440,15 +475,18 @@
 			"items": {
 				"description": "Description",
 				"type": "Data Type"
-			}
+			},
+			"summary": false
 		},
 		"gee:terms_of_use": {
 			"label": "Terms of Use",
-			"format": "CommonMark"
+			"format": "CommonMark",
+			"summary": false
 		},
 		"gee:visualizations": {
 			"label": "Visualizations",
-			"custom": true
+			"custom": true,
+			"summary": false
 		},
 		
 		"landsat:scene_id": "Scene ID",
@@ -475,7 +513,10 @@
 		"sentinel:latitude_band": "Latitude band",
 		"sentinel:grid_square": "Grid square",
 		"sentinel:sequence": "Sequence",
-		"sentinel:product_id": "Product ID",
+		"sentinel:product_id": {
+			"label": "Product ID",
+			"summary": false
+		},
 		"sentinel:data_coverage": {
 			"label": "Data Coverage",
 			"unit": "%"
