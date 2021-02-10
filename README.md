@@ -2,6 +2,8 @@
 
 A minimal STAC library that contains a list of STAC fields with some metadata (title, unit, prefix) and helper functions.
 
+Version: **1.0.0-beta.1**
+
 ## Usage
 
 Add to your project with `npm install @radiantearth/stac-fields --save`
@@ -46,7 +48,7 @@ This library is written for the latest version of the STAC specification (1.0.0-
 It is recommended to pass your STAC data through a migration tool like `@radiantearth/stac-migrate` (WIP) before so that it complies to the latest STAC version. Otherwise some fields may not be handled correctly.
 
 Non-JavaScript library authors can re-use the `fields.json`. It is available at:
-* TODO: Add JsDelivr link
+<https://cdn.jsdelivr.net/npm/@radiantearth/stac-fields/fields.json>
 
 ## fields.json
 
