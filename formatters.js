@@ -57,7 +57,7 @@ var _ = {
 		let html = '<dl>';
 		for(let key in obj) {
 			// ToDo: also convert CamelCase? but not abbreviations like "USA".
-			let label = _.formatKey(key);
+			let label = _.formatKey(key, true);
 			let value = obj[key];
 			if (typeof formatter === 'function') {
 				value = formatter(value, key);
@@ -73,7 +73,7 @@ var _ = {
 		return (typeof obj === 'object' && obj === Object(obj) && !Array.isArray(obj));
 	},
 
-	formatKey(key, prefix = true) {
+	formatKey(key, prefix = false) {
 		if (prefix === false) {
 			key = key.replace(/^\w+:/i, '');
 		}
@@ -135,34 +135,34 @@ var _ = {
 
 var DataTypes = {
 
-	array(arr, sort = false, unit = null) {
+	array(arr, sort = false, unit = '') {
 		return _.toList(arr, sort, v => DataTypes.format(v, unit));
 	},
 	
 	object(obj) {
-		return _.toObject(obj, DataTypes.format);
+		return _.toObject(obj, v => DataTypes.format(v));
 	},
 	
 	null(label = 'n/a') {
 		return `<i>${label}</i>`;
 	},
 	
-	number(num, unit = null) {
+	number(num, unit = '') {
 		if (typeof num !== 'number') {
 			num = parseFloat(num);
 		}
-		return num.toLocaleString() + (unit ? ' ' + unit : '');
+		return num.toLocaleString() + unit;
 	},
 
-	string(str, unit = null) {
-		return _.e(str).replace(/(\r\n|\r|\n){2,}/g, '<br />') + (unit ? ' ' + unit : '');
+	string(str, unit = '') {
+		return _.e(str).replace(/(\r\n|\r|\n){2,}/g, '<br />') + unit;
 	},
 	
 	boolean(bool) {
 		return bool ? '✔️' : '❌';
 	},
 	
-	format(value, unit = null) {
+	format(value, unit = '') {
 		if (typeof value === 'boolean') {
 			return DataTypes.boolean(value);
 		}
@@ -223,7 +223,7 @@ var Formatters = {
 			}
 			if (Array.isArray(provider.roles) && provider.roles.length > 0) {
 				roles = provider.roles.map(r => _.e(r)).join(', ');
-				roles = `<br /><small>${roles}</small>`;
+				roles = ` (<em>${roles}</em>)`;
 			}
 			if (typeof provider.description === 'string' && provider.description.length > 0) {
 				description = Formatters.formatCommonMark(provider.description);
@@ -280,21 +280,21 @@ var Formatters = {
 		}
 	},
 
-	formatExtent(value) {
+	formatExtent(value, unit = '') {
 		if (!Array.isArray(value) || value.length < 2 || (value[0] === null && value[1] === null)) {
 			return DataTypes.formatNull();
 		}
 		else if (value[0] === null) {
-			return `Until ${DataTypes.format(value[1])}`;
+			return `Until ${DataTypes.format(value[1], unit)}`;
 		}
 		else if (value[1] === null) {
-			return `From ${DataTypes.format(value[0])}`;
+			return `From ${DataTypes.format(value[0], unit)}`;
 		}
 		else if (value[0] === value[1]) {
-			return DataTypes.format(value[0]);
+			return DataTypes.format(value[0], unit);
 		}
 		else {
-			return value.map(v => DataTypes.format(v)).join(' to ');
+			return value.map(v => DataTypes.format(v, unit)).join(' – ');
 		}
 	},
 
@@ -315,6 +315,37 @@ var Formatters = {
 		else {
 			return value.map(date => Formatters.formatTimestamp(date)).join(' - ');
 		}
+	},
+
+	formatWKT2(value) {
+		if (typeof value !== 'string') {
+			return DataTypes.formatNull();
+		}
+		
+		// This is a VERY simplistic WKT2 formatter, which may fail to render properly in some cases.
+		let indent = -1;
+		let formatted;
+		try {
+			formatted = value.replace(/([A-Z]+)\[|\]/g, (match, keyword) => {
+				if (match === ']') {
+					indent--;
+					return match;
+				}
+				else {
+					indent++;
+					let tabs = "  ".repeat(indent);
+					return `\n${tabs}${keyword}[`;
+				}
+			});
+		} catch (e) {
+			// In case the formatting did not work properly
+			// (usually the number of [ and ] doesn't match)
+			// just return the unformatted value
+			formatted = value;
+			
+		}
+
+		return `<pre>${formatted}</pre>`;
 	}
 
 };
@@ -342,12 +373,12 @@ function formatGrouped(context, prop, filter, coreKey) {
 		}
 
 		let value = context[prop][field];
-		let spec = Fields.metadata[field];
+		let spec = Fields.metadata[field] || {};
 
 		// Fill items with missing properties
 		// ToDo: This just takes the first entry into account and doesn't care about the others so some fields may be missing
 		let items = null;
-		if (_.isObject(spec.items)) {
+		if (_.isObject(spec.items) && Array.isArray(value)) {
 			items = {};
 			let entry = spec.mergedArrays ? value : value[0];
 			let keys = Object.keys(entry);
@@ -355,7 +386,7 @@ function formatGrouped(context, prop, filter, coreKey) {
 				Object.keys(entry[keys[0]]).forEach(key => {
 					if (typeof spec.items[key] === 'undefined') {
 						items[key] = {
-							label: _.formatKey(key, false),
+							label: _.formatKey(key),
 							explain: key
 						};
 					}
@@ -373,7 +404,7 @@ function formatGrouped(context, prop, filter, coreKey) {
 		if (prop === 'summaries') {
 			// ToDo: Migrate to RC1, where this is minimum and maximum instead of min and max
 			if (_.isObject(value) && typeof value.min !== 'undefined' && typeof value.max !== 'undefined') {
-				formatted = Formatters.formatExtent([value.min, value.max]);
+				formatted = Formatters.formatExtent([value.min, value.max], spec.unit);
 			}
 			else if (Array.isArray(value)) {
 				formatted = [];
@@ -469,10 +500,10 @@ function format(value, field, context = null, spec = null) {
 function label(key, specs = null) {
 	let spec;
 	if (_.isObject(specs)) {
-		spec = specs[key];
+		spec = specs[key] || {};
 	}
 	else {
-		spec = Fields.metadata[key];
+		spec = Fields.metadata[key] || {};
 	}
 	if (_.isObject(spec) && typeof spec.label === 'string') {
 		if (typeof spec.explain === 'string') {

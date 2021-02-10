@@ -286,7 +286,7 @@
 		"proj:wkt2": {
 			"label": "WKT2",
 			"explain": "Well-Known Text, version 2",
-			"custom": true,
+			"format": "WKT2",
 			"summary": false
 		},
 		"proj:projjson": {
@@ -433,10 +433,50 @@
 			"label": "Anomalous Pixels",
 			"unit": "px"
 		},
+		"pl:cloud_percent": {
+			"label": "Cloud Cover",
+			"unit": "%"
+		},
+		"pl:clear_confidence_percent": {
+			"label": "Cloud Free Confidence",
+			"unit": "%"
+		},
+		"pl:clear_percent": {
+			"label": "Cloud Free",
+			"unit": "%"
+		},
+		"pl:heavy_haze_percent": {
+			"label": "Heavy Haze Cover",
+			"unit": "%"
+		},
+		"pl:light_haze_percent": {
+			"label": "Light Haze Cover",
+			"unit": "%"
+		},
+		"pl:shadow_percent": {
+			"label": "Shadow Cover",
+			"unit": "%"
+		},
+		"pl:snow_ice_percent": {
+			"label": "Snow/Ice Cover",
+			"unit": "%"
+		},
+		"pl:visible_confidence_percent": {
+			"label": "Visible Confidence",
+			"unit": "%"
+		},
+		"pl:visible_percent": {
+			"label": "Visible",
+			"unit": "%"
+		},
+		"pl:columns": "Columns",
+		"pl:rows": "Rows",
+		
 		"pl:epsg_code": {
 			"alias": "proj:epsg"
 		},
 		"pl:ground_control": "Ground Control",
+		"pl:ground_control_ratio": "Ground Control Ratio",
 		"pl:instrument": {
 			"alias": "instruments"
 		},
@@ -444,7 +484,7 @@
 		"pl:origin_x": "X Origin",
 		"pl:origin_y": "Y Origin",
 		"pl:pixel_resolution": {
-			"label": "Pixel resolution",
+			"label": "Pixel Resolution",
 			"unit": "m"
 		},
 		"pl:provider": {
@@ -455,9 +495,11 @@
 			"alias": "published"
 		},
 		"pl:quality_category": "Quality Category",
-		"pl:columns": "Columns",
-		"pl:rows": "Rows",
 		"pl:satellite_id": "Satellite ID",
+		"pl:satellite_azimuth": {
+			"label": "Satellite Azimuth",
+			"unit": "º"
+		},
 		"pl:strip_id": "Strip ID",
 		"pl:updated": {
 			"alias": "updated"
