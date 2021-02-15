@@ -43,7 +43,7 @@
 	},
 	"properties": {
 		"platform": "landsat-8",
-		"instrument": ["oli", "tirs"],
+		"instruments": ["oli", "tirs"],
 		"datetime": "2018-10-01T01:08:32.033Z",
 		"gsd": 30,
 		"view:sun_azimuth": 168.8989761,
@@ -51,6 +51,23 @@
 		"view:off_nadir": 0,
 		"landsat:path": 107,
 		"landsat:row": 18,
+		"card4l:specification": "NRB",
+		"card4l:specification_version": "5.0",
+		"card4l:speckle_filtering": null,
+		"file:checksum": "1114a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
+		"file:data_type": "uint16",
+		"file:size": 2048,
+		"file:nodata": [0, 255],
+		"file:values": [
+			{
+				"values": [1, 2],
+				"summary": "Trees"
+			},
+			{
+				"values": [3],
+				"summary": "Water"
+			}
+		],
 		"eo:cloud_cover": 78,
 		"eo:bands": [
 			{

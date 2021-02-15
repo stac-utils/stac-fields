@@ -129,6 +129,17 @@ var _ = {
 		}
 
 		return spec;
+	},
+
+	hexToUint8(hexString) {
+		if(hexString.length === 0 || hexString.length % 2 !== 0){
+			throw new Error(`The string "${hexString}" is not valid hex.`)
+		}
+  		return new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+	},
+
+	uint8ToHex(bytes) {
+		return bytes.reduce((str, byte) => str + byte.toString(16).padStart(2, '0'), '');
 	}
 
 };
@@ -346,6 +357,70 @@ var Formatters = {
 		}
 
 		return `<pre>${formatted}</pre>`;
+	},
+
+	fileSizeUnits: ['B', 'kB', 'MB', 'GB', 'TB'],
+
+	formatFileSize(value) {
+		if (typeof value !== 'number') {
+			return _.e(value);
+		}
+		var i = value == 0 ? 0 : Math.floor( Math.log(value) / Math.log(1024) );
+		return ( value / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + Formatters.fileSizeUnits[i];
+	},
+
+	formatChecksum(value) {
+		if (typeof value !== 'string') {
+			return DataTypes.formatNull();
+		}
+
+		try {
+			const multihash = require('multihashes');
+			const meta = multihash.decode(_.hexToUint8(value));
+			const name = _.e(meta.name);
+			const hex = _.e(_.uint8ToHex(meta.digest));
+			return `<input class="checksum-input" size="32" value="${hex}" readonly /><br />Hashing algorithm: <strong>${name}</strong>`;
+		} catch (error) {
+			return DataTypes.null();
+		}
+	},
+
+	fileDataTypes: {
+		"int8": "8-bit integer",
+		"int16": "16-bit integer",
+		"int32": "32-bit integer",
+		"int64": "64-bit integer",
+		"uint8": "unsigned 8-bit integer",
+		"uint16": "unsigned 16-bit integer",
+		"uint32": "unsigned 32-bit integer",
+		"uint64": "unsigned 64-bit integer",
+		"float16": "16-bit float",
+		"float32": "32-bit float",
+		"float64": "64-big float",
+		"cint16": "16-bit complex integer",
+		"cint32": "32-bit complex integer",
+		"cfloat32": "32-bit complex float",
+		"cfloat64": "64-bit complex float",
+		"other": "Other"
+	},
+
+	formatFileDataType(value) {
+		if (typeof value === 'string' && value in Formatters.fileDataTypes) {
+			return `<abbr title="${Formatters.fileDataTypes[value]}">${value}</abbr>`;
+		}
+
+		return DataTypes.formatNull();
+	},
+
+	formatCSV(value) {
+		if (Array.isArray(value)) {
+			let numeric = value.find(v => typeof v === 'number') !== undefined;
+			// If there's potentially a comma in the values (decimal or thousand separators in numbers), use semicolon instead of comma.
+			return value.map(_.e).join(numeric ? '; ' : ', ');
+		}
+		else {
+			return _.e(value);
+		}
 	}
 
 };

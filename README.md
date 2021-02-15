@@ -71,6 +71,8 @@ The following options are available in the object:
 
 If only a label is available, it can be passed as string instead of an object.
 
+Some details about the fields included in the fields.json file can be found [here](fields.md).
+
 ## formatters.js
 
 The most important methods are:
@@ -93,6 +95,10 @@ The most important methods are:
 * TemporalExtent (array with two timestamps)
 * Timestamp (ISO8601 timestamp)
 * Summary
+* CSV (array to comma-separated values)
+* FileSize
+* FileDataType
+* Checksum (multihashes)
 
 ### Custom formatters
 
@@ -142,3 +148,5 @@ All methods return strings, which may contain HTML. Input is sanitized.
 * toList
 * toObject
 * normalizeFields
+* hextoUint8
+* uint8ToHex

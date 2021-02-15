@@ -1,7 +1,12 @@
 {
 	"extensions": {
+		"card4l": {
+			"label": "CARD4L",
+			"explain": "CEOS Analysis Ready Data for Land"
+		},
 		"cube": "Data Cube",
 		"eo": "Electro-Optical",
+		"file": "File",
 		"label": "Labels / ML",
 		"pc": "Point Cloud",
 		"processing": "Processing",
@@ -88,6 +93,7 @@
 		"platform": "Platform",
 		"instruments": {
 			"label": "Instruments",
+			"format": "CSV",
 			"mergedArrays": true
 		},
 		"constellation": "Constellation",
@@ -172,6 +178,46 @@
 		"eo:cloud_cover": {
 			"label": "Cloud Cover",
 			"unit": "%"
+		},
+
+		"file:bits_per_sample": "Bits per Sample",
+		"file:byte_order": "Byte Order",
+		"file:checksum": {
+			"label": "Checksum",
+			"format": "Checksum",
+			"custom": true,
+			"summary": false
+		},
+		"file:data_type": {
+			"label": "Data Type of Values",
+			"format": "FileDataType"
+		},
+		"file:header_size": {
+			"label": "Header Size",
+			"format": "FileSize",
+			"summary": false
+		},
+		"file:nodata": {
+			"label": "No-data Values",
+			"format": "CSV",
+			"summary": false
+		},
+		"file:size": {
+			"label": "Size",
+			"format": "FileSize",
+			"summary": false
+		},
+		"file:unit": "Unit of Values",
+		"file:values": {
+			"label": "Map of Values",
+			"summary": false,
+			"items": {
+				"values": {
+					"label": "Value(s)",
+					"format": "CSV"
+				},
+				"summary": "Summary"
+			}
 		},
 
 		"label:properties": {
@@ -328,6 +374,7 @@
 		},
 		"sar:polarizations": {
 			"label": "Polarizations",
+			"format": "CSV",
 			"mergedArrays": true
 		},
 		"sar:product_type": "Product Type",
@@ -567,6 +614,57 @@
 
 		"cbers:data_type": "Data type",
 		"cbers:path": "Path",
-		"cbers:row": "Row"
+		"cbers:row": "Row",
+
+		"card4l:specification": "Specification",
+		"card4l:specification_version": "Specification Version",
+		"card4l:orbit_mean_altitude": {
+			"label": "Platform altitude",
+			"unit": "m"
+		},
+		"card4l:incidence_angle_near_range": {
+			"label": "Incidence Angle (near)",
+			"unit": "º"
+		},
+		"card4l:incidence_angle_far_range": {
+			"label": "Incidence Angle (far)",
+			"unit": "º"
+		},
+		"card4l:noise_equivalent_intensity": {
+			"label": "Noise Equivalent Intensity",
+			"unit": "dB"
+		},
+		"card4l:mean_faraday_rotation_angle": {
+			"label": "Mean Faraday Rotation",
+			"unit": "º"
+		},
+		"card4l:speckle_filtering": {
+			"label": "Speckle Filtering",
+			"custom": true,
+			"summary": false,
+			"null": "not applied"
+		},
+		"card4l:relative_rtc_accuracy": {
+			"label": "Rel. RTC Accuracy",
+			"explain": "Relative accuracy of the Radiometric Terrain Correction",
+			"unit": "dB"
+		},
+		"card4l:absolute_rtc_accuracy": {
+			"label": "Abs. RTC Accuracy",
+			"explain": "Absolute accuracy of the Radiometric Terrain Correction",
+			"unit": "dB"
+		},
+		"card4l:northern_geometric_accuracy": {
+			"label": "Northern Geometric Accuracy",
+			"unit": "m"
+		},
+		"card4l:eastern_geometric_accuracy": {
+			"label": "Eastern Geometric Accuracy",
+			"unit": "m"
+		},
+		"card4l:ellipsoidal_height": {
+			"label": "Ellipsoidal Height",
+			"unit": "m"
+		}
 	}
 }
