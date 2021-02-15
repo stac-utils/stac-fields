@@ -73,6 +73,10 @@ If only a label is available, it can be passed as string instead of an object.
 
 Some details about the fields included in the fields.json file can be found [here](fields.md).
 
+There is also a `fields-normalized.json`, which is a normalized version of the fields.json.
+All non-Javascript users will probably prefer to use the `fields-normalized.json` as it already
+has the `alias`es resolved and all fields and extensions are defined as objects for easier handling.
+
 ## formatters.js
 
 The most important methods are:

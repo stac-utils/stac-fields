@@ -5,6 +5,7 @@
 	"main": "formatters.js",
 	"files": [
 		"fields.json",
+		"fields-normalized.json",
 		"formatters.js"
 	],
 	"bugs": {
@@ -26,6 +27,7 @@
 		"multihashes": "^3.1.2"
 	},
 	"scripts": {
-		"demo": "node demo/generate.js"
+		"demo": "node demo/generate.js",
+		"normalize": "node normalize.js"
 	}
 }
