@@ -94,7 +94,7 @@
 		"instruments": {
 			"label": "Instruments",
 			"format": "CSV",
-			"mergedArrays": true
+			"mergeArrays": true
 		},
 		"constellation": "Constellation",
 		"mission": "Mission",
@@ -116,6 +116,7 @@
 		"cube:dimensions": {
 			"label": "Dimensions",
 			"summary": false,
+			"listWithKeys": true,
 			"items": {
 				"type": "Type",
 				"axis": "Axis",
@@ -138,40 +139,47 @@
 
 		"eo:bands": {
 			"label": "Spectral Bands",
-			"mergedArrays": true,
+			"mergeArrays": true,
 			"items": {
 				"name": {
 					"label": "Name",
 					"sortable": true,
-					"id": true
+					"id": true,
+					"order": 0
 				},
 				"common_name": {
 					"label": "Common Name",
-					"sortable": true
+					"sortable": true,
+					"order": 1
 				},
 				"description": {
 					"label": "Description",
-					"format": "CommonMark"
+					"format": "CommonMark",
+					"order": 2
 				},
 				"center_wavelength": {
 					"label": "Wavelength",
 					"explain": "Center Wavelength",
 					"unit": "μm",
-					"sortable": true
+					"sortable": true,
+					"order": 5
 				},
 				"full_width_half_max": {
 					"label": "FWHM",
 					"explain": "Full Width Half Max",
 					"unit": "μm",
-					"sortable": true
+					"sortable": true,
+					"order": 6
 				},
 				"gsd": {
 					"alias": "gsd",
-					"sortable": true
+					"sortable": true,
+					"order": 3
 				},
 				"cloud_cover": {
 					"alias": "eo:cloud_cover",
-					"sortable": true
+					"sortable": true,
+					"order": 4
 				}
 			}
 		},
@@ -214,9 +222,13 @@
 			"items": {
 				"values": {
 					"label": "Value(s)",
-					"format": "CSV"
+					"format": "CSV",
+					"order": 1
 				},
-				"summary": "Summary"
+				"summary": {
+					"label": "Summary",
+					"order": 0
+				}
 			}
 		},
 
@@ -227,7 +239,7 @@
 		},
 		"label:classes": {
 			"label": "Classes",
-			"mergedArrays": true,
+			"mergeArrays": true,
 			"items": {
 				"name": {
 					"label": "Name",
@@ -246,11 +258,11 @@
 		"label:type": "Type",
 		"label:tasks": {
 			"label": "Tasks",
-			"mergedArrays": true
+			"mergeArrays": true
 		},
 		"label:methods": {
 			"label": "Methods",
-			"mergedArrays": true
+			"mergeArrays": true
 		},
 		"label:overviews": {
 			"label": "Overviews",
@@ -375,7 +387,7 @@
 		"sar:polarizations": {
 			"label": "Polarizations",
 			"format": "CSV",
-			"mergedArrays": true
+			"mergeArrays": true
 		},
 		"sar:product_type": "Product Type",
 		"sar:resolution_range": {
@@ -434,12 +446,14 @@
 			"items": {
 				"citation": {
 					"label": "Publication",
-					"sortable": true
+					"sortable": true,
+					"order": 0
 				},
 				"doi": {
 					"label": "DOI",
 					"format": "DOI",
-					"sortable": true
+					"sortable": true,
+					"order": 1
 				}
 			}
 		},
@@ -561,6 +575,7 @@
 		"gee:cadence": "Cadence",
 		"gee:schema": {
 			"label": "Variables",
+			"listWithKeys": true,
 			"items": {
 				"description": "Description",
 				"type": "Data Type"

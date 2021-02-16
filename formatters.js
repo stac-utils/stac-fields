@@ -1,6 +1,5 @@
 var Registry = {
 
-	createTableColumns: null,
 	externalRenderer: false,
 
 	addExtension(prefix, spec) {
@@ -110,22 +109,28 @@ var _ = {
 
 		// Normalize items
 		if (_.isObject(spec.items)) {
-			if (typeof Registry.createTableColumn === 'function') {
-				spec.columns = [];
-			}
+		let itemOrder = [];
 			for(let key in spec.items) {
 				spec.items[key] = _.normalizeField(spec.items[key], fields);
+				itemOrder.push(Object.assign({key}, spec.items[key]));
+			}
 
-				if (typeof Registry.createTableColumn === 'function') {
-					let column = Registry.createTableColumn(key, spec.items[key], spec);
-					if (spec.items[key].id) {
-						spec.columns.unshift(column);
+			spec.itemOrder = itemOrder
+				.sort((i1, i2) => {
+					if (i1.id === true) {
+						return -1;
+					}
+					else if (i2.id === true) {
+						return 1;
+					}
+					else if (typeof i1.order === 'number' && typeof i2.order === 'number') {
+						return i1.order - i2.order;
 					}
 					else {
-						spec.columns.push(column);
+						return i1.label.localeCompare(i2.label);
 					}
-				}
-			}
+				})
+				.map(item => item.key);
 		}
 
 		return spec;
@@ -140,6 +145,21 @@ var _ = {
 
 	uint8ToHex(bytes) {
 		return bytes.reduce((str, byte) => str + byte.toString(16).padStart(2, '0'), '');
+	},
+
+	keysFromObjectList(objectList) {
+		return objectList.reduce(
+			(arr, o) => Object.keys(o).reduce(
+				(a, k) => {
+					if (a.indexOf(k) == -1) {
+						a.push(k);
+					}
+					return a;
+				},
+				arr
+			),
+			[]
+		);
 	}
 
 };
@@ -263,13 +283,13 @@ var Formatters = {
 		for(let software in value) {
 			let version = value[software];
 			if ((typeof version === 'string' && version.length > 0) || typeof version === 'number') {
-				list.push(`${software} ${version}`);
+				list.push(`${software} (${version})`);
 			}
 			else {
 				list.push(software);
 			}
 		}
-		return _.toList(list, true, e);
+		return _.toList(list, true);
 	},
 
 	formatDOI(value) {
@@ -451,25 +471,43 @@ function formatGrouped(context, prop, filter, coreKey) {
 		let spec = Fields.metadata[field] || {};
 
 		// Fill items with missing properties
-		// ToDo: This just takes the first entry into account and doesn't care about the others so some fields may be missing
 		let items = null;
-		if (_.isObject(spec.items) && Array.isArray(value)) {
-			items = {};
-			let entry = spec.mergedArrays ? value : value[0];
-			let keys = Object.keys(entry);
-			if (keys.length > 0) {
-				Object.keys(entry[keys[0]]).forEach(key => {
-					if (typeof spec.items[key] === 'undefined') {
-						items[key] = {
-							label: _.formatKey(key),
-							explain: key
-						};
-					}
-					else {
-						items[key] = spec.items[key];
-					}
-				});
+		let itemOrder = [];
+		if (_.isObject(spec.items)) {
+			// ToDo: This is just looking at the first value of the summarized values - should we check all?
+			let temp = (prop === 'summaries' && spec.mergeArrays !== true) ? value[0] : value;
+			// Ignore keys for lists that are stored as object (e.g. cube:dimensions)
+			if (spec.listWithKeys) {
+				temp = Object.values(temp);
 			}
+
+			let itemFieldNames;
+			if (Array.isArray(temp)) {
+				itemFieldNames = _.keysFromObjectList(temp);
+			}
+			else if (_.isObject(temp)) {
+				itemFieldNames = Object.keys(temp);
+			}
+
+			items = {};
+			// Remove fields from list that are not available in the data
+			itemOrder = spec.itemOrder.filter(fieldName => itemFieldNames.includes(fieldName));
+
+			itemFieldNames.forEach(key => {
+				if (typeof spec.items[key] === 'undefined') {
+					// Add fields that are not specified in fields.json
+					items[key] = {
+						label: _.formatKey(key),
+						explain: key
+					};
+					// Place non-specified fields at the end
+					itemOrder.push(key);
+				}
+				else {
+					// Copy field spec from fields.json
+					items[key] = spec.items[key];
+				}
+			});
 		}
 
 		// Format values
@@ -484,7 +522,7 @@ function formatGrouped(context, prop, filter, coreKey) {
 			else if (Array.isArray(value)) {
 				formatted = [];
 				if (Registry.externalRenderer && items) {
-					let summaries = spec.mergedArrays ? [value] : value;
+					let summaries = spec.mergeArrays ? [value] : value;
 					// Go through each entry in a summary (this is besically a single value as defined in the Item spec)
 					for(let i1 in summaries) {
 						let summary = summaries[i1];
@@ -520,6 +558,7 @@ function formatGrouped(context, prop, filter, coreKey) {
 			value,
 			formatted,
 			items,
+			itemOrder,
 			spec
 		};
 	}
@@ -555,11 +594,11 @@ function format(value, field, context = null, spec = null) {
 		}
 	}
 	else if (_.isObject(value) && _.isObject(spec.items)) {
-		let callback = (v, k) => format(v, k, context, spec.items[k]);
+		let callback = (v, k) => format(v, k, context, spec.listWithKeys ? Object.assign({}, spec, {listWithKeys: false}) : spec.items[k]);
 		if (Registry.externalRenderer && (spec.custom || spec.items)) {
 			let formattedValues = {};
 			for(let key in value) {
-				formattedValues[key] = callback(value[key]);
+				formattedValues[key] = callback(value[key], key);
 			}
 			return formattedValues;
 		}

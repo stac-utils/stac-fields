@@ -61,13 +61,15 @@ The following options are available in the object:
 * `explain`: A long form for an abbreviation that should be shown in a tooltip.
 * `custom`: A structure that can't easily be rendered with any of the pre-defined formatters and thus needs a custom implementation (see `externalRenderer`).
 * `alias`: If a field has multiple keys, declare the field to use the specification of the other field.
-* `items`: If the value is an array of objects, a table can be created with the details in this object. It has the same structure as specified here, but in additon `sortable` and `id` are allowed:
+* `listWithKeys`: Set to `true` to allow the option `items` to specify items in an object of objects (like assets). Defaults to `false`.
+* `items`: If the value is an array of objects (or an object of objects if `listWithKeys` has ben set), a table can be created with the details in this object. It has the same structure as specified here, but in additon `sortable` and `id` are allowed:
     * `sortable`: Specfiies whether the value can be sorted (`true`, e.g. in a table) or not (`false`). Defaults to `false`.
     * `id`: Specfiies whether the value is the unique primary key (`true`) or not (`false`). Defaults to `false`.
 * `null`: The value that should be given instead of `null`. If a value is null but this property is not given, defaults to "n/a".
 * Options related to Collection Summaries:
     * `summary`: If the fields should be added to summaries (`true`, default) or not `false`.
-    * `mergedArrays`: If the values are arrays and should be merged in summaries (`true`, e.g. `eo:bands`) or not (`false`, default).
+    * `mergeArrays`: If the values are arrays and should usually be merged in summaries (`true`, e.g. `eo:bands` or `instruments`) or not (`false`, default).
+    * `order`: The order of the items in ascending order, e.g. for a table. If not given, the first entry is always the item with `id` set to `true`, all other items are in alphabetic order.
 
 If only a label is available, it can be passed as string instead of an object.
 
@@ -122,7 +124,6 @@ This avoids XSS and similar security issues.
 
 ### `Registry`
 
-* `createTableColumn` (function\|null): Specify a function with the signature `function(field, columnSpec, parentSpec) => object` to convert a field containing `items` to a table column for your favorite table rendering component. Will be made available as a property `columns` on the same level as `items`.
 * `externalRenderer` (boolean): Set to `true` to not render custom objects, arrays and tables with the renderers from this library. Will return formatted values individually then. Defaults to `false`.
 * `addExtension(prefix : string, spec : object) => void` - Adds a additional (custom) extension that is compliant to the fields.json, can also be used to replace existing extensions
 * `addMetadataField(field : string, spec : object) => void` - Adds a additional (custom) metdata field that is compliant to the fields.json, can also be used to replace existing fields
