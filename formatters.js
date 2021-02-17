@@ -160,6 +160,13 @@ var _ = {
 			),
 			[]
 		);
+	},
+
+	unit(value, unit = '') {
+		if (typeof unit === 'string' && unit.length > 0) {
+			return `${value}&nbsp;<span class="unit">${unit}</unit>`;
+		}
+		return value;
 	}
 
 };
@@ -175,18 +182,18 @@ var DataTypes = {
 	},
 	
 	null(label = 'n/a') {
-		return `<i>${label}</i>`;
+		return `<i class="null">${label}</i>`;
 	},
 	
 	number(num, unit = '') {
 		if (typeof num !== 'number') {
 			num = parseFloat(num);
 		}
-		return num.toLocaleString() + unit;
+		return _.unit(num.toLocaleString(), unit);
 	},
 
 	string(str, unit = '') {
-		return _.e(str).replace(/(\r\n|\r|\n){2,}/g, '<br />') + unit;
+		return _.unit(_.e(str).replace(/(\r\n|\r|\n){2,}/g, '<br />'), unit);
 	},
 	
 	boolean(bool) {
@@ -386,7 +393,7 @@ var Formatters = {
 			return _.e(value);
 		}
 		var i = value == 0 ? 0 : Math.floor( Math.log(value) / Math.log(1024) );
-		return ( value / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + Formatters.fileSizeUnits[i];
+		return _.unit(( value / Math.pow(1024, i) ).toFixed(2) * 1, Formatters.fileSizeUnits[i]);
 	},
 
 	formatChecksum(value) {

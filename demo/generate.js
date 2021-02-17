@@ -2,7 +2,7 @@ const fs = require('fs');
 const STAC = require('../formatters');
 const item = require('./item.json');
 
-let html = '<table>';
+let html = '<table border="1" cellspacing="0" cellpadding="4">';
 for (let key in item.properties) {
 	let label = STAC.label(key);
 	let value = item.properties[key];

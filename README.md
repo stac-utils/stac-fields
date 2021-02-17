@@ -2,7 +2,7 @@
 
 A minimal STAC library that contains a list of STAC fields with some metadata (title, unit, prefix) and helper functions.
 
-Version: **1.0.0-beta.1**
+Version: **1.0.0-beta.2**
 
 ## Usage
 
@@ -56,7 +56,7 @@ The following options are available in the object:
 
 * `label`: The human-readable title for the value.
 * `format`: The name of the formatter in formatters.js, but without the leading `format`.
-* `formatter`: A formatter function that is compatible to the formatters defined in formatters.js. Use this if no suitable pre-defined formatter is available to be specified in `format`.
+* `formatter`: A formatter function that is compatible to the formatters defined in formatters.js. Use this if no suitable pre-defined formatter is available to be specified in `format`. See also [Custom Formatters](#custom-formatters) for more details.
 * `unit`: A unit to add after the value.
 * `explain`: A long form for an abbreviation that should be shown in a tooltip.
 * `custom`: A structure that can't easily be rendered with any of the pre-defined formatters and thus needs a custom implementation (see `externalRenderer`).
@@ -83,28 +83,28 @@ has the `alias`es resolved and all fields and extensions are defined as objects 
 
 The most important methods are:
 
-* `format(value, field, spec, context = null) => string`: Applies the right formatting depending on the data type of the a single property.
-* label
-* extension
-* formatSummaries
-* formatItemProperties
+* `format(value: any, field: string, spec: object, context: object = null) => string`: Applies the right formatting depending on the data type of the a single property.
+* `label(key: string, specs: object = null)`: Formats a label according to the rules given in `specs`. By default uses the labels from fields.json.
+* `extension(key: string) => string`: Formats an extension, similar to `label`.
+* `formatSummaries(collection: object, filter: function = null, coreKey: string = '') => object`: Formats the summaries in a collection. Also groups by extension.
+* `formatItemProperties(item: object, filter: function = null, coreKey: string = '') => object`: Formats the properties in an Item. Also groups by extension.
 
 ### Pre-defined formatters (`Formatters`)
 
+* Checksum (multihashes, show original hash and hashing algorithm)
 * CommonMark
-* DOI
-* EPSG
-* Extent (array with two values)
-* License
-* Providers
-* Software
-* TemporalExtent (array with two timestamps)
-* Timestamp (ISO8601 timestamp)
-* Summary
 * CSV (array to comma-separated values)
-* FileSize
-* FileDataType
-* Checksum (multihashes)
+* DOI (generate a link for a DOI)
+* EPSG (generate a link for an EPSG code)
+* Extent (array with two values formatted as range)
+* FileDataType (explains the data types defined in the file extension)
+* FileSize (formats a number of bytes into kB, MB, ...)
+* License (formats a license as link based on SPDX or the links)
+* Providers (formats an array of providers)
+* Software (formats the list of software as defined in the processing extension)
+* TemporalExtent (array with two timestamps formatted as temporal range, see Timestamp)
+* Timestamp (ISO8601 timestamp formatted according to local rules)
+* WKT2 (splits a WKT2 string into nicely formatted chunks for better readability - experimental!)
 
 ### Custom formatters
 
@@ -131,27 +131,28 @@ This avoids XSS and similar security issues.
 
 ### Data Types (`DataTypes`)
 
-This object has functions to format the native JSON data types: 
-* array => `array(arr, sort = false)`
-* object => `object(obj)`
-* null => `null(label = 'n/a')`
-* number => `number(num)`
-* string => `string(str)`
-* boolean => `boolean(bool)`
+This object has functions to format the native JSON data types as HTML strings: 
+* array => `array(arr: array, sort: boolean = false) => string`
+* object => `object(obj: object) => string`
+* null => `null(label: string = 'n/a') => string`
+* number => `number(num: number) => string`
+* string => `string(str: string) => string`
+* boolean => `boolean(bool: boolean) => string`
 
-Additionally, it has a method `format(value)`, which applies the right formatting depending on the data type of the value.
+Additionally, it has a method `format(value: any) => string`, which applies the right formatting depending on the data type of the value.
 
 All methods return strings, which may contain HTML. Input is sanitized.
 
 ### `Helpers`
 
-* e
-* formatKey
-* groupByExtensions
-* isObject
-* toLink
-* toList
-* toObject
-* normalizeFields
-* hextoUint8
-* uint8ToHex
+* `e(str: string) => string`: Escapes the values for HTML output.
+* `formatKey(key: string, prefix: boolean = false) => string`: Formats the property key nicely (e.g. the key `eo:cloud_cover` will be `Cloud Cover`). If `prefix` is set to true, the prefix will not be removed (e.g. the key `eo:cloud_cover` will then be `Eo Cloud Cover`). 
+* `groupByExtensions`
+* `isObject`
+* `toLink(url: string, title: string) => string`: Converts a url and title to a HTML link (`<a href="$url" target="_blank">$title</a>`). Does not apply escaping, use the `e` function yourself!
+* `toList`
+* `toObject`
+* `normalizeFields`
+* `hextoUint8`
+* `uint8ToHex`
+* `unit`

@@ -118,21 +118,36 @@
 			"summary": false,
 			"listWithKeys": true,
 			"items": {
-				"type": "Type",
-				"axis": "Axis",
+				"type": {
+					"label": "Type",
+					"order": 0
+				},
+				"axis": {
+					"label": "Axis",
+					"order": 1
+				},
 				"description": {
 					"label": "Description",
-					"format": "CommonMark"
+					"format": "CommonMark",
+					"order": 2
 				},
 				"extent": {
 					"label": "Extent",
-					"format": "Extent"
+					"format": "Extent",
+					"order": 3
 				},
-				"values": "Values",
-				"step": "Step",
+				"values": {
+					"label": "Values",
+					"order": 4
+				},
+				"step": {
+					"label": "Step",
+					"order": 5
+				},
 				"reference_system": {
 					"label": "Ref. Sys.",
-					"explain": "Coordinate / Temporal / Other Reference System"
+					"explain": "Coordinate / Temporal / Other Reference System",
+					"order": 6
 				}
 			}
 		},
@@ -268,7 +283,10 @@
 			"label": "Overviews",
 			"summary": false,
 			"items": {
-				"property_key": "Property Key",
+				"property_key": {
+					"label": "Property Key",
+                    "id": true
+				},
 				"counts": {
 					"label": "Counts",
 					"custom": true
@@ -310,7 +328,10 @@
 			"label": "Statistics",
 			"summary": false,
 			"items": {
-				"name": "Name",
+				"name": {
+					"label": "Name",
+					"id": true
+				},
 				"position": "Position",
 				"average": "Average",
 				"count": "Count",
