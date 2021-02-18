@@ -226,14 +226,15 @@ var DataTypes = {
 var Formatters = {
 
 	formatTimestamp(value) {
-		try {
-			return new Date(value).toLocaleString([], {
-				timeZone: "UTC",
-				timeZoneName: "short"
-			});
-		} catch (error) {
-			return DataTypes.null();
+		if (typeof value === 'string') {
+			try {
+				return new Date(value).toLocaleString([], {
+					timeZone: "UTC",
+					timeZoneName: "short"
+				});
+			} catch (error) {}
 		}
+		return DataTypes.null();
 	},
 
 	formatLicense(value, field, spec, context = null) {
@@ -513,6 +514,7 @@ function formatGrouped(context, prop, filter, coreKey) {
 				else {
 					// Copy field spec from fields.json
 					items[key] = spec.items[key];
+					items[key].label = label(key, spec.items);
 				}
 			});
 		}
