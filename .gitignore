@@ -1,4 +1,4 @@
 /node_modules
 /package-lock.json
-demo.html
+*.html
 /fields-normalized.json

@@ -68,7 +68,6 @@ The following options are available in the object:
 * `null`: The value that should be given instead of `null`. If a value is null but this property is not given, defaults to "n/a".
 * Options related to Collection Summaries:
     * `summary`: If the fields should be added to summaries (`true`, default) or not `false`.
-    * `mergeArrays`: If the values are arrays and should usually be merged in summaries (`true`, e.g. `eo:bands` or `instruments`) or not (`false`, default).
     * `order`: The order of the items in ascending order, e.g. for a table. If not given, the first entry is always the item with `id` set to `true`, all other items are in alphabetic order.
 
 If only a label is available, it can be passed as string instead of an object.

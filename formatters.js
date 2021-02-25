@@ -147,7 +147,7 @@ var _ = {
 		return bytes.reduce((str, byte) => str + byte.toString(16).padStart(2, '0'), '');
 	},
 
-	keysFromObjectList(objectList) {
+	keysFromListOfObjects(objectList) {
 		return objectList.reduce(
 			(arr, o) => Object.keys(o).reduce(
 				(a, k) => {
@@ -477,13 +477,19 @@ function formatGrouped(context, prop, filter, coreKey) {
 
 		let value = context[prop][field];
 		let spec = Fields.metadata[field] || {};
+		// Special handling for summaries that contain a list with keys (e.g. cube:dimensions, gee:schema)
+		// There's usually just a single object included, so get that as value
+		let isSummarizedListWithKeys = false;
+		if (prop === 'summaries' && spec.listWithKeys && Array.isArray(value) && value.length > 0) {
+			value = value[0];
+			isSummarizedListWithKeys = true;
+		}
 
 		// Fill items with missing properties
 		let items = null;
 		let itemOrder = [];
 		if (_.isObject(spec.items)) {
-			// ToDo: This is just looking at the first value of the summarized values - should we check all?
-			let temp = (prop === 'summaries' && spec.mergeArrays !== true) ? value[0] : value;
+			let temp = value;
 			// Ignore keys for lists that are stored as object (e.g. cube:dimensions)
 			if (spec.listWithKeys) {
 				temp = Object.values(temp);
@@ -491,7 +497,7 @@ function formatGrouped(context, prop, filter, coreKey) {
 
 			let itemFieldNames;
 			if (Array.isArray(temp)) {
-				itemFieldNames = _.keysFromObjectList(temp);
+				itemFieldNames = _.keysFromListOfObjects(temp);
 			}
 			else if (_.isObject(temp)) {
 				itemFieldNames = Object.keys(temp);
@@ -525,35 +531,23 @@ function formatGrouped(context, prop, filter, coreKey) {
 		// Handle summaries
 		if (prop === 'summaries') {
 			// ToDo: Migrate to RC1, where this is minimum and maximum instead of min and max
-			if (_.isObject(value) && typeof value.min !== 'undefined' && typeof value.max !== 'undefined') {
+			if (!isSummarizedListWithKeys && _.isObject(value) && typeof value.min !== 'undefined' && typeof value.max !== 'undefined') {
 				formatted = Formatters.formatExtent([value.min, value.max], spec.unit);
 			}
-			else if (Array.isArray(value)) {
-				formatted = [];
-				if (Registry.externalRenderer && items) {
-					let summaries = spec.mergeArrays ? [value] : value;
-					// Go through each entry in a summary (this is besically a single value as defined in the Item spec)
-					for(let i1 in summaries) {
-						let summary = summaries[i1];
-						formatted.push(Array.isArray(summary) ? [] : {});
-						for(let i2 in summary) {
-							let prop = summaries[i1][i2];
-							if (Array.isArray(summary)) {
-								formatted[i1].push(Array.isArray(prop) ? [] : {});
-							}
-							else {
-								formatted[i1][i2] = Array.isArray(prop) ? [] : {};
-							}
-							for(let i3 in items) {
-								let itemSpec = items[i3];
-								formatted[i1][i2][i3] = format(prop[i3], i3, context, itemSpec);
-							}
-						}
+			else if (Registry.externalRenderer && items) {
+				let formatted = isSummarizedListWithKeys ? Object.assign({}, value) : value.slice(0);
+				// Go through each field's summary
+				for(let i in formatted) {
+					let result = _.isObject(formatted[i]) ? {} : [];
+					// Go through each entry in a field's summary (this is besically a single value as defined in the Item spec)
+					for(let key in items) {
+						result[key] = format(formatted[i][key], key, context, items[key]);
 					}
+					formatted[i] = result;
 				}
-				else {
-					formatted = _.toList(value, !spec.custom && !spec.items, v => format(v, field, context, spec));
-				}
+			}
+			else {
+				formatted = _.toList(value, !spec.custom && !spec.items, v => format(v, field, context, spec));
 			}
 		}
 

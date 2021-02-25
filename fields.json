@@ -93,8 +93,7 @@
 		"platform": "Platform",
 		"instruments": {
 			"label": "Instruments",
-			"format": "CSV",
-			"mergeArrays": true
+			"format": "CSV"
 		},
 		"constellation": "Constellation",
 		"mission": "Mission",
@@ -154,7 +153,6 @@
 
 		"eo:bands": {
 			"label": "Spectral Bands",
-			"mergeArrays": true,
 			"items": {
 				"name": {
 					"label": "Name",
@@ -254,7 +252,6 @@
 		},
 		"label:classes": {
 			"label": "Classes",
-			"mergeArrays": true,
 			"items": {
 				"name": {
 					"label": "Name",
@@ -271,14 +268,8 @@
 			"summary": false
 		},
 		"label:type": "Type",
-		"label:tasks": {
-			"label": "Tasks",
-			"mergeArrays": true
-		},
-		"label:methods": {
-			"label": "Methods",
-			"mergeArrays": true
-		},
+		"label:tasks": "Tasks",
+		"label:methods": "Methods",
 		"label:overviews": {
 			"label": "Overviews",
 			"summary": false,
@@ -407,8 +398,7 @@
 		},
 		"sar:polarizations": {
 			"label": "Polarizations",
-			"format": "CSV",
-			"mergeArrays": true
+			"format": "CSV"
 		},
 		"sar:product_type": "Product Type",
 		"sar:resolution_range": {
