@@ -279,7 +279,7 @@ var Formatters = {
 		let reader = new commonmark.Parser();
 		let writer = new commonmark.HtmlRenderer({safe: true, smart: true});
 		let html = writer.render(reader.parse(value));
-		return `<div class="descrption">${html}</div>`;
+		return `<div class="description">${html}</div>`;
 	},
 
 	formatSoftware(value) {
