@@ -26,6 +26,10 @@
 		"cbers": {
 			"label": "CBERS",
 			"explain": "China-Brazil Earth Resources Satellite Program"
+		},
+		"geoadmin": {
+			"label": "swisstopo",
+			"explain": "Federal Office of Topography (Switzerland)"
 		}
 	},
 	"metadata": {
@@ -691,6 +695,16 @@
 		"card4l:ellipsoidal_height": {
 			"label": "Ellipsoidal Height",
 			"unit": "m"
+		},
+
+		"geoadmin:variant": {
+			"label": "Product Variant",
+			"mapping": {
+				"krel": "RGB color with relief",
+				"komb": "RGB color without relief",
+				"kgrel": "Grayscale with relief",
+				"kgrs": "Grayscale without relief"
+			}
 		}
 	}
 }

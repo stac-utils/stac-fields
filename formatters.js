@@ -581,8 +581,16 @@ function format(value, field, context = null, spec = null) {
 	if (!_.isObject(spec)) {
 		spec = Fields.metadata[field] || {};
 	}
+
 	if (typeof spec.formatter === 'function') {
-		return spec.formatter(value, field, spec, context) ;
+		return spec.formatter(value, field, spec, context);
+	}
+	else if (_.isObject(spec.mapping)) {
+		let key = String(value).toLowerCase();
+		if (typeof spec.mapping[key] !== 'undefined') {
+			value = spec.mapping[key];
+		}
+		return DataTypes.format(value, spec.unit);
 	}
 	else if (value === null && spec.null) {
 		return DataTypes.null(spec.null);

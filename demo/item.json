@@ -54,6 +54,7 @@
 		"card4l:specification": "NRB",
 		"card4l:specification_version": "5.0",
 		"card4l:speckle_filtering": null,
+		"geoadmin:variant": "KOMB",
 		"file:checksum": "1114a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
 		"file:data_type": "uint16",
 		"file:size": 2048,
