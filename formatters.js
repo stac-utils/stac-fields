@@ -10,10 +10,32 @@ var Registry = {
 		Fields.metadata[field] = _.normalizeField(spec, Fields.metadata);
 	},
 
+	addLinkField(field, spec) {
+		Fields.links[field] = _.normalizeField(spec, Fields.links);
+	},
+
+	addAssetField(field, spec) {
+		Fields.assets[field] = _.normalizeField(spec, Fields.assets);
+	},
+
 	addMetadataFields(specs) {
 		for(var key in specs) {
 			Registry.addMetadataField(key, specs[key]);
 		}
+	},
+
+	getSpecification(field, type = null) {
+		let spec = {};
+		if (type === 'assets' && Fields.assets[field]) {
+			spec = Fields.assets[field];
+		}
+		else if (type === 'links' && Fields.links[field]) {
+			spec = Fields.links[field];
+		}
+		else if (Fields.metadata[field]) {
+			spec = Fields.metadata[field];
+		}
+		return spec;
 	}
 
 };
@@ -48,8 +70,8 @@ var _ = {
 		}
 	},
 
-	toLink(url, title) {
-		return `<a href="${url}" target="_blank">${title}</a>`;
+	toLink(url, title, rel = "", target = "_blank") {
+		return `<a href="${url}" rel="${rel}" target="${target}">${title}</a>`;
 	},
 
 	toObject(obj, formatter = null) {
@@ -59,7 +81,7 @@ var _ = {
 			let label = _.formatKey(key, true);
 			let value = obj[key];
 			if (typeof formatter === 'function') {
-				value = formatter(value, key);
+				value = formatter(value, key, obj);
 			}
 			// TODO: Format label (also in arrays)
 			html += `<dt>${label}</dt><dd>${value}</dd>`;
@@ -80,11 +102,11 @@ var _ = {
 	},
 
 	normalizeFields(fields) {
-		for(let key in fields.extensions) {
-			fields.extensions[key] = _.normalizeField(fields.extensions[key], fields.extensions);
-		}
-		for(let key in fields.metadata) {
-			fields.metadata[key] = _.normalizeField(fields.metadata[key], fields.metadata);
+		let parts = ['extensions', 'metadata', 'links', 'assets'];
+		for (let part of parts) {
+			for(let key in fields[part]) {
+				fields[part][key] = _.normalizeField(fields[part][key], fields[part]);
+			}
 		}
 		return fields;
 	},
@@ -225,6 +247,72 @@ var DataTypes = {
 
 var Formatters = {
 
+	formatUrl(value, field, spec, context = null, parent = null) {
+		let title = _.isObject(parent) && typeof parent === 'string' ? parent.title : value;
+		return _.toLink(_.e(value), _.e(title), _.e(parent.rel || ""));
+	},
+
+	formatMediaType(value) {
+		if (typeof value !== 'string') {
+			return DataTypes.null('Unknown');
+		}
+		switch(value.toLowerCase()) {
+			case 'image/tiff; application=geotiff':
+				return 'GeoTIFF image';
+			case 'image/tiff; application=geotiff; profile=cloud-optimized':
+				return 'Cloud-optimized GeoTIFF image';
+			case 'image/jp2':
+				return 'JPEG 2000 image';
+			case 'image/png':
+			case 'image/apng':
+				return 'PNG image';
+			case 'image/gif':
+				return 'GIF image';
+			case 'image/jpeg':
+			case 'image/jpg':
+				return 'JPEG image';
+			case 'image/webp':
+				return 'WebP image';
+			case 'image/svg+xml':
+				return 'SVG vector image';
+			case 'text/xml':
+			case 'application/xml':
+				return 'XML';
+			case 'text/json':
+			case 'application/json':
+				return 'JSON';
+			case 'application/geo+json':
+				return 'GeoJSON';
+			case 'text/html':
+				return 'HTML (Website)';
+			case 'text/plain':
+				return 'Text document';
+			case 'application/pdf':
+				return 'PDF document';
+			case 'application/octet-stream':
+				return 'Binary file';
+			default:
+				let parts = value.toLowerCase().match(/^(\w+)\/([\w-\+]+)$/);
+				if (Array.isArray(parts) && parts.length >= 2) {
+					let format = _.formatKey(parts[2]);
+					switch(parts[1]) {
+						case 'image':
+							return `${format} image`;
+						case 'audio':
+							return `${format} audio`;
+						case 'model':
+							return `${format} 3D model`;
+						case 'video':
+							return `${format} video`;
+						case 'text':
+						case 'application':
+							return format;
+					}
+				}
+				return _.e(value);
+		}
+	},
+
 	formatTimestamp(value) {
 		if (typeof value === 'string') {
 			try {
@@ -245,11 +333,11 @@ var Formatters = {
 		// We could use the spdx-license-ids and/or spdx-to-html packages previously used in STAC Browser,
 		// but let's try it without additional dependency for now.
 		if (value !== 'proprietary' && value !== 'various' && value.match(/^[\w\.\-]+$/i)) { // SPDX
-			return _.toLink(`https://spdx.org/licenses/${value}.html`, value);
+			return _.toLink(`https://spdx.org/licenses/${value}.html`, value, "license");
 		}
 		
 		let licenses = Array.isArray(context.links) ? context.links.filter(link => (_.isObject(link) && typeof link.href === 'string' && link.rel === 'license')) : [];
-		return _.toList(licenses, false, link => _.toLink(_.e(link.href), _.e(link.title || value)));
+		return _.toList(licenses, false, link => _.toLink(_.e(link.href), _.e(link.title || value), "license"));
 	},
 
 	formatProviders(value) {
@@ -453,10 +541,10 @@ var Formatters = {
 
 };
 
-function formatGrouped(context, prop, filter, coreKey) {
+function formatGrouped(context, data, type, filter, coreKey) {
 	// Group fields into extensions
 	let groups = {};
-	for(let field in context[prop]) {
+	for(let field in data) {
 		let parts = field.split(':', 2);
 		if (parts.length === 1) {
 			parts.unshift(coreKey);
@@ -475,12 +563,12 @@ function formatGrouped(context, prop, filter, coreKey) {
 			};
 		}
 
-		let value = context[prop][field];
-		let spec = Fields.metadata[field] || {};
+		let value = data[field];
+		let spec = Registry.getSpecification(field, type);
 		// Special handling for summaries that contain a list with keys (e.g. cube:dimensions, gee:schema)
 		// There's usually just a single object included, so get that as value
 		let isSummarizedListWithKeys = false;
-		if (prop === 'summaries' && spec.listWithKeys && Array.isArray(value) && value.length > 0) {
+		if (type === 'summaries' && spec.listWithKeys && Array.isArray(value) && value.length > 0) {
 			value = value[0];
 			isSummarizedListWithKeys = true;
 		}
@@ -529,7 +617,7 @@ function formatGrouped(context, prop, filter, coreKey) {
 		let formatted;
 
 		// Handle summaries
-		if (prop === 'summaries') {
+		if (type === 'summaries') {
 			// ToDo: Migrate to RC1, where this is minimum and maximum instead of min and max
 			if (!isSummarizedListWithKeys && _.isObject(value) && typeof value.min !== 'undefined' && typeof value.max !== 'undefined') {
 				formatted = Formatters.formatExtent([value.min, value.max], spec.unit);
@@ -541,23 +629,23 @@ function formatGrouped(context, prop, filter, coreKey) {
 					let result = _.isObject(formatted[i]) ? {} : [];
 					// Go through each entry in a field's summary (this is besically a single value as defined in the Item spec)
 					for(let key in items) {
-						result[key] = format(formatted[i][key], key, context, items[key]);
+						result[key] = format(formatted[i][key], key, context, data, items[key]);
 					}
 					formatted[i] = result;
 				}
 			}
 			else {
-				formatted = _.toList(value, !spec.custom && !spec.items, v => format(v, field, context, spec));
+				formatted = _.toList(value, !spec.custom && !spec.items, v => format(v, field, context, data, spec));
 			}
 		}
 
 		// Fallback to "normal" rendering if not handled by summaries yet
 		if (typeof formatted === 'undefined') {
-			formatted = format(value, field, context, spec);
+			formatted = format(value, field, context, data, spec);
 		}
 
 		groups[ext].properties[field] = {
-			label: label(field),
+			label: label(field, type),
 			value,
 			formatted,
 			items,
@@ -569,21 +657,41 @@ function formatGrouped(context, prop, filter, coreKey) {
 
 }
 
+// For assets (item and collection) and item-assets (extension)
+function formatAssets(assets, context, filter = null, coreKey = '') {
+	let formatted = {};
+	for (let key in assets) {
+		formatted[key] = formatGrouped(context, assets[key], 'assets', filter, coreKey);
+	}
+	return formatted;
+}
+
+// For links
+function formatLinks(links, context, filter = null, coreKey = '') {
+	let formatted = [];
+	for (let link of links) {
+		formatted.push(formatGrouped(context, link, 'links', filter, coreKey));
+	}
+	return formatted;
+}
+
+// For Collection summaries
 function formatSummaries(collection, filter = null, coreKey = '') {
-	return formatGrouped(collection, 'summaries', filter, coreKey);
+	return formatGrouped(collection, collection.summaries, 'summaries', filter, coreKey);
 }
 
+// For item properties
 function formatItemProperties(item, filter = null, coreKey = '') {
-	return formatGrouped(item, 'properties', filter, coreKey);
+	return formatGrouped(item, item.properties, 'metadata', filter, coreKey);
 }
 
-function format(value, field, context = null, spec = null) {
+function format(value, field, context = null, parent = null, spec = null) {
 	if (!_.isObject(spec)) {
 		spec = Fields.metadata[field] || {};
 	}
 
 	if (typeof spec.formatter === 'function') {
-		return spec.formatter(value, field, spec, context);
+		return spec.formatter(value, field, spec, context, parent);
 	}
 	else if (_.isObject(spec.mapping)) {
 		let key = String(value).toLowerCase();
@@ -596,7 +704,7 @@ function format(value, field, context = null, spec = null) {
 		return DataTypes.null(spec.null);
 	}
 	else if (Array.isArray(value)) {
-		let callback = v => format(v, field, context, spec);
+		let callback = v => format(v, field, context, parent, spec);
 		if (Registry.externalRenderer && (spec.custom || spec.items)) {
 			return value.map(callback);
 		}
@@ -605,11 +713,11 @@ function format(value, field, context = null, spec = null) {
 		}
 	}
 	else if (_.isObject(value) && _.isObject(spec.items)) {
-		let callback = (v, k) => format(v, k, context, spec.listWithKeys ? Object.assign({}, spec, {listWithKeys: false}) : spec.items[k]);
+		let callback = (v, k, p) => format(v, k, context, p, spec.listWithKeys ? Object.assign({}, spec, {listWithKeys: false}) : spec.items[k]);
 		if (Registry.externalRenderer && (spec.custom || spec.items)) {
 			let formattedValues = {};
 			for(let key in value) {
-				formattedValues[key] = callback(value[key], key);
+				formattedValues[key] = callback(value[key], key, value);
 			}
 			return formattedValues;
 		}
@@ -622,13 +730,13 @@ function format(value, field, context = null, spec = null) {
 	}
 }
 
-function label(key, specs = null) {
+function label(key, specs = 'metadata') {
 	let spec;
 	if (_.isObject(specs)) {
 		spec = specs[key] || {};
 	}
 	else {
-		spec = Fields.metadata[key] || {};
+		spec = Fields[specs][key] || {};
 	}
 	if (_.isObject(spec) && typeof spec.label === 'string') {
 		if (typeof spec.explain === 'string') {
@@ -653,6 +761,8 @@ module.exports = {
 	extension,
 	formatSummaries,
 	formatItemProperties,
+	formatAssets,
+	formatLinks,
 	Fields,
 	Registry,
 	Helper: _,

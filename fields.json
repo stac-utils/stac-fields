@@ -32,6 +32,55 @@
 			"explain": "Federal Office of Topography (Switzerland)"
 		}
 	},
+	"links": {
+		"href": {
+			"label": "URL",
+			"format": "Url"
+		},
+		"rel": {
+			"label": "Relation",
+			"explain": "based on IANA relation types",
+			"mapping": {
+				"self": "This document",
+				"root": "Root STAC Catalog",
+				"parent": "Parent STAC Catalog",
+				"collection": "STAC Collection",
+				"derived_from": "STAC Item for input data",
+				"alternate": "Alternative representation",
+				"via": "Source metadata",
+				"next": "Next page",
+				"prev": "Previous page",
+				"canonical": "Origin of this document"
+			}
+		},
+		"type": {
+			"label": "File Format",
+			"explain": "based on the IANA media (MIME) types",
+			"format": "MediaType"
+		}
+	},
+	"assets": {
+		"href": {
+			"label": "URL",
+			"format": "Url"
+		},
+		"type": {
+			"label": "File Format",
+			"explain": "based on the IANA media (MIME) types",
+			"format": "MediaType"
+		},
+		"roles": {
+			"label": "Purpose",
+			"mapping": {
+				"thumbnail": "Preview",
+				"overview": "Overview",
+				"visual": "Visualization",
+				"data": "Data",
+				"metadata": "Metadata",
+				"graphic": "Illustration"
+			}
+		}
+	},
 	"metadata": {
 		"datetime": {
 			"label": "Acquired",

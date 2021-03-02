@@ -83,9 +83,11 @@ has the `alias`es resolved and all fields and extensions are defined as objects 
 
 The most important methods are:
 
-* `format(value: any, field: string, spec: object, context: object = null) => string`: Applies the right formatting depending on the data type of the a single property.
-* `label(key: string, specs: object = null)`: Formats a label according to the rules given in `specs`. By default uses the labels from fields.json.
+* `format(value: any, field: string, spec: object, context: object = null, parent: object = null) => string`: Applies the right formatting depending on the data type of the a single property.
+* `label(key: string, specs: object | string = 'metadata')`: Formats a label according to the rules given in `specs`. By default uses the labels from fields.json.
 * `extension(key: string) => string`: Formats an extension, similar to `label`.
+* `formatAssets(assets: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats the assets. Also groups by extension per asset.
+* `formatLinks(links: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats the links. Also groups by extension per link.
 * `formatSummaries(collection: object, filter: function = null, coreKey: string = '') => object`: Formats the summaries in a collection. Also groups by extension.
 * `formatItemProperties(item: object, filter: function = null, coreKey: string = '') => object`: Formats the properties in an Item. Also groups by extension.
 
@@ -127,6 +129,8 @@ This avoids XSS and similar security issues.
 * `externalRenderer` (boolean): Set to `true` to not render custom objects, arrays and tables with the renderers from this library. Will return formatted values individually then. Defaults to `false`.
 * `addExtension(prefix : string, spec : object) => void` - Adds a additional (custom) extension that is compliant to the fields.json, can also be used to replace existing extensions
 * `addMetadataField(field : string, spec : object) => void` - Adds a additional (custom) metdata field that is compliant to the fields.json, can also be used to replace existing fields
+* `addLinkField(field : string, spec : object) => void` - Adds a additional (custom) metdata field only for links that is compliant to the fields.json, can also be used to replace existing fields
+* `addAssetField(field : string, spec : object) => void` - Adds a additional (custom) metdata field only for assets that is compliant to the fields.json, can also be used to replace existing fields
 * `addMetadataFields(specs : object) => void` - Adds additional (custom) metdata fields that are compliant to the fields.json, can also be used to replace existing fields
 
 ### Data Types (`DataTypes`)
