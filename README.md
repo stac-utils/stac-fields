@@ -153,7 +153,7 @@ All methods return strings, which may contain HTML. Input is sanitized.
 * `formatKey(key: string, prefix: boolean = false) => string`: Formats the property key nicely (e.g. the key `eo:cloud_cover` will be `Cloud Cover`). If `prefix` is set to true, the prefix will not be removed (e.g. the key `eo:cloud_cover` will then be `Eo Cloud Cover`). 
 * `groupByExtensions`
 * `isObject`
-* `toLink(url: string, title: string) => string`: Converts a url and title to a HTML link (`<a href="$url" target="_blank">$title</a>`). Does not apply escaping, use the `e` function yourself!
+* `toLink(url: string, title: string) => string`: Converts a url and title to a HTML link (`<a href="$url" target="_blank">$title</a>`).
 * `toList`
 * `toObject`
 * `normalizeFields`

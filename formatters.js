@@ -70,8 +70,21 @@ var _ = {
 		}
 	},
 
-	toLink(url, title, rel = "", target = "_blank") {
-		return `<a href="${url}" rel="${rel}" target="${target}">${title}</a>`;
+	toLink(url, title = "", rel = "", target = "_blank") {
+		if (typeof title !== 'string' || title.length === 0) {
+			if (url.length > 50) {
+				title = url.replace(/^\w+:\/\/([^\/]+)((\/[^\/\?]+)*\/([^\/\?]+)(\?.*)?)?$/ig, function(...x) {
+					if (x[4]) {
+						return x[1] + '​/[…]/​' + x[4]; // There are invisible zero-width whitespaces after and before the slashes. It allows breaking the link in the browser. Be careful when editing.
+					}
+					return x[1];
+				});
+			}
+			else {
+				title = url.replace(/^\w+:\/\//i, '');
+			}
+		}
+		return `<a href="${_.e(url)}" rel="${_.e(rel)}" target="${_.e(target)}">${_.e(title)}</a>`;
 	},
 
 	toObject(obj, formatter = null) {
@@ -249,7 +262,7 @@ var Formatters = {
 
 	formatUrl(value, field, spec, context = null, parent = null) {
 		let title = _.isObject(parent) && typeof parent === 'string' ? parent.title : value;
-		return _.toLink(_.e(value), _.e(title), _.e(parent.rel || ""));
+		return _.toLink(value, title, parent.rel || "");
 	},
 
 	formatMediaType(value) {
@@ -337,7 +350,7 @@ var Formatters = {
 		}
 		
 		let licenses = Array.isArray(context.links) ? context.links.filter(link => (_.isObject(link) && typeof link.href === 'string' && link.rel === 'license')) : [];
-		return _.toList(licenses, false, link => _.toLink(_.e(link.href), _.e(link.title || value), "license"));
+		return _.toList(licenses, false, link => _.toLink(link.href, link.title || value, "license"));
 	},
 
 	formatProviders(value) {

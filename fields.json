@@ -695,7 +695,15 @@
 		"cbers:path": "Path",
 		"cbers:row": "Row",
 
-		"card4l:specification": "Specification",
+		"card4l:specification": {
+			"label": "Specification",
+			"mapping": {
+				"sr": "Surface Reflectance (Optical)",
+				"st": "Surface Temperature (Optical)",
+				"nrb": "Normalized Radar Backscatter (SAR)",
+				"pol": "Polarimetric Radar (SAR)"
+			}
+		},
 		"card4l:specification_version": "Specification Version",
 		"card4l:orbit_mean_altitude": {
 			"label": "Platform altitude",
