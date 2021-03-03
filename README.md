@@ -2,7 +2,7 @@
 
 A minimal STAC library that contains a list of STAC fields with some metadata (title, unit, prefix) and helper functions.
 
-Version: **1.0.0-beta.4**
+Version: **1.0.0-beta.5**
 
 ## Usage
 
@@ -84,7 +84,7 @@ has the `alias`es resolved and all fields and extensions are defined as objects 
 The most important methods are:
 
 * `format(value: any, field: string, spec: object, context: object = null, parent: object = null) => string`: Applies the right formatting depending on the data type of the a single property.
-* `label(key: string, specs: object | string = 'metadata')`: Formats a label according to the rules given in `specs`. By default uses the labels from fields.json.
+* `label(key: string, spec: object = null)`: Formats a label according to the rules given in `spec`. By default uses the metadata labels from fields.json.
 * `extension(key: string) => string`: Formats an extension, similar to `label`.
 * `formatAssets(assets: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats the assets. Also groups by extension per asset.
 * `formatLinks(links: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats the links. Also groups by extension per link.

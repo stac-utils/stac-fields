@@ -71,7 +71,7 @@ var _ = {
 	},
 
 	toLink(url, title = "", rel = "", target = "_blank") {
-		if (typeof title !== 'string' || title.length === 0) {
+		if (!title) {
 			if (url.length > 50) {
 				title = url.replace(/^\w+:\/\/([^\/]+)((\/[^\/\?]+)*\/([^\/\?]+)(\?.*)?)?$/ig, function(...x) {
 					if (x[4]) {
@@ -621,7 +621,7 @@ function formatGrouped(context, data, type, filter, coreKey) {
 				else {
 					// Copy field spec from fields.json
 					items[key] = spec.items[key];
-					items[key].label = label(key, spec.items);
+					items[key].label = label(key, spec.items[key]);
 				}
 			});
 		}
@@ -658,7 +658,7 @@ function formatGrouped(context, data, type, filter, coreKey) {
 		}
 
 		groups[ext].properties[field] = {
-			label: label(field, type),
+			label: label(field, spec),
 			value,
 			formatted,
 			items,
@@ -743,13 +743,9 @@ function format(value, field, context = null, parent = null, spec = null) {
 	}
 }
 
-function label(key, specs = 'metadata') {
-	let spec;
-	if (_.isObject(specs)) {
-		spec = specs[key] || {};
-	}
-	else {
-		spec = Fields[specs][key] || {};
+function label(key, spec = null) {
+	if (!_.isObject(spec)) {
+		spec = Fields.metadata[key] || {};
 	}
 	if (_.isObject(spec) && typeof spec.label === 'string') {
 		if (typeof spec.explain === 'string') {
@@ -763,7 +759,7 @@ function label(key, specs = 'metadata') {
 }
 
 function extension(key) {
-	return label(key, Fields.extensions);
+	return label(key, Fields.extensions[key]);
 }
 
 var Fields = _.normalizeFields(require('./fields.json'));
