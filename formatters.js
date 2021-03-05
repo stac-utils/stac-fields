@@ -60,7 +60,7 @@ var _ = {
 			list = list.map(formatter);
 		}
 		if (list.length === 0) {
-			return formatter(null);
+			return DataTypes.null();
 		}
 		else if (list.length === 1) {
 			return list[0];
@@ -422,7 +422,7 @@ var Formatters = {
 
 	formatExtent(value, unit = '') {
 		if (!Array.isArray(value) || value.length < 2 || (value[0] === null && value[1] === null)) {
-			return DataTypes.formatNull();
+			return DataTypes.null();
 		}
 		else if (value[0] === null) {
 			return `Until ${DataTypes.format(value[1], unit)}`;
@@ -441,7 +441,7 @@ var Formatters = {
 	// Helper, not used at the moment
 	formatTemporalExtent(value) {
 		if (!Array.isArray(value) || value.length < 2 || (typeof value[0] !== 'string' && typeof value[1] !== 'string')) {
-			return DataTypes.formatNull();
+			return DataTypes.null();
 		}
 		else if (typeof value[0] !== 'string') {
 			return `Until ${Formatters.formatTimestamp(value[1])}`;
@@ -459,7 +459,7 @@ var Formatters = {
 
 	formatWKT2(value) {
 		if (typeof value !== 'string') {
-			return DataTypes.formatNull();
+			return DataTypes.null();
 		}
 		
 		// This is a VERY simplistic WKT2 formatter, which may fail to render properly in some cases.
@@ -500,7 +500,7 @@ var Formatters = {
 
 	formatChecksum(value) {
 		if (typeof value !== 'string') {
-			return DataTypes.formatNull();
+			return DataTypes.null();
 		}
 
 		try {
@@ -538,7 +538,7 @@ var Formatters = {
 			return `<abbr title="${Formatters.fileDataTypes[value]}">${value}</abbr>`;
 		}
 
-		return DataTypes.formatNull();
+		return DataTypes.null();
 	},
 
 	formatCSV(value) {
