@@ -558,113 +558,124 @@ function formatGrouped(context, data, type, filter, coreKey) {
 	// Group fields into extensions
 	let groups = {};
 	for(let field in data) {
-		let parts = field.split(':', 2);
-		if (parts.length === 1) {
-			parts.unshift(coreKey);
-		}
-		let ext = parts[0];
-		if (typeof filter === 'function' && !filter(field)) {
-			continue;
-		}
-
-		// Add group if missing
-		if (!_.isObject(groups[ext])) {
-			groups[ext] = {
-				extension: ext,
-				label: extension(ext),
-				properties: {}
-			};
-		}
-
-		let value = data[field];
-		let spec = Registry.getSpecification(field, type);
-		// Special handling for summaries that contain a list with keys (e.g. cube:dimensions, gee:schema)
-		// There's usually just a single object included, so get that as value
-		let isSummarizedListWithKeys = false;
-		if (type === 'summaries' && spec.listWithKeys && Array.isArray(value) && value.length > 0) {
-			value = value[0];
-			isSummarizedListWithKeys = true;
-		}
-
-		// Fill items with missing properties
-		let items = null;
-		let itemOrder = [];
-		if (_.isObject(spec.items)) {
-			let temp = value;
-			// Ignore keys for lists that are stored as object (e.g. cube:dimensions)
-			if (spec.listWithKeys) {
-				temp = Object.values(temp);
+		try {
+			let parts = field.split(':', 2);
+			if (parts.length === 1) {
+				parts.unshift(coreKey);
+			}
+			let ext = parts[0];
+			if (typeof filter === 'function' && !filter(field)) {
+				continue;
 			}
 
-			let itemFieldNames;
-			if (Array.isArray(temp)) {
-				itemFieldNames = _.keysFromListOfObjects(temp);
-			}
-			else if (_.isObject(temp)) {
-				itemFieldNames = Object.keys(temp);
+			// Add group if missing
+			if (!_.isObject(groups[ext])) {
+				groups[ext] = {
+					extension: ext,
+					label: extension(ext),
+					properties: {}
+				};
 			}
 
-			items = {};
-			// Remove fields from list that are not available in the data
-			itemOrder = spec.itemOrder.filter(fieldName => itemFieldNames.includes(fieldName));
+			let value = data[field];
+			let spec = Registry.getSpecification(field, type);
+			// Special handling for summaries that contain a list with keys (e.g. cube:dimensions, gee:schema)
+			// There's usually just a single object included, so get that as value
+			let isSummarizedListWithKeys = false;
+			if (type === 'summaries' && spec.listWithKeys && Array.isArray(value) && value.length > 0) {
+				value = value[0];
+				isSummarizedListWithKeys = true;
+			}
 
-			itemFieldNames.forEach(key => {
-				if (typeof spec.items[key] === 'undefined') {
-					// Add fields that are not specified in fields.json
-					items[key] = {
-						label: _.formatKey(key),
-						explain: key
-					};
-					// Place non-specified fields at the end
-					itemOrder.push(key);
+			// Fill items with missing properties
+			let items = null;
+			let itemOrder = [];
+			if (_.isObject(spec.items)) {
+				let temp = value;
+				// Ignore keys for lists that are stored as object (e.g. cube:dimensions)
+				if (spec.listWithKeys) {
+					temp = Object.values(temp);
+				}
+
+				let itemFieldNames;
+				if (Array.isArray(temp)) {
+					itemFieldNames = _.keysFromListOfObjects(temp);
+				}
+				else if (_.isObject(temp)) {
+					itemFieldNames = Object.keys(temp);
+				}
+
+				items = {};
+				// Remove fields from list that are not available in the data
+				itemOrder = spec.itemOrder.filter(fieldName => itemFieldNames.includes(fieldName));
+
+				itemFieldNames.forEach(key => {
+					if (typeof spec.items[key] === 'undefined') {
+						// Add fields that are not specified in fields.json
+						items[key] = {
+							label: _.formatKey(key),
+							explain: key
+						};
+						// Place non-specified fields at the end
+						itemOrder.push(key);
+					}
+					else {
+						// Copy field spec from fields.json
+						items[key] = spec.items[key];
+						items[key].label = label(key, spec.items[key]);
+					}
+				});
+			}
+
+			// Format values
+			let formatted;
+
+			// Handle summaries
+			if (type === 'summaries') {
+				if (!isSummarizedListWithKeys && _.isObject(value)) {
+					if (typeof value.minimum !== 'undefined' && typeof value.minimum !== 'undefined') {
+						formatted = Formatters.formatExtent([value.minimum, value.maximum], spec.unit);
+					}
+					else {
+						formatted = DataTypes.object(value);
+					}
+				}
+				else if (Registry.externalRenderer && items) {
+					let formatted = isSummarizedListWithKeys ? Object.assign({}, value) : value.slice(0);
+					// Go through each field's summary
+					for(let i in formatted) {
+						let result = _.isObject(formatted[i]) ? {} : [];
+						// Go through each entry in a field's summary (this is besically a single value as defined in the Item spec)
+						for(let key in items) {
+							result[key] = format(formatted[i][key], key, context, data, items[key]);
+						}
+						formatted[i] = result;
+					}
+				}
+				else if (Array.isArray(value)) {
+					formatted = _.toList(value, !spec.custom && !spec.items, v => format(v, field, context, data, spec));
 				}
 				else {
-					// Copy field spec from fields.json
-					items[key] = spec.items[key];
-					items[key].label = label(key, spec.items[key]);
-				}
-			});
-		}
-
-		// Format values
-		let formatted;
-
-		// Handle summaries
-		if (type === 'summaries') {
-			// ToDo: Migrate to RC1, where this is minimum and maximum instead of min and max
-			if (!isSummarizedListWithKeys && _.isObject(value) && typeof value.min !== 'undefined' && typeof value.max !== 'undefined') {
-				formatted = Formatters.formatExtent([value.min, value.max], spec.unit);
-			}
-			else if (Registry.externalRenderer && items) {
-				let formatted = isSummarizedListWithKeys ? Object.assign({}, value) : value.slice(0);
-				// Go through each field's summary
-				for(let i in formatted) {
-					let result = _.isObject(formatted[i]) ? {} : [];
-					// Go through each entry in a field's summary (this is besically a single value as defined in the Item spec)
-					for(let key in items) {
-						result[key] = format(formatted[i][key], key, context, data, items[key]);
-					}
-					formatted[i] = result;
+					console.warn(`Invalid summary value: ${value}`);
 				}
 			}
-			else {
-				formatted = _.toList(value, !spec.custom && !spec.items, v => format(v, field, context, data, spec));
+
+			// Fallback to "normal" rendering if not handled by summaries yet
+			if (typeof formatted === 'undefined') {
+				formatted = format(value, field, context, data, spec);
 			}
-		}
 
-		// Fallback to "normal" rendering if not handled by summaries yet
-		if (typeof formatted === 'undefined') {
-			formatted = format(value, field, context, data, spec);
+			groups[ext].properties[field] = {
+				label: label(field, spec),
+				value,
+				formatted,
+				items,
+				itemOrder,
+				spec
+			};
+		} catch(error) {
+			console.error(`Field '${field}' with value '${value}' resulted in an error`, error);
 		}
-
-		groups[ext].properties[field] = {
-			label: label(field, spec),
-			value,
-			formatted,
-			items,
-			itemOrder,
-			spec
-		};
 	}
 	return Object.values(groups).sort((a,b) => a.extension.localeCompare(b.extension));
 
