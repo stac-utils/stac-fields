@@ -753,6 +753,11 @@
 			"label": "Ellipsoidal Height",
 			"unit": "m"
 		},
+		"card4l:processing_chain": {
+			"label": "Processing",
+			"custom": true,
+			"summary": false
+		},
 
 		"geoadmin:variant": {
 			"label": "Product Variant",
