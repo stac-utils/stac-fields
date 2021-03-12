@@ -2,7 +2,7 @@
 
 A minimal STAC library that contains a list of STAC fields with some metadata (title, unit, prefix) and helper functions.
 
-Version: **1.0.0-beta.5**
+Version: **1.0.0-beta.6**
 
 ## Usage
 
@@ -44,8 +44,10 @@ for(let field in stacItem.properties) {
 let groups = StacFields.formatStacProperties(stacItem, key => key !== 'eo:bands');
 ```
 
-This library is written for the latest version of the STAC specification (1.0.0-beta.2).
-It is recommended to pass your STAC data through a migration tool like `@radiantearth/stac-migrate` (WIP) before so that it complies to the latest STAC version. Otherwise some fields may not be handled correctly.
+This library is written for the latest version of the STAC specification (1.0.0-rc.1).
+It is recommended to pass your STAC data through a migration tool like
+[`@radiantearth/stac-migrate`](https://www.npmjs.com/package/@radiantearth/stac-migrate)
+before so that it complies to the latest STAC version. Otherwise some fields may not be handled correctly.
 
 Non-JavaScript library authors can re-use the `fields.json`. It is available at:
 <https://cdn.jsdelivr.net/npm/@radiantearth/stac-fields/fields.json>

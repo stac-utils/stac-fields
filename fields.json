@@ -554,86 +554,10 @@
 			"unit": "º"
 		},
 
-		"pl:anomalous_pixels": {
-			"label": "Anomalous Pixels",
-			"unit": "px"
-		},
-		"pl:cloud_percent": {
-			"label": "Cloud Cover",
-			"unit": "%"
-		},
-		"pl:clear_confidence_percent": {
-			"label": "Cloud Free Confidence",
-			"unit": "%"
-		},
-		"pl:clear_percent": {
-			"label": "Cloud Free",
-			"unit": "%"
-		},
-		"pl:heavy_haze_percent": {
-			"label": "Heavy Haze Cover",
-			"unit": "%"
-		},
-		"pl:light_haze_percent": {
-			"label": "Light Haze Cover",
-			"unit": "%"
-		},
-		"pl:shadow_percent": {
-			"label": "Shadow Cover",
-			"unit": "%"
-		},
-		"pl:snow_ice_percent": {
-			"label": "Snow/Ice Cover",
-			"unit": "%"
-		},
-		"pl:visible_confidence_percent": {
-			"label": "Visible Confidence",
-			"unit": "%"
-		},
-		"pl:visible_percent": {
-			"label": "Visible",
-			"unit": "%"
-		},
-		"pl:columns": "Columns",
-		"pl:rows": "Rows",
-		
-		"pl:epsg_code": {
-			"alias": "proj:epsg"
-		},
 		"pl:ground_control": "Ground Control",
-		"pl:ground_control_ratio": "Ground Control Ratio",
-		"pl:instrument": {
-			"alias": "instruments"
-		},
 		"pl:item_type": "Source Type",
-		"pl:origin_x": "X Origin",
-		"pl:origin_y": "Y Origin",
-		"pl:pixel_resolution": {
-			"label": "Pixel Resolution",
-			"unit": "m"
-		},
-		"pl:provider": {
-			"label": "Provider",
-			"summary": false
-		},
-		"pl:published": {
-			"alias": "published"
-		},
 		"pl:quality_category": "Quality Category",
-		"pl:satellite_id": "Satellite ID",
-		"pl:satellite_azimuth": {
-			"label": "Satellite Azimuth",
-			"unit": "º"
-		},
 		"pl:strip_id": "Strip ID",
-		"pl:updated": {
-			"alias": "updated"
-		},
-		"pl:usable_data": "Usable Data",
-		"pl:view_angle": {
-			"label": "View Angle",
-			"unit": "º"
-		},
 
 		"gee:type": "Type",
 		"gee:cadence": "Cadence",
