@@ -558,6 +558,7 @@ function formatGrouped(context, data, type, filter, coreKey) {
 	// Group fields into extensions
 	let groups = {};
 	for(let field in data) {
+		let value;
 		try {
 			let parts = field.split(':', 2);
 			if (parts.length === 1) {
@@ -577,7 +578,7 @@ function formatGrouped(context, data, type, filter, coreKey) {
 				};
 			}
 
-			let value = data[field];
+			value = data[field];
 			let spec = Registry.getSpecification(field, type);
 			// Special handling for summaries that contain a list with keys (e.g. cube:dimensions, gee:schema)
 			// There's usually just a single object included, so get that as value
