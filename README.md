@@ -2,7 +2,7 @@
 
 A minimal STAC library that contains a list of STAC fields with some metadata (title, unit, prefix) and helper functions.
 
-Version: **1.0.0-beta.6**
+Version: **1.0.0-rc.1**
 
 ## Usage
 
@@ -44,7 +44,7 @@ for(let field in stacItem.properties) {
 let groups = StacFields.formatStacProperties(stacItem, key => key !== 'eo:bands');
 ```
 
-This library is written for the latest version of the STAC specification (1.0.0-rc.1).
+This library is written for the latest version of the STAC specification (1.0.0-rc.4).
 It is recommended to pass your STAC data through a migration tool like
 [`@radiantearth/stac-migrate`](https://www.npmjs.com/package/@radiantearth/stac-migrate)
 before so that it complies to the latest STAC version. Otherwise some fields may not be handled correctly.
@@ -53,6 +53,9 @@ Non-JavaScript library authors can re-use the `fields.json`. It is available at:
 <https://cdn.jsdelivr.net/npm/@radiantearth/stac-fields/fields.json>
 
 ## fields.json
+
+This is a file defining useful metadata about extensions and metadata fields.
+In general, the fields.json only lists fields that are either backed by a released extension or have at least one public catalog implementing it.
 
 The following options are available in the object:
 
@@ -70,7 +73,12 @@ The following options are available in the object:
     * `id`: Specfiies whether the value is the unique primary key (`true`) or not (`false`). Defaults to `false`.
 * `null`: The value that should be given instead of `null`. If a value is null but this property is not given, defaults to "n/a".
 * Options related to Collection Summaries:
-    * `summary`: If the fields should be added to summaries (`true`, default) or not `false`.
+    * `summary`: Gives an indication how the field should be summarized:
+        * `false` (boolean): Don't summarize
+        * `r` (string): Summarize as Range Object (minimum and maxiumum value)
+        * `v` (string): Summarize as array of all values (may require merging arrays)
+        * `s` (string): Summarize as JSON Schema Object (usually for very complex values or very long non-numerical lists of values)
+        * `true` (boolean) or not set: Detect based on the given data type of the values. Use Range Objects for numerical values, use JSON Schema Objects for objects and all other data types provide as array of all values.
     * `order`: The order of the items in ascending order, e.g. for a table. If not given, the first entry is always the item with `id` set to `true`, all other items are in alphabetic order.
 
 If only a label is available, it can be passed as string instead of an object.

@@ -111,24 +111,29 @@
 
 		"created": {
 			"label": "Created",
-			"format": "Timestamp"
+			"format": "Timestamp",
+			"summary": "r"
 		},
 		"updated": {
 			"label": "Updated",
-			"format": "Timestamp"
+			"format": "Timestamp",
+			"summary": "r"
 		},
 	
 		"published": {
 			"label": "Published",
-			"format": "Timestamp"
+			"format": "Timestamp",
+			"summary": "r"
 		},
 		"expires": {
 			"label": "Expires",
-			"format": "Timestamp"
+			"format": "Timestamp",
+			"summary": "r"
 		},
 		"unpublished": {
 			"label": "Unpublished",
-			"format": "Timestamp"
+			"format": "Timestamp",
+			"summary": "r"
 		},
 
 		"license": {
@@ -300,7 +305,6 @@
 
 		"label:properties": {
 			"label": "Properties",
-			"summary": false,
 			"null": "raster data"
 		},
 		"label:classes": {
@@ -350,6 +354,7 @@
 		"pc:encoding": "Format",
 		"pc:schemas": {
 			"label": "Schemas",
+			"summary": false,
 			"items": {
 				"name": {
 					"label": "Name",
@@ -370,7 +375,7 @@
 		"pc:density": "Density",
 		"pc:statistics": {
 			"label": "Statistics",
-			"summary": false,
+			"summary": "s",
 			"items": {
 				"name": {
 					"label": "Name",
@@ -404,7 +409,8 @@
 
 		"proj:epsg": {
 			"label": "EPSG Code",
-			"format": "EPSG"
+			"format": "EPSG",
+			"summary": "v"
 		},
 		"proj:wkt2": {
 			"label": "WKT2",
@@ -493,7 +499,8 @@
 		},
 		"sat:anx_datetime": {
 			"label": "ANX time",
-			"explain": "Ascending Node Crossing time"
+			"explain": "Ascending Node Crossing time",
+			"summary": "r"
 		},
 
 		"sci:doi": {
@@ -502,7 +509,7 @@
 		},
 		"sci:citation": {
 			"label": "Citation",
-			"summary": false
+			"summary": "s"
 		},
 		"sci:publications": {
 			"label": "Publications",
@@ -607,7 +614,7 @@
 		"sentinel:sequence": "Sequence",
 		"sentinel:product_id": {
 			"label": "Product ID",
-			"summary": false
+			"summary": "s"
 		},
 		"sentinel:data_coverage": {
 			"label": "Data Coverage",
