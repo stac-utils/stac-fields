@@ -75,7 +75,7 @@ The following options are available in the object:
 * Options related to Collection Summaries:
     * `summary`: Gives an indication how the field should be summarized:
         * `false` (boolean): Don't summarize
-        * `r` (string): Summarize as Range Object (minimum and maxiumum value)
+        * `r` (string): Summarize as Range Object (minimum and maximum value)
         * `v` (string): Summarize as array of all values (may require merging arrays)
         * `s` (string): Summarize as JSON Schema Object (usually for very complex values or very long non-numerical lists of values)
         * `true` (boolean) or not set: Detect based on the given data type of the values. Use Range Objects for numerical values, use JSON Schema Objects for objects and all other data types provide as array of all values.
