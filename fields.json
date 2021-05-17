@@ -630,13 +630,13 @@
 				"L3": "Control points used to geolocate image, no terrain correction",
 				"L4": "Control points used to geolocate image, orthorectified"
 			},
-			"summary": false,
+			"summary": "v",
 		"cbers:path": {
-			"label": "CBERS Reference Grid Path",
+			"label": "Reference Grid Path",
 			"summary": "r"
 		},
 		"cbers:row": {
-			"label": "CBERS Reference Grid Row",
+			"label": "Reference Grid Row",
 			"summary": "r"
 		},
 		"card4l:specification": {
