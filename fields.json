@@ -622,10 +622,23 @@
 		},
 		"sentinel:valid_cloud_cover": "Valid Cloud Cover",
 
-		"cbers:data_type": "Data type",
-		"cbers:path": "Path",
-		"cbers:row": "Row",
-
+		"cbers:data_type": {
+			"label": "Data type",
+			"explain": "Geolocation precision level",
+			"mapping": {
+				"L2": "Geolocation using only satellite telemetry",
+				"L3": "Control points used to geolocate image, no terrain correction",
+				"L4": "Control points used to geolocate image, orthorectified"
+			},
+			"summary": "v",
+		"cbers:path": {
+			"label": "Reference Grid Path",
+			"summary": "r"
+		},
+		"cbers:row": {
+			"label": "Reference Grid Row",
+			"summary": "r"
+		},
 		"card4l:specification": {
 			"label": "Specification",
 			"mapping": {
