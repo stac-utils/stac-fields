@@ -507,10 +507,7 @@
 			"label": "DOI",
 			"format": "DOI"
 		},
-		"sci:citation": {
-			"label": "Citation",
-			"summary": "s"
-		},
+		"sci:citation": "Citation",
 		"sci:publications": {
 			"label": "Publications",
 			"summary": false,
