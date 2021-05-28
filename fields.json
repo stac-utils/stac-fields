@@ -508,8 +508,7 @@
 			"format": "DOI"
 		},
 		"sci:citation": {
-			"label": "Citation",
-			"summary": "s"
+			"label": "Citation"
 		},
 		"sci:publications": {
 			"label": "Publications",
