@@ -11,6 +11,7 @@
 		"pc": "Point Cloud",
 		"processing": "Processing",
 		"proj": "Projection",
+		"raster": "Raster Imagery",
 		"sar": {
 			"label": "SAR",
 			"explain": "Synthetic Aperture Radar"
@@ -82,6 +83,9 @@
 		}
 	},
 	"metadata": {
+		"id": "Identifier",
+		"keywords": "Keywords",
+
 		"datetime": {
 			"label": "Acquired",
 			"format": "Timestamp",
@@ -299,6 +303,46 @@
 				"summary": {
 					"label": "Summary",
 					"order": 0
+				}
+			}
+		},
+
+		"raster:bands": {
+			"label": "Bands",
+			"items": {
+				"nodata": {
+					"alias": "file:nodata"
+				},
+				"sampling": {
+					"label": "Sampling",
+					"mapping": {
+						"area": "Area",
+						"point": "Point (at pixel center)"
+					}
+				},
+				"data_type": {
+					"alias": "file:data_type"
+				},
+				"bits_per_sample": {
+					"alias": "file:bits_per_sample"
+				},
+				"spatial_resolution": {
+					"label": "Resolution",
+					"explain": "Average spatial resolution",
+					"unit": "m"
+				},
+				"statistics": {
+					"label": "Statistics",
+					"custom": true
+				},
+				"unit": {
+					"alias": "file:unit"
+				},
+				"scale": "Scale",
+				"offset": "Offset",
+				"histogram": {
+					"label": "Histogram",
+					"custom": true
 				}
 			}
 		},
