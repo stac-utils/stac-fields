@@ -96,8 +96,9 @@ The most important methods are:
 * `format(value: any, field: string, spec: object, context: object = null, parent: object = null) => string`: Applies the right formatting depending on the data type of the a single property.
 * `label(key: string, spec: object = null)`: Formats a label according to the rules given in `spec`. By default uses the metadata labels from fields.json.
 * `extension(key: string) => string`: Formats an extension, similar to `label`.
-* `formatAssets(assets: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats the assets. Also groups by extension per asset.
-* `formatLinks(links: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats the links. Also groups by extension per link.
+* `formatAsset(asset: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats an asset. Also groups by extension per asset.
+* `formatLink(link: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats a link. Also groups by extension per link.
+* `formatCollection(collection: object, filter: function = null, coreKey: string = '') => object`: Formats a collection. Also groups by extension. *Experimental!*
 * `formatSummaries(collection: object, filter: function = null, coreKey: string = '') => object`: Formats the summaries in a collection. Also groups by extension.
 * `formatItemProperties(item: object, filter: function = null, coreKey: string = '') => object`: Formats the properties in an Item. Also groups by extension.
 

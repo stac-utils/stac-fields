@@ -51,10 +51,16 @@ var _ = {
 
 	toList(arr, sort = false, formatter = null) {
 		let list = arr;
-		let tag = 'ol';
+		let tag = 'ul';
 		if (sort) {
-			list = list.slice(0).sort();
-			tag = 'ul';
+			list = list.slice(0);
+			if (typeof sort === 'function') {
+				list.sort(sort);
+			}
+			else {
+				list.sort();
+			}
+			tag = 'ol';
 		}
 		if (typeof formatter === 'function') {
 			list = list.map(formatter);
@@ -457,6 +463,18 @@ var Formatters = {
 		}
 	},
 
+	formatTemporalExtents(value) {
+		let sortExtents = (a,b) => {
+			if (a[0] === null) {
+				return -1;
+			}
+			else {
+				return a[0].localeCompare(b[0]);
+			}
+		};
+		return _.toList(value, sortExtents, Formatters.formatTemporalExtent);
+	},
+
 	formatWKT2(value) {
 		if (typeof value !== 'string') {
 			return DataTypes.null();
@@ -683,26 +701,23 @@ function formatGrouped(context, data, type, filter, coreKey) {
 }
 
 // For assets (item and collection) and item-assets (extension)
-function formatAssets(assets, context, filter = null, coreKey = '') {
-	let formatted = {};
-	for (let key in assets) {
-		formatted[key] = formatGrouped(context, assets[key], 'assets', filter, coreKey);
-	}
-	return formatted;
+function formatAsset(asset, context, filter = null, coreKey = '') {
+	return formatGrouped(context, asset, 'assets', filter, coreKey);
 }
 
 // For links
-function formatLinks(links, context, filter = null, coreKey = '') {
-	let formatted = [];
-	for (let link of links) {
-		formatted.push(formatGrouped(context, link, 'links', filter, coreKey));
-	}
-	return formatted;
+function formatLink(link, context, filter = null, coreKey = '') {
+	return formatGrouped(context, link, 'links', filter, coreKey);
 }
 
 // For Collection summaries
 function formatSummaries(collection, filter = null, coreKey = '') {
 	return formatGrouped(collection, collection.summaries, 'summaries', filter, coreKey);
+}
+
+// For Collections
+function formatCollection(collection, filter = null, coreKey = '') {
+	return formatGrouped(collection, collection, 'collection', filter, coreKey);
 }
 
 // For item properties
@@ -780,10 +795,11 @@ module.exports = {
 	format,
 	label,
 	extension,
+	formatCollection,
 	formatSummaries,
 	formatItemProperties,
-	formatAssets,
-	formatLinks,
+	formatAsset,
+	formatLink,
 	Fields,
 	Registry,
 	Helper: _,
