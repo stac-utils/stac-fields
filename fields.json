@@ -607,17 +607,25 @@
 		"pl:quality_category": "Quality Category",
 		"pl:strip_id": "Strip ID",
 
-		"gee:type": "Type",
+		"gee:type": {
+			"label": "Type",
+			"mapping": {
+				"image": "Single image",
+				"image_collection": "Image Collection",
+				"table": "Table"
+			}
+		},
 		"gee:cadence": "Cadence",
 		"gee:schema": {
 			"label": "Variables",
-			"listWithKeys": true,
 			"items": {
+				"name": "Name",
 				"description": "Description",
 				"type": "Data Type"
 			},
 			"summary": false
 		},
+		"gee:revisit_interval": "Revisit interval",
 		"gee:terms_of_use": {
 			"label": "Terms of Use",
 			"format": "CommonMark",
