@@ -311,7 +311,7 @@ var Formatters = {
 			case 'application/octet-stream':
 				return 'Binary file';
 			default:
-				let parts = value.toLowerCase().match(/^(\w+)\/([\w-\+]+)$/);
+				let parts = value.toLowerCase().match(/^(\w+)\/(?:vnd.|x.)?([\w-\+\.]+)$/);
 				if (Array.isArray(parts) && parts.length >= 2) {
 					let format = _.formatKey(parts[2]);
 					switch(parts[1]) {
