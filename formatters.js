@@ -412,6 +412,18 @@ var Formatters = {
 		return _.toLink(`http://doi.org/${value}`, value);
 	},
 
+	formatCRS(value) {
+		return _.toList(value, false, value => {
+			if (typeof value === 'string') {
+				let title = value
+					.replace(/^https?:\/\/www\.opengis\.net\/def\/crs\//i, '') // HTTP(s) URI
+					.replace(/^urn:ogc:def:crs:/i, ''); // OGC URN
+				return _.toLink(value, title);
+			}
+			return _.e(value);
+		});
+	},
+
 	formatEPSG(value) {
 		// Remove leading 'epsg:' which people sometimes prepend
 		if (typeof value === 'string') {
