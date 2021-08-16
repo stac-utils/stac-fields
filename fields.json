@@ -18,6 +18,7 @@
 		},
 		"sat": "Satellite",
 		"sci": "Scientific",
+		"ssys": "Solar System",
 		"tiles": "Tiled Assets",
 		"view": "View Geometry",
 		"gee": "Google Earth Engine",
@@ -575,6 +576,8 @@
 				}
 			}
 		},
+
+		"ssys:targets": "Target Body",
 
 		"tiles:tile_matrix_sets": {
 			"label": "Tile Matrix Sets",
