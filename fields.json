@@ -23,6 +23,7 @@
 		"view": "View Geometry",
 		"gee": "Google Earth Engine",
 		"landsat": "Landsat",
+		"openeo": "openEO",
 		"pl": "Planet Labs Inc.",
 		"sentinel": "Copernicus Sentinel",
 		"cbers": {
@@ -384,7 +385,7 @@
 			"items": {
 				"property_key": {
 					"label": "Property Key",
-                    "id": true
+					"id": true
 				},
 				"counts": {
 					"label": "Counts",
@@ -395,6 +396,20 @@
 					"custom": true
 				}
 			}
+		},
+
+		"openeo:api_version": "API Version",
+		"openeo:backend_version": "Back-end Version",
+		"openeo:production": "Ready for Production",
+		"openeo:endpoints": {
+			"label": "Supported Endpoints",
+			"custom": true,
+			"summary": false
+		},
+		"openeo:billing": {
+			"label": "Billing",
+			"custom": true,
+			"summary": false
 		},
 
 		"pc:count": {
