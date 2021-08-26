@@ -456,6 +456,21 @@ var Formatters = {
 		}
 	},
 
+	formatPROJJSON(value) {
+		if (!Utils.isObject(value)) {
+			return DataTypes.null();
+		}
+		if (Utils.isObject(value.id) && value.id.authority === 'EPSG' && typeof value.code === 'number' && value.code > 0) {
+			return 'EPSG ' + Formatters.formatEPSG(value);
+		}
+		else if (typeof value.name === 'string') {
+			return DataTypes.string(value.name);
+		}
+		else {
+			return DataTypes.object(value);
+		}
+	},
+
 	// Helper, not used at the moment
 	formatTemporalExtent(value) {
 		if (!Array.isArray(value) || value.length < 2 || (typeof value[0] !== 'string' && typeof value[1] !== 'string')) {
@@ -569,6 +584,29 @@ var Formatters = {
 		}
 
 		return DataTypes.null();
+	},
+
+	formatTransform(value) {
+		if (Array.isArray(value) && value.length % 3 === 0) {
+			let rows = [];
+			for (let i = 0; i < value.length; i = i+3) {
+				let chunk = value.slice(i, i + 3);
+				rows.push(`[${Formatters.formatCSV(chunk)}]`);
+			}
+			return rows.join('<br />');
+		}
+		else {
+			return Formatters.formatCSV(value);
+		}
+	},
+
+	formatShape(value) {
+		if (Array.isArray(value)) {
+			return value.map(_.e).join(' × ');
+		}
+		else {
+			return _.e(value);
+		}
 	},
 
 	formatCSV(value) {

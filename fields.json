@@ -8,6 +8,7 @@
 		"eo": "Electro-Optical",
 		"file": "File",
 		"label": "Labels / ML",
+		"odc": "Open Data Cube",
 		"pc": "Point Cloud",
 		"processing": "Processing",
 		"proj": "Projection",
@@ -486,7 +487,8 @@
 		},
 		"proj:projjson": {
 			"label": "PROJJSON",
-			"custom": true,
+			"explain": "JSON encoding of WKT2",
+			"format": "PROJJSON",
 			"summary": false
 		},
 		"proj:geometry": {
@@ -506,12 +508,12 @@
 		},
 		"proj:shape": {
 			"label": "Shape",
-			"custom": true,
+			"format": "Shape",
 			"summary": false
 		},
 		"proj:transform": {
 			"label": "Transform",
-			"custom": true,
+			"format": "Transform",
 			"summary": false
 		},
 
