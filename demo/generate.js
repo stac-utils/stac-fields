@@ -3,8 +3,6 @@ const STAC = require('../formatters');
 const item = require('./item.json');
 
 const properties = STAC.formatItemProperties(item);
-const assets = STAC.formatAssets(item.assets, item);
-const links = STAC.formatLinks(item.links, item);
 
 function display(fields, h = 'h3') {
 	let html = '';
@@ -31,15 +29,17 @@ output += `<h2>Properties</h2>\n`;
 output += display(properties);
 
 output += `<h2>Assets</h2>\n`;
-for(let key in assets) {
-	let asset = assets[key];
+for(let key in item.assets) {
+	let asset = item.assets[key];
+	let formatted = STAC.formatAsset(asset);
 	output += `<h3>${key}</h3>\n`;
-	output += display(asset, 'h4');
+	output += display(formatted, 'h4');
 }
 
 output += `<h2>Links</h2>\n<ul>\n`;
-for (let link of links) {
-	output += `<li>${display(link)}</li>\n`;
+for (let link of item.links) {
+	let formatted = STAC.formatLink(link);
+	output += `<li>${display(formatted)}</li>\n`;
 }
 output += `</ul>\n`;
 
