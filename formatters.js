@@ -276,6 +276,8 @@ var Formatters = {
 			return DataTypes.null('Unknown');
 		}
 		switch(value.toLowerCase()) {
+			case 'image/tiff':
+				return 'TIFF image';
 			case 'image/tiff; application=geotiff':
 				return 'GeoTIFF image';
 			case 'image/tiff; application=geotiff; profile=cloud-optimized':
@@ -284,6 +286,7 @@ var Formatters = {
 				return 'JPEG 2000 image';
 			case 'image/png':
 			case 'image/apng':
+			case 'image/vnd.mozilla.apng':
 				return 'PNG image';
 			case 'image/gif':
 				return 'GIF image';
@@ -292,22 +295,45 @@ var Formatters = {
 				return 'JPEG image';
 			case 'image/webp':
 				return 'WebP image';
+			case 'image/bmp':
+			case 'image/x-bmp':
+			case 'image/x-ms-bmp':
+			case 'image/wbmp':
+				return 'Bitmap image';
 			case 'image/svg+xml':
 				return 'SVG vector image';
+			case 'text/csv':
+				return 'Comma-separated values (CSV)';
 			case 'text/xml':
 			case 'application/xml':
 				return 'XML';
 			case 'text/json':
 			case 'application/json':
 				return 'JSON';
+			case 'text/yaml':
+			case 'text/vnd.yaml':
+			case 'text/x-yaml':
+			case 'application/x-yaml':
+				return 'YAML';
 			case 'application/geo+json':
 				return 'GeoJSON';
 			case 'text/html':
+			case 'application/xhtml+xml':
 				return 'HTML (Website)';
 			case 'text/plain':
 				return 'Text document';
+			case 'text/markdown':
+				return 'Markdown document';
 			case 'application/pdf':
 				return 'PDF document';
+			case 'application/zip':
+				return 'ZIP archive';
+			case 'application/gzip':
+				return 'GZIP archive';
+			case 'application/x-hdf':
+				return 'HDF';
+			case 'application/x-netcdf':
+				return 'NetCDF';
 			case 'application/octet-stream':
 				return 'Binary file';
 			default:
@@ -315,10 +341,12 @@ var Formatters = {
 				if (Array.isArray(parts) && parts.length >= 2) {
 					let format = _.formatKey(parts[2]);
 					switch(parts[1]) {
-						case 'image':
-							return `${format} image`;
 						case 'audio':
 							return `${format} audio`;
+						case 'image':
+							return `${format} image`;
+						case 'font':
+							return `Font`;
 						case 'model':
 							return `${format} 3D model`;
 						case 'video':
@@ -553,7 +581,7 @@ var Formatters = {
 			const meta = multihash.decode(_.hexToUint8(value));
 			const name = _.e(meta.name);
 			const hex = _.e(_.uint8ToHex(meta.digest));
-			return `<input class="checksum-input" size="32" value="${hex}" readonly /><br />Hashing algorithm: <strong>${name}</strong>`;
+			return `<div class="checksum"><input class="checksum-input" size="32" value="${hex}" readonly /><br /><span class="checksum-algo">Hashing algorithm: <strong>${name}</strong></span></div>`;
 		} catch (error) {
 			return DataTypes.null();
 		}
@@ -605,7 +633,7 @@ var Formatters = {
 			return value.map(_.e).join(' × ');
 		}
 		else {
-			return _.e(value);
+			return DataTypes.format(value);
 		}
 	},
 
@@ -616,7 +644,7 @@ var Formatters = {
 			return value.map(_.e).join(numeric ? '; ' : ', ');
 		}
 		else {
-			return _.e(value);
+			return DataTypes.format(value);
 		}
 	}
 

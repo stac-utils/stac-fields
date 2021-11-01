@@ -8,6 +8,10 @@
 		"eo": "Electro-Optical",
 		"file": "File",
 		"label": "Labels / ML",
+		"mgrs": {
+			"label": "MGRS",
+			"explain": "Military Grid Reference System"
+		},
 		"odc": "Open Data Cube",
 		"pc": "Point Cloud",
 		"processing": "Processing",
@@ -20,6 +24,7 @@
 		"sat": "Satellite",
 		"sci": "Scientific",
 		"ssys": "Solar System",
+		"storage": "Cloud Storage",
 		"tiles": "Tiled Assets",
 		"view": "View Geometry",
 		"gee": "Google Earth Engine",
@@ -54,7 +59,8 @@
 				"via": "Source metadata",
 				"next": "Next page",
 				"prev": "Previous page",
-				"canonical": "Origin of this document"
+				"canonical": "Origin of this document",
+				"processing-expression": "Processing Instructions"
 			}
 		},
 		"type": {
@@ -214,9 +220,54 @@
 					"label": "Step",
 					"order": 5
 				},
+				"unit": {
+					"alias": "file:unit",
+					"order": 5
+				},
 				"reference_system": {
 					"label": "Ref. Sys.",
 					"explain": "Coordinate / Temporal / Other Reference System",
+					"order": 6
+				}
+			}
+		},
+		"cube:variables": {
+			"label": "Variables",
+			"summary": false,
+			"listWithKeys": true,
+			"items": {
+				"dimensions": {
+					"label": "Dimensions",
+					"order": 0
+				},
+				"type": {
+					"label": "Type",
+					"order": 1,
+					"mapping": {
+						"data": "Measured values",
+						"auxiliary": "Coordinate data"
+					}
+				},
+				"description": {
+					"label": "Description",
+					"format": "CommonMark",
+					"order": 2
+				},
+				"extent": {
+					"label": "Extent",
+					"format": "Extent",
+					"order": 3
+				},
+				"values": {
+					"label": "Values",
+					"order": 4
+				},
+				"step": {
+					"label": "Step",
+					"order": 5
+				},
+				"unit": {
+					"alias": "file:unit",
 					"order": 6
 				}
 			}
@@ -264,6 +315,12 @@
 					"alias": "eo:cloud_cover",
 					"sortable": true,
 					"order": 4
+				},
+				"solar_illumination": {
+					"label": "Solar Illumination",
+					"sortable": true,
+					"order": 7,
+					"unit": "W/m²/μm"
 				}
 			}
 		},
@@ -315,6 +372,10 @@
 				}
 			}
 		},
+		"file:local_path": {
+			"label": "Local Path",
+			"summary": false
+		},
 
 		"raster:bands": {
 			"label": "Bands",
@@ -342,7 +403,27 @@
 				},
 				"statistics": {
 					"label": "Statistics",
-					"custom": true
+					"custom": true,
+					"items": {
+						"mean": "Average",
+						"maximum": {
+							"label": "Max.",
+							"explain": "Maxmimum value"
+						},
+						"minimum": {
+							"label": "Min.",
+							"explain": "Minimum value"
+						},
+						"stdev": {
+							"label": "Std. Dev.",
+							"explain": "Standard Deviation"
+						},
+						"valid_percent": {
+							"label": "Valid",
+							"explain": "Percentage of valid pixels",
+							"unit": "%"
+						}
+					}
 				},
 				"unit": {
 					"alias": "file:unit"
@@ -399,9 +480,13 @@
 			}
 		},
 
+		"mgrs:latitude_band": "Latitude Band",
+		"mgrs:grid_square": "Grid Square",
+		"mgrs:utm_zone": "UTM Zone",
+
 		"openeo:api_version": "API Version",
 		"openeo:backend_version": "Back-end Version",
-		"openeo:production": "Ready for Production",
+		"openeo:production": "Production-ready",
 		"openeo:endpoints": {
 			"label": "Supported Endpoints",
 			"custom": true,
@@ -451,8 +536,14 @@
 				"position": "Position",
 				"average": "Average",
 				"count": "Count",
-				"maximum": "Max.",
-				"minimum": "Min.",
+				"maximum": {
+					"label": "Max.",
+					"explain": "Maxmimum value"
+				},
+				"minimum": {
+					"label": "Min.",
+					"explain": "Minimum value"
+				},
 				"stddev": {
 					"label": "Std. Dev.",
 					"explain": "Standard Deviation"
@@ -461,6 +552,10 @@
 			}
 		},
 
+		"processing:expression": {
+			"label": "Processing Instructions",
+			"summary": false
+		},
 		"processing:lineage": {
 			"label": "Lineage",
 			"format": "CommonMark",
@@ -595,6 +690,21 @@
 		},
 
 		"ssys:targets": "Target Body",
+
+		"storage:platform": {
+			"label": "Provider",
+			"mapping": {
+				"ALIBABA": "Alibaba Cloud",
+				"AWS": "Amazon AWS",
+				"AZURE": "Microsoft Azure",
+				"GCP": "Google Cloud Platform",
+				"IBM": "IBM Cloud",
+				"ORACLE": "Oracle Cloud"
+			}
+		},
+		"storage:region": "Region",
+		"storage:requester_pays": "Requester Pays",
+		"storage:tier": "Tier Type",
 
 		"tiles:tile_matrix_sets": {
 			"label": "Tile Matrix Sets",
