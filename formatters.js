@@ -230,7 +230,7 @@ var DataTypes = {
 		if (typeof num !== 'number') {
 			num = parseFloat(num);
 		}
-		return _.unit(num.toLocaleString(), unit);
+		return _.unit(num.toLocaleString(undefined, {maximumFractionDigits: 10}), unit);
 	},
 
 	string(str, unit = '') {
