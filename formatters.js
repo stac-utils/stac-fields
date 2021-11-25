@@ -317,6 +317,9 @@ var Formatters = {
 				return 'YAML';
 			case 'application/geo+json':
 				return 'GeoJSON';
+			case 'application/geopackage+vnd.sqlite3':
+			case 'application/geopackage+sqlite3':
+				return 'GeoPackage';
 			case 'text/html':
 			case 'application/xhtml+xml':
 				return 'HTML (Website)';
