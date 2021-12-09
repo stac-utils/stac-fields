@@ -668,17 +668,14 @@ function formatGrouped(context, data, type, filter, coreKey) {
 				continue;
 			}
 
-			// Add group if missing
-			if (!_.isObject(groups[ext])) {
-				groups[ext] = {
-					extension: ext,
-					label: extension(ext),
-					properties: {}
-				};
-			}
-
 			value = data[field];
 			let spec = Registry.getSpecification(field, type);
+
+			// Move to another extension (e.g. if no prefix is provided)
+			if (spec.ext) {
+				ext = spec.ext;
+			}
+
 			// Special handling for summaries that contain a list with keys (e.g. cube:dimensions, gee:schema)
 			// There's usually just a single object included, so get that as value
 			let isSummarizedListWithKeys = false;
@@ -763,6 +760,15 @@ function formatGrouped(context, data, type, filter, coreKey) {
 			// Fallback to "normal" rendering if not handled by summaries yet
 			if (typeof formatted === 'undefined') {
 				formatted = format(value, field, context, data, spec);
+			}
+
+			// Add group if missing
+			if (!_.isObject(groups[ext])) {
+				groups[ext] = {
+					extension: ext,
+					label: extension(ext),
+					properties: {}
+				};
 			}
 
 			groups[ext].properties[field] = {

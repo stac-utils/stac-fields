@@ -175,7 +175,7 @@
 		},
 
 		"version": {
-			"label": "Version",
+			"label": "Data Version",
 			"summary": false
 		},
 		"deprecated": {
@@ -334,7 +334,6 @@
 		"file:checksum": {
 			"label": "Checksum",
 			"format": "Checksum",
-			"custom": true,
 			"summary": false
 		},
 		"file:data_type": {
@@ -403,7 +402,6 @@
 				},
 				"statistics": {
 					"label": "Statistics",
-					"custom": true,
 					"items": {
 						"mean": "Average",
 						"maximum": {
@@ -484,16 +482,38 @@
 		"mgrs:grid_square": "Grid Square",
 		"mgrs:utm_zone": "UTM Zone",
 
-		"openeo:api_version": "API Version",
-		"openeo:backend_version": "Back-end Version",
-		"openeo:production": "Production-ready",
-		"openeo:endpoints": {
-			"label": "Supported Endpoints",
-			"custom": true,
-			"summary": false
+		"openeo:status":  "Processing Status",
+		"api_version": {
+			"label": "API Version",
+			"ext": "openeo"
 		},
-		"openeo:billing": {
+		"backend_version": {
+			"label": "Back-end Version",
+			"ext": "openeo"
+		},
+		"production": {
+			"label": "Production-ready",
+			"ext": "openeo"
+		},
+		"endpoints": {
+			"label": "Supported Endpoints",
+			"ext": "openeo",
+			"summary": false,
+			"items": {
+				"path": {
+					"label": "Path Template",
+					"order": 0
+				},
+				"methods": {
+					"label": "HTTP Methods",
+					"order": 1,
+					"format": "CSV"
+				}
+			}
+		},
+		"billing": {
 			"label": "Billing",
+			"ext": "openeo",
 			"custom": true,
 			"summary": false
 		},
@@ -738,9 +758,22 @@
 			"unit": "º"
 		},
 
+		"pl:clear_percent": {
+			"label": "Clear Sky",
+			"unit": "%"
+		},
 		"pl:ground_control": "Ground Control",
-		"pl:item_type": "Source Type",
+		"pl:pixel_resolution": {
+			"label": "Pixel Resolution",
+			"unit": "m"
+		},
+		"pl:publishing_stage": "Publishing Stage",
 		"pl:quality_category": "Quality Category",
+		"pl:satellite_azimuth": {
+			"label": "Satellite Azimuth",
+			"unit": "°"
+		},
+		"pl:source_type": "Source Type",
 		"pl:strip_id": "Strip ID",
 
 		"gee:type": {
