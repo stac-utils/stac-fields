@@ -29,6 +29,7 @@
 		"table": "Tabular Data",
 		"tiles": "Tiled Assets",
 		"view": "View Geometry",
+		"xarray": "xarray",
 
 		"gee": "Google Earth Engine",
 		"landsat": "Landsat",
@@ -94,7 +95,19 @@
 				"graphic": "Illustration"
 			}
 		},
-		"table:storage_options": "fsspec Options"
+		"table:storage_options": {
+			"alias": "xarray:storage_options"
+		},
+		"xarray:open_kwargs": {
+			"label": "Read Options",
+			"custom": true,
+			"summary": false
+		},
+		"xarray:storage_options": {
+			"label": "fsspec Options",
+			"custom": true,
+			"summary": false
+		}
 	},
 	"metadata": {
 		"id": "Identifier",
