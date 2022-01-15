@@ -375,6 +375,19 @@ var Formatters = {
 		return DataTypes.null();
 	},
 
+	formatDate(value) {
+		if (typeof value === 'string') {
+			try {
+				return new Date(value).toLocaleString([], {
+					day: 'numeric',
+					month: 'numeric',
+					year: 'numeric'
+				});
+			} catch (error) {}
+		}
+		return DataTypes.null();
+	},
+
 	formatLicense(value, field, spec, context = null) {
 		if (typeof value !== 'string' || value.length === 0) {
 			return DataTypes.null();
@@ -502,22 +515,22 @@ var Formatters = {
 		}
 	},
 
-	// Helper, not used at the moment
-	formatTemporalExtent(value) {
+	formatTemporalExtent(value, shorten = false) {
+		let formatter = shorten ? Formatters.formatDate : Formatters.formatTimestamp;
 		if (!Array.isArray(value) || value.length < 2 || (typeof value[0] !== 'string' && typeof value[1] !== 'string')) {
 			return DataTypes.null();
 		}
 		else if (typeof value[0] !== 'string') {
-			return `Until ${Formatters.formatTimestamp(value[1])}`;
+			return `Until ${formatter(value[1])}`;
 		}
 		else if (typeof value[1] !== 'string') {
-			return `${Formatters.formatTimestamp(value[0])} until present`;
+			return `${formatter(value[0])} until present`;
 		}
 		else if (value[0] === value[1]) {
 			return Formatters.formatTimestamp(value[0]);
 		}
 		else {
-			return value.map(date => Formatters.formatTimestamp(date)).join(' - ');
+			return value.map(date => formatter(date)).join(' - ');
 		}
 	},
 

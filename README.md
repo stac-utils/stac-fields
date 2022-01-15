@@ -108,6 +108,7 @@ The most important methods are:
 * Checksum (multihashes, show original hash and hashing algorithm)
 * CommonMark
 * CSV (array to comma-separated values)
+* Date
 * DOI (generate a link for a DOI)
 * EPSG (generate a link for an EPSG code)
 * Extent (array with two values formatted as range)
