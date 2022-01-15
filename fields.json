@@ -26,10 +26,13 @@
 		"sci": "Scientific",
 		"ssys": "Solar System",
 		"storage": "Cloud Storage",
+		"table": "Tabular Data",
 		"tiles": "Tiled Assets",
 		"view": "View Geometry",
+
 		"gee": "Google Earth Engine",
 		"landsat": "Landsat",
+		"msft": "Microsoft",
 		"openeo": "openEO",
 		"pl": "Planet Labs Inc.",
 		"sentinel": "Copernicus Sentinel",
@@ -90,7 +93,8 @@
 				"metadata": "Metadata",
 				"graphic": "Illustration"
 			}
-		}
+		},
+		"table:storage_options": "fsspec Options"
 	},
 	"metadata": {
 		"id": "Identifier",
@@ -737,6 +741,48 @@
 		"storage:requester_pays": "Requester Pays",
 		"storage:tier": "Tier Type",
 
+		"table:columns": {
+			"label": "Columns",
+			"items": {
+				"name": {
+					"label": "Name",
+					"sortable": true,
+					"id": true,
+					"order": 0
+				},
+				"type": {
+					"label": "Data Type",
+					"sortable": true,
+					"order": 1
+				},
+				"description": {
+					"label": "Description",
+					"format": "CommonMark",
+					"order": 2
+				}
+			}
+		},
+		"table:primary_geometry": "Primary Geometry Column",
+		"table:row_count": "Rows",
+		"table:tables": {
+			"label": "Tables",
+			"summary": false,
+			"listWithKeys": true,
+			"items": {
+				"name": {
+					"label": "Name",
+					"sortable": true,
+					"id": true,
+					"order": 0
+				},
+				"description": {
+					"label": "Description",
+					"format": "CommonMark",
+					"order": 1
+				}
+			}
+		},
+
 		"tiles:tile_matrix_sets": {
 			"label": "Tile Matrix Sets",
 			"custom": true,
@@ -835,6 +881,13 @@
 		"landsat:cloud_cover_land": {
 			"label": "Land Cloud Cover",
 			"unit": "%"
+		},
+
+		"msft:container": "Container",
+		"msft:storage_account": "Storage Account",
+		"msft:short_description": {
+			"label": "Summary",
+			"summary": false
 		},
 		
 		"sentinel:utm_zone": "UTM zone",
