@@ -1,5 +1,6 @@
 {
 	"extensions": {
+		"anon": "Anonymized Location",
 		"card4l": {
 			"label": "CARD4L",
 			"explain": "CEOS Analysis Ready Data for Land"
@@ -187,6 +188,16 @@
 			"label": "CRS",
 			"format": "CRS",
 			"explain": "Coordinate Reference System"
+		},
+
+		"anon:size": {
+			"label": "Uncertainty",
+			"unit": "º",
+			"explain": "The size of one side of the anonymized bounding box"
+		},
+		"anon:warning": {
+			"label": "Warning",
+			"summary": false
 		},
 
 		"cube:dimensions": {
