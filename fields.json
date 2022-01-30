@@ -65,7 +65,10 @@
 				"next": "Next page",
 				"prev": "Previous page",
 				"canonical": "Origin of this document",
-				"processing-expression": "Processing Instructions"
+				"processing-expression": "Processing Instructions",
+				"latest-version": "Latest version",
+				"predecessor-version": "Predecessor version",
+				"successor-version": "Successor version"
 			}
 		},
 		"type": {
