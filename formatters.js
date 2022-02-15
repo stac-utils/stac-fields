@@ -400,7 +400,12 @@ var Formatters = {
 		}
 		
 		let licenses = Array.isArray(context.links) ? context.links.filter(link => (_.isObject(link) && typeof link.href === 'string' && link.rel === 'license')) : [];
-		return _.toList(licenses, false, link => _.toLink(link.href, link.title || value, "license"));
+		if (licenses.length > 0) {
+			return _.toList(licenses, false, link => _.toLink(link.href, link.title || value, "license"));
+		}
+		else {
+			return DataTypes.string(value);
+		}
 	},
 
 	formatProviders(value) {
