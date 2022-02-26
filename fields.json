@@ -68,7 +68,8 @@
 				"processing-expression": "Processing Instructions",
 				"latest-version": "Latest version",
 				"predecessor-version": "Predecessor version",
-				"successor-version": "Successor version"
+				"successor-version": "Successor version",
+				"source": "Source data"
 			}
 		},
 		"type": {
