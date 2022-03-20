@@ -69,7 +69,8 @@
 				"latest-version": "Latest version",
 				"predecessor-version": "Predecessor version",
 				"successor-version": "Successor version",
-				"source": "Source data"
+				"source": "Source data",
+				"cite-as": "Citation"
 			}
 		},
 		"type": {
