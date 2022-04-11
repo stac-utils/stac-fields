@@ -275,12 +275,13 @@ var Formatters = {
 		if (typeof value !== 'string') {
 			return DataTypes.null('Unknown');
 		}
-		switch(value.toLowerCase()) {
+
+		switch(value.toLowerCase().replaceAll(' ', '')) {
 			case 'image/tiff':
 				return 'TIFF image';
-			case 'image/tiff; application=geotiff':
+			case 'image/tiff;application=geotiff':
 				return 'GeoTIFF image';
-			case 'image/tiff; application=geotiff; profile=cloud-optimized':
+			case 'image/tiff;application=geotiff;profile=cloud-optimized':
 				return 'Cloud-optimized GeoTIFF image';
 			case 'image/jp2':
 				return 'JPEG 2000 image';
@@ -712,7 +713,7 @@ function formatGrouped(context, data, type, filter, coreKey) {
 					temp = Object.values(temp);
 				}
 
-				let itemFieldNames;
+				let itemFieldNames = [];
 				if (Array.isArray(temp)) {
 					itemFieldNames = _.keysFromListOfObjects(temp);
 				}
