@@ -507,10 +507,10 @@ var Formatters = {
 	},
 
 	formatPROJJSON(value) {
-		if (!Utils.isObject(value)) {
+		if (!_.isObject(value)) {
 			return DataTypes.null();
 		}
-		if (Utils.isObject(value.id) && value.id.authority === 'EPSG' && typeof value.code === 'number' && value.code > 0) {
+		if (_.isObject(value.id) && value.id.authority === 'EPSG' && typeof value.code === 'number' && value.code > 0) {
 			return 'EPSG ' + Formatters.formatEPSG(value);
 		}
 		else if (typeof value.name === 'string') {
