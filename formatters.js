@@ -506,6 +506,16 @@ var Formatters = {
 		}
 	},
 
+	formatHexColor(value) {
+		if (typeof value !== 'string' || !value.match(/^#?[\dA-F]{3,8}$/i)) {
+			return _.null();
+		}
+		if (value.startsWith('#')) {
+			value = value.substring(1);
+		}
+		return `<div class="color" style="background-color: #${value}"><code class="color-code">#${value}</code></div>`;
+	},
+
 	formatPROJJSON(value) {
 		if (!_.isObject(value)) {
 			return DataTypes.null();

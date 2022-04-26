@@ -5,6 +5,7 @@
 			"label": "CARD4L",
 			"explain": "CEOS Analysis Ready Data for Land"
 		},
+		"classification": "Classification",
 		"cube": "Data Cube",
 		"eo": "Electro-Optical",
 		"file": "File",
@@ -222,6 +223,61 @@
 			"summary": false
 		},
 
+		"classification:classes": {
+			"summary": false,
+			"label": "Classes",
+			"items": {
+				"color-hint": {
+					"label": "Color",
+					"order": 0,
+					"format": "HexColor"
+				},
+				"value": {
+					"label": "Value",
+					"order": 1
+				},
+				"name": {
+					"label": "Title",
+					"order": 2
+				},
+				"description": {
+					"label": "Description",
+					"order": 3,
+					"format": "CommonMark"
+				}
+			}
+		},
+		"classification:bitfields": {
+			"summary": false,
+			"label": "Bit Mask",
+			"items": {
+				"name": {
+					"label": "Name",
+					"order": 0
+				},
+				"offset": {
+					"label": "Offset",
+					"explain": "Offset to the first bit",
+					"order": 1
+				},
+				"length": {
+					"label": "Number of bits",
+					"order": 2
+				},
+				"description": {
+					"label": "Description",
+					"order": 3,
+					"format": "CommonMark"
+				},
+				"classes": {
+					"alias": "classification:classes"
+				},
+				"roles": {
+					"label": "Purpose"
+				}
+			}
+		},
+
 		"cube:dimensions": {
 			"label": "Dimensions",
 			"summary": false,
@@ -354,6 +410,12 @@
 					"sortable": true,
 					"order": 7,
 					"unit": "W/m²/μm"
+				},
+				"classification:classes": {
+					"alias": "classification:classes"
+				},
+				"classification:bitfields": {
+					"alias": "classification:bitfields"
 				}
 			}
 		},
@@ -464,6 +526,12 @@
 				"histogram": {
 					"label": "Histogram",
 					"custom": true
+				},
+				"classification:classes": {
+					"alias": "classification:classes"
+				},
+				"classification:bitfields": {
+					"alias": "classification:bitfields"
 				}
 			}
 		},

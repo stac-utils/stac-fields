@@ -114,10 +114,13 @@ The most important methods are:
 * Extent (array with two values formatted as range)
 * FileDataType (explains the data types defined in the file extension)
 * FileSize (formats a number of bytes into kB, MB, ...)
+* HexColor (formats a hex color to a box in this color)
 * License (formats a license as link based on SPDX or the links)
+* PROJJSON (formats PROJJSON)
 * Providers (formats an array of providers)
 * Software (formats the list of software as defined in the processing extension)
 * TemporalExtent (array with two timestamps formatted as temporal range, see Timestamp)
+* TemporalExtents (array containing TemporalExtent again)
 * Timestamp (ISO8601 timestamp formatted according to local rules)
 * WKT2 (splits a WKT2 string into nicely formatted chunks for better readability - experimental!)
 
