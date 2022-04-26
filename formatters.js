@@ -109,6 +109,10 @@ var _ = {
 		return html;
 	},
 
+	abbrev(short, long) {
+		return `<abbr title="${_.e(long)}">${_.e(short)}</abbr>`;
+	},
+
 	isObject(obj) {
 		return (typeof obj === 'object' && obj === Object(obj) && !Array.isArray(obj));
 	},
@@ -640,7 +644,7 @@ var Formatters = {
 
 	formatFileDataType(value) {
 		if (typeof value === 'string' && value in Formatters.fileDataTypes) {
-			return `<abbr title="${Formatters.fileDataTypes[value]}">${value}</abbr>`;
+			return _.abbrev(value, Formatters.fileDataTypes[value]);
 		}
 
 		return DataTypes.null();
@@ -678,6 +682,73 @@ var Formatters = {
 		else {
 			return DataTypes.format(value);
 		}
+	},
+
+	formatGridCode(value) {
+		if (typeof value !== 'string') {
+			return DataTypes.format(value);
+		}
+
+		let splitHalf = function(parts, value, labelA, labelB) {
+			let len = value.length;
+			if ((len % 2) === 1) {
+				parts.push(`Code: ${value}`);
+			}
+			else {
+				let mid = len/2;
+				let a = value.substring(0, mid);
+				parts.push(`${labelA}: ${a}`);
+				let b = value.substring(mid, len);
+				parts.push(`${labelB}: ${b}`);
+			}
+		};
+
+		let [designator, code] = value.split(/-(.*)/);
+		let parts = [];
+		switch(designator) {
+			case 'MGRS': 
+				parts.push(_.abbrev(designator, 'Military Grid Reference System'));
+				let [, utm, band, sq, coord] = code.match(/^(\d{2})([C-X])([A-Z]{2})(\d+)$/);
+				parts.push(`UTM Zone: ${utm}`);
+				parts.push(`Latitude Band: ${band}`);
+				parts.push(`Square Identifier: ${sq}`);
+				splitHalf(parts, coord, "Easting", "Northing");
+				break;
+			case 'MSIN':
+				parts.push('MODIS Sinusoidal Tile Grid');
+				splitHalf(parts, code, 'Horizontal', 'Vertical');
+				break;
+			case 'WRS1':
+			case 'WRS2':
+				let version = designator.substring(3,4);
+				parts.push(_.abbrev('WRS-' + version, 'Worldwide Reference System ' + version));
+				splitHalf(parts, code, 'Path', 'Row');
+				break;
+			case 'DOQ':
+				parts.push('Digital Orthophoto Quadrangle');
+				parts.push(`Quadrangle: ${code}`);
+				break;
+			case 'DOQQ':
+				parts.push('Digital Orthophoto Quarter Quadrangle');
+				let quad = code.substr(0, code.length - 2);
+				parts.push(`Quadrangle: ${quad}`);
+				let quarter = code.substr(-2);
+				let a = quarter[0] === 'N' ? 'North' : 'South';
+				let b = quarter[1] === 'E' ? 'East' : 'West';
+				parts.push(`Quarter: ${a} ${b}`);
+				break;
+			case 'MXRA':
+				parts.push('Maxar ARD Tile Grid');
+				let [zone, quadkey] = code.split(/-(.*)/);
+				if (zone.startsWith('Z')) {
+					zone = zone.substring(1);
+				}
+				parts.push(`UTM Zone: ${zone}`);
+				parts.push(`Quadkey: ${quadkey}`);
+				break;
+		}
+
+		return parts.join('<br />');
 	}
 
 };
@@ -688,7 +759,7 @@ function formatGrouped(context, data, type, filter, coreKey) {
 	for(let field in data) {
 		let value;
 		try {
-			let parts = field.split(':', 2);
+			let parts = field.split(/:(.*)/);
 			if (parts.length === 1) {
 				parts.unshift(coreKey);
 			}
@@ -892,7 +963,7 @@ function label(key, spec = null) {
 	}
 	if (_.isObject(spec) && typeof spec.label === 'string') {
 		if (typeof spec.explain === 'string') {
-			return `<abbr title="${_.e(spec.explain)}">${spec.label}</abbr>`;
+			return _.abbrev(spec.label, spec.explain);
 		}
 		else if (typeof spec.label === 'string') {
 			return spec.label;

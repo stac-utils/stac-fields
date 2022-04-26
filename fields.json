@@ -9,6 +9,7 @@
 		"cube": "Data Cube",
 		"eo": "Electro-Optical",
 		"file": "File",
+		"grid": "Gridded Data",
 		"label": "Labels / ML",
 		"mgrs": {
 			"label": "MGRS",
@@ -469,6 +470,11 @@
 		"file:local_path": {
 			"label": "Local Path",
 			"summary": false
+		},
+
+		"grid:code": {
+			"label": "Grid",
+			"format": "GridCode"
 		},
 
 		"raster:bands": {

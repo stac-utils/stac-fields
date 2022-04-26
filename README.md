@@ -114,6 +114,7 @@ The most important methods are:
 * Extent (array with two values formatted as range)
 * FileDataType (explains the data types defined in the file extension)
 * FileSize (formats a number of bytes into kB, MB, ...)
+* GridCode (formats the `grid:code` field)
 * HexColor (formats a hex color to a box in this color)
 * License (formats a license as link based on SPDX or the links)
 * MediaType (converts media types into a more human-readable variant)
