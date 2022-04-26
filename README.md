@@ -116,12 +116,16 @@ The most important methods are:
 * FileSize (formats a number of bytes into kB, MB, ...)
 * HexColor (formats a hex color to a box in this color)
 * License (formats a license as link based on SPDX or the links)
-* PROJJSON (formats PROJJSON)
+* MediaType (converts media types into a more human-readable variant)
+* PROJJSON (formats PROJJSON into a more human-readable variant)
 * Providers (formats an array of providers)
+* Shape (formats an array containing shape/size information, e.g. `proj:shape`)
 * Software (formats the list of software as defined in the processing extension)
 * TemporalExtent (array with two timestamps formatted as temporal range, see Timestamp)
 * TemporalExtents (array containing TemporalExtent again)
+* Transform (makes 2D numerical arrays, e.g. the `proj:transform` field, better readable)
 * Timestamp (ISO8601 timestamp formatted according to local rules)
+* Url (Formats a STAC Link Object)
 * WKT2 (splits a WKT2 string into nicely formatted chunks for better readability - experimental!)
 
 ### Custom formatters
