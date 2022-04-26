@@ -418,7 +418,7 @@ var Formatters = {
 				name = _.toLink(provider.url, name);
 			}
 			if (Array.isArray(provider.roles) && provider.roles.length > 0) {
-				roles = provider.roles.map(r => _.e(r)).join(', ');
+				roles = provider.roles.map(r => DataTypes.format(r)).join(', ');
 				roles = ` (<em>${roles}</em>)`;
 			}
 			if (typeof provider.description === 'string' && provider.description.length > 0) {
@@ -458,7 +458,7 @@ var Formatters = {
 	},
 
 	formatDOI(value) {
-		value = _.e(value);
+		value = DataTypes.format(value);
 		return _.toLink(`http://doi.org/${value}`, value);
 	},
 
@@ -470,7 +470,7 @@ var Formatters = {
 					.replace(/^urn:ogc:def:crs:/i, ''); // OGC URN
 				return _.toLink(value, title);
 			}
-			return _.e(value);
+			return DataTypes.format(value);
 		});
 	},
 
@@ -561,7 +561,7 @@ var Formatters = {
 		let indent = -1;
 		let formatted;
 		try {
-			formatted = value.replace(/([A-Z]+)\[|\]/g, (match, keyword) => {
+			formatted = value.replace(/([A-Z]+)\[|\]/ig, (match, keyword) => {
 				if (match === ']') {
 					indent--;
 					return match;
@@ -587,7 +587,7 @@ var Formatters = {
 
 	formatFileSize(value) {
 		if (typeof value !== 'number') {
-			return _.e(value);
+			return DataTypes.format(value);
 		}
 		var i = value == 0 ? 0 : Math.floor( Math.log(value) / Math.log(1024) );
 		return _.unit(( value / Math.pow(1024, i) ).toFixed(2) * 1, Formatters.fileSizeUnits[i]);
@@ -652,7 +652,7 @@ var Formatters = {
 
 	formatShape(value) {
 		if (Array.isArray(value)) {
-			return value.map(_.e).join(' × ');
+			return value.map(DataTypes.format).join(' × ');
 		}
 		else {
 			return DataTypes.format(value);
@@ -663,7 +663,7 @@ var Formatters = {
 		if (Array.isArray(value)) {
 			let numeric = value.find(v => typeof v === 'number') !== undefined;
 			// If there's potentially a comma in the values (decimal or thousand separators in numbers), use semicolon instead of comma.
-			return value.map(_.e).join(numeric ? '; ' : ', ');
+			return value.map(DataTypes.format).join(numeric ? '; ' : ', ');
 		}
 		else {
 			return DataTypes.format(value);
