@@ -64,7 +64,7 @@ The following options are available in the object:
 * `formatter`: A formatter function that is compatible to the formatters defined in formatters.js. Use this if no suitable pre-defined formatter is available to be specified in `format`. See also [Custom Formatters](#custom-formatters) for more details.
 * `ext`: Specify the extension prefix here, if the field belongs to an extension that has no prefix or so.
 * `unit`: A unit to add after the value.
-* `explain`: A long form for an abbreviation that should be shown in a tooltip.
+* `explain`: A long form for an abbreviation that should be shown in a tooltip. Can also be a http or https link, which shows a link instead of an abbreviation.
 * `mapping`: A map with the keys being the original (stringified lower-case) value and the values being the values shown to users.
 * `custom`: A structure that can't easily be rendered with any of the pre-defined formatters and thus needs a custom implementation (see `externalRenderer`).
 * `alias`: If a field has multiple keys, declare the field to use the specification of the other field.
@@ -122,8 +122,8 @@ The most important methods are:
 * Providers (formats an array of providers)
 * Shape (formats an array containing shape/size information, e.g. `proj:shape`)
 * Software (formats the list of software as defined in the processing extension)
-* TemporalExtent (array with two timestamps formatted as temporal range, see Timestamp)
-* TemporalExtents (array containing TemporalExtent again)
+* TemporalExtent (array with two timestamps formatted as temporal range, see Timestamp) - add `shorten:  true` to the field spec to render a shorter version (i.e. date only)
+* TemporalExtents (array containing a temporal extent per element, which is rendere using `TemporalExtent`, see above)
 * Transform (makes 2D numerical arrays, e.g. the `proj:transform` field, better readable)
 * Timestamp (ISO8601 timestamp formatted according to local rules)
 * Url (Formats a STAC Link Object)

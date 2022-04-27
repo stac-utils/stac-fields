@@ -14,7 +14,7 @@ function display(fields, h = 'h3') {
 		html += '<table border="1" cellspacing="0" cellpadding="4">';
 		for(let field in group.properties) {
 			let prop = group.properties[field];
-			html += `<tr><td title="${prop.field}">${prop.label}</td><td>${prop.formatted}</td></tr>`;
+			html += `<tr><td title="${field}">${prop.label}</td><td>${prop.formatted}</td></tr>`;
 		}
 		html += '</table>\n';
 	}

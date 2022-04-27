@@ -79,7 +79,7 @@ var _ = {
 	toLink(url, title = "", rel = "", target = "_blank") {
 		if (!title) {
 			if (url.length > 50) {
-				title = url.replace(/^\w+:\/\/([^\/]+)((\/[^\/\?]+)*\/([^\/\?]+)(\?.*)?)?$/ig, function(...x) {
+				title = url.replace(/^\w+:\/\/([^\/]+)((\/[^\/\?]+)*\/([^\/\?]+)(\?.*)?)?$/i, function(...x) {
 					if (x[4]) {
 						return x[1] + '​/[…]/​' + x[4]; // There are invisible zero-width whitespaces after and before the slashes. It allows breaking the link in the browser. Be careful when editing.
 					}
@@ -270,7 +270,7 @@ var DataTypes = {
 
 var Formatters = {
 
-	formatUrl(value, field, spec, context = null, parent = null) {
+	formatUrl(value, field, spec = {}, context = null, parent = null) {
 		let title = _.isObject(parent) && typeof parent === 'string' ? parent.title : value;
 		return _.toLink(value, title, parent.rel || "");
 	},
@@ -393,7 +393,7 @@ var Formatters = {
 		return DataTypes.null();
 	},
 
-	formatLicense(value, field, spec, context = null) {
+	formatLicense(value, field, spec = {}, context = null) {
 		if (typeof value !== 'string' || value.length === 0) {
 			return DataTypes.null();
 		}
@@ -492,21 +492,21 @@ var Formatters = {
 		}
 	},
 
-	formatExtent(value, unit = '') {
+	formatExtent(value, field, spec = {}) {
 		if (!Array.isArray(value) || value.length < 2 || (value[0] === null && value[1] === null)) {
 			return DataTypes.null();
 		}
 		else if (value[0] === null) {
-			return `Until ${DataTypes.format(value[1], unit)}`;
+			return `Until ${DataTypes.format(value[1], spec.unit)}`;
 		}
 		else if (value[1] === null) {
-			return `From ${DataTypes.format(value[0], unit)}`;
+			return `From ${DataTypes.format(value[0], spec.unit)}`;
 		}
 		else if (value[0] === value[1]) {
-			return DataTypes.format(value[0], unit);
+			return DataTypes.format(value[0], spec.unit);
 		}
 		else {
-			return value.map(v => DataTypes.format(v, unit)).join(' – ');
+			return value.map(v => DataTypes.format(v, spec.unit)).join(' – ');
 		}
 	},
 
@@ -535,8 +535,8 @@ var Formatters = {
 		}
 	},
 
-	formatTemporalExtent(value, shorten = false) {
-		let formatter = shorten ? Formatters.formatDate : Formatters.formatTimestamp;
+	formatTemporalExtent(value, field, spec = {}) {
+		let formatter = spec.shorten ? Formatters.formatDate : Formatters.formatTimestamp;
 		if (!Array.isArray(value) || value.length < 2 || (typeof value[0] !== 'string' && typeof value[1] !== 'string')) {
 			return DataTypes.null();
 		}
@@ -554,7 +554,7 @@ var Formatters = {
 		}
 	},
 
-	formatTemporalExtents(value) {
+	formatTemporalExtents(value, field, spec = {}) {
 		let sortExtents = (a,b) => {
 			if (a[0] === null) {
 				return -1;
@@ -563,7 +563,7 @@ var Formatters = {
 				return a[0].localeCompare(b[0]);
 			}
 		};
-		return _.toList(value, sortExtents, Formatters.formatTemporalExtent);
+		return _.toList(value, sortExtents, v => Formatters.formatTemporalExtent(v, field, spec));
 	},
 
 	formatWKT2(value) {
@@ -664,12 +664,12 @@ var Formatters = {
 		}
 	},
 
-	formatShape(value) {
+	formatShape(value, field, spec = {}) {
 		if (Array.isArray(value)) {
-			return value.map(DataTypes.format).join(' × ');
+			return value.map(x => DataTypes.format(x, spec.unit)).join(' × ');
 		}
 		else {
-			return DataTypes.format(value);
+			return DataTypes.format(value, spec.unit);
 		}
 	},
 
@@ -831,7 +831,7 @@ function formatGrouped(context, data, type, filter, coreKey) {
 			if (type === 'summaries') {
 				if (!isSummarizedListWithKeys && _.isObject(value)) {
 					if (typeof value.minimum !== 'undefined' && typeof value.minimum !== 'undefined') {
-						formatted = Formatters.formatExtent([value.minimum, value.maximum], spec.unit);
+						formatted = Formatters.formatExtent([value.minimum, value.maximum], field, spec);
 					}
 					else {
 						formatted = DataTypes.object(value);
@@ -963,7 +963,12 @@ function label(key, spec = null) {
 	}
 	if (_.isObject(spec) && typeof spec.label === 'string') {
 		if (typeof spec.explain === 'string') {
-			return _.abbrev(spec.label, spec.explain);
+			if (spec.explain.match(/^https?:\/\//i)) {
+				return _.toLink(spec.explain, spec.label, "about");
+			}
+			else {
+				return _.abbrev(spec.label, spec.explain);
+			}
 		}
 		else if (typeof spec.label === 'string') {
 			return spec.label;
