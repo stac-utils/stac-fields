@@ -52,6 +52,9 @@ var _ = {
 	toList(arr, sort = false, formatter = null) {
 		let list = arr;
 		let tag = 'ul';
+		if (!Array.isArray(arr)) {
+			arr = [arr];
+		}
 		if (sort) {
 			list = list.slice(0);
 			if (typeof sort === 'function') {
