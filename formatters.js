@@ -345,6 +345,8 @@ var Formatters = {
 				return 'HDF';
 			case 'application/x-netcdf':
 				return 'NetCDF';
+			case 'application/wmo-GRIB2':
+				return 'GRIB2';
 			case 'application/octet-stream':
 				return 'Binary file';
 			default:
