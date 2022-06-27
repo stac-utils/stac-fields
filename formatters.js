@@ -278,40 +278,41 @@ var Formatters = {
 		return _.toLink(value, title, parent.rel || "");
 	},
 
-	formatMediaType(value) {
+	formatMediaType(value, field, spec = {}) {
+		let short = Boolean(spec.shorten);
 		if (typeof value !== 'string') {
-			return DataTypes.null('Unknown');
+			return short ? "" : DataTypes.null('Unknown');
 		}
 
 		switch(value.toLowerCase().replaceAll(' ', '')) {
 			case 'image/tiff':
-				return 'TIFF image';
+				return short ? 'TIFF' : 'TIFF image';
 			case 'image/tiff;application=geotiff':
-				return 'GeoTIFF image';
+				return short ? 'GeoTiff' : 'GeoTIFF image';
 			case 'image/tiff;application=geotiff;profile=cloud-optimized':
-				return 'Cloud-optimized GeoTIFF image';
+				return short ? 'COG' : 'Cloud-optimized GeoTIFF image';
 			case 'image/jp2':
-				return 'JPEG 2000 image';
+				return short ? 'JPEG 2000' : 'JPEG 2000 image';
 			case 'image/png':
 			case 'image/apng':
 			case 'image/vnd.mozilla.apng':
-				return 'PNG image';
+				return short ? 'PNG' : 'PNG image';
 			case 'image/gif':
-				return 'GIF image';
+				return short ? 'GIF' : 'GIF image';
 			case 'image/jpeg':
 			case 'image/jpg':
-				return 'JPEG image';
+				return short ? 'JPEG' : 'JPEG image';
 			case 'image/webp':
-				return 'WebP image';
+				return short ? 'WebP' : 'WebP image';
 			case 'image/bmp':
 			case 'image/x-bmp':
 			case 'image/x-ms-bmp':
 			case 'image/wbmp':
-				return 'Bitmap image';
+				return short ? 'Bitmap' : 'Bitmap image';
 			case 'image/svg+xml':
-				return 'SVG vector image';
+				return short ? 'SVG' : 'SVG vector image';
 			case 'text/csv':
-				return 'Comma-separated values (CSV)';
+				return short ? 'CSV' : 'Comma-separated values (CSV)';
 			case 'text/xml':
 			case 'application/xml':
 				return 'XML';
@@ -330,17 +331,17 @@ var Formatters = {
 				return 'GeoPackage';
 			case 'text/html':
 			case 'application/xhtml+xml':
-				return 'HTML (Website)';
+				return short ? 'HTML' : 'HTML (Website)';
 			case 'text/plain':
-				return 'Text document';
+				return short ? 'Text' : 'Text document';
 			case 'text/markdown':
-				return 'Markdown document';
+				return short ? 'Markdown' : 'Markdown document';
 			case 'application/pdf':
-				return 'PDF document';
+				return short ? 'PDF' : 'PDF document';
 			case 'application/zip':
-				return 'ZIP archive';
+				return short ? 'ZIP' : 'ZIP archive';
 			case 'application/gzip':
-				return 'GZIP archive';
+				return short ? 'GZIP' : 'GZIP archive';
 			case 'application/x-hdf':
 				return 'HDF';
 			case 'application/x-netcdf':
@@ -348,11 +349,14 @@ var Formatters = {
 			case 'application/wmo-GRIB2':
 				return 'GRIB2';
 			case 'application/octet-stream':
-				return 'Binary file';
+				return short ? 'Binary' : 'Binary file';
 			default:
 				let parts = value.toLowerCase().match(/^(\w+)\/(?:vnd.|x.)?([\w-\+\.]+)$/);
 				if (Array.isArray(parts) && parts.length >= 2) {
 					let format = _.formatKey(parts[2]);
+					if (short) {
+						return format;
+					}
 					switch(parts[1]) {
 						case 'audio':
 							return `${format} audio`;
