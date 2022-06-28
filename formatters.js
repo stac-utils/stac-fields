@@ -826,8 +826,8 @@ function formatGrouped(context, data, type, filter, coreKey) {
 						itemOrder.push(key);
 					}
 					else {
-						// Copy field spec from fields.json
-						items[key] = spec.items[key];
+						// Clone field spec from fields.json
+						items[key] = Object.assign({}, spec.items[key]);
 						items[key].label = label(key, spec.items[key]);
 					}
 				});
