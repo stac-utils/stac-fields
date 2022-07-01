@@ -233,6 +233,11 @@
 					"order": 0,
 					"format": "HexColor"
 				},
+				"color_hint": {
+					"label": "Color",
+					"order": 0,
+					"format": "HexColor"
+				},
 				"value": {
 					"label": "Value",
 					"order": 1

@@ -350,6 +350,15 @@ var Formatters = {
 				return 'GRIB2';
 			case 'application/octet-stream':
 				return short ? 'Binary' : 'Binary file';
+			case 'application/vnd.laszip':
+				return 'LASzip';
+			case 'application/vnd.laszip+copc': // https://github.com/copcio/copcio.github.io/issues/53
+				return short ? 'COPC' : 'Cloud-optimized Point Cloud (LASzip)';
+			case 'application/vnd+zarr': // https://github.com/zarr-developers/zarr-specs/issues/123
+				return short ? 'zarr' : 'Cloud-optimized Point Cloud (LASzip)';
+			// ToDo: Add media types for:
+			// - flatgeobuf: https://github.com/flatgeobuf/flatgeobuf/discussions/112
+			// - geopaqrquet: https://github.com/opengeospatial/geoparquet/issues/115
 			default:
 				let parts = value.toLowerCase().match(/^(\w+)\/(?:vnd.|x.)?([\w-\+\.]+)$/);
 				if (Array.isArray(parts) && parts.length >= 2) {
