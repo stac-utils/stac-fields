@@ -286,7 +286,8 @@ var Formatters = {
 			const mediaType = require('content-type');
 			media = mediaType.parse(value);
 		} catch (error) {
-			return short ? "" : DataTypes.null('Unknown');
+			console.warn(error);
+			return short ? "" : _.e(value);
 		}
 
 		switch(media.type) {
