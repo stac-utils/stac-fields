@@ -360,7 +360,7 @@ var Formatters = {
 			// - flatgeobuf: https://github.com/flatgeobuf/flatgeobuf/discussions/112
 			// - geopaqrquet: https://github.com/opengeospatial/geoparquet/issues/115
 			default:
-				let parts = value.toLowerCase().match(/^(\w+)\/(?:vnd.|x.)?([\w-\+\.]+)$/);
+				let parts = value.toLowerCase().match(/^(\w+)\/(?:vnd.|x.)?([\w-\+\.]+)(;\s?.+)?$/);
 				if (Array.isArray(parts) && parts.length >= 2) {
 					let format = _.formatKey(parts[2]);
 					if (short) {
