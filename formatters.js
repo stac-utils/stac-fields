@@ -280,17 +280,28 @@ var Formatters = {
 
 	formatMediaType(value, field, spec = {}) {
 		let short = Boolean(spec.shorten);
-		if (typeof value !== 'string') {
+
+		let media;
+		try {
+			const mediaType = require('content-type');
+			media = mediaType.parse(value);
+		} catch (error) {
 			return short ? "" : DataTypes.null('Unknown');
 		}
 
-		switch(value.toLowerCase().replaceAll(' ', '')) {
+		switch(media.type) {
 			case 'image/tiff':
-				return short ? 'TIFF' : 'TIFF image';
-			case 'image/tiff;application=geotiff':
-				return short ? 'GeoTiff' : 'GeoTIFF image';
-			case 'image/tiff;application=geotiff;profile=cloud-optimized':
-				return short ? 'COG' : 'Cloud-optimized GeoTIFF image';
+				if (media.parameters.application === "geotiff") {
+					if (media.parameters.profile === "cloud-optimized") {
+						return short ? 'COG' : 'Cloud-optimized GeoTIFF image';
+					}
+					else {
+						return short ? 'GeoTiff' : 'GeoTIFF image';
+					}
+				}
+				else {
+					return short ? 'TIFF' : 'TIFF image';
+				}
 			case 'image/jp2':
 				return short ? 'JPEG 2000' : 'JPEG 2000 image';
 			case 'image/png':
@@ -358,31 +369,30 @@ var Formatters = {
 				return short ? 'zarr' : 'Cloud-optimized Point Cloud (LASzip)';
 			// ToDo: Add media types for:
 			// - flatgeobuf: https://github.com/flatgeobuf/flatgeobuf/discussions/112
-			// - geopaqrquet: https://github.com/opengeospatial/geoparquet/issues/115
+			// - geoparquet: https://github.com/opengeospatial/geoparquet/issues/115
 			default:
-				let parts = value.toLowerCase().match(/^(\w+)\/(?:vnd.|x.)?([\w-\+\.]+)(;\s?.+)?$/);
-				if (Array.isArray(parts) && parts.length >= 2) {
-					let format = _.formatKey(parts[2]);
-					if (short) {
-						return format;
-					}
-					switch(parts[1]) {
-						case 'audio':
-							return `${format} audio`;
-						case 'image':
-							return `${format} image`;
-						case 'font':
-							return `Font`;
-						case 'model':
-							return `${format} 3D model`;
-						case 'video':
-							return `${format} video`;
-						case 'text':
-						case 'application':
-							return format;
-					}
+				let [group, format] = media.type.split('/');
+				format = _.formatKey(format.replace(/^(vnd|x)[\.\+]/, ''));
+				if (short) {
+					return format;
 				}
-				return _.e(value);
+				switch(group) {
+					case 'audio':
+						return `${format} audio`;
+					case 'image':
+						return `${format} image`;
+					case 'font':
+						return `Font`;
+					case 'model':
+						return `${format} 3D model`;
+					case 'video':
+						return `${format} video`;
+					case 'text':
+					case 'application':
+						return format;
+					default:
+						return _.e(value);
+				}
 		}
 	},
 

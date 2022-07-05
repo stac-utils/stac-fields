@@ -24,6 +24,7 @@
 	"license": "Apache-2.0",
 	"dependencies": {
 		"commonmark": "^0.29.3",
+		"content-type": "^1.0.4",
 		"multihashes": "^3.1.2"
 	},
 	"scripts": {
