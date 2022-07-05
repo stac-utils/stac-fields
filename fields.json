@@ -73,7 +73,11 @@
 				"successor-version": "Successor version",
 				"source": "Source data",
 				"cite-as": "Citation",
-				"related": "Related resource"
+				"related": "Related resource",
+				"describedby": "Description of the resource",
+				"service-desc": "API Definitions",
+				"service-doc": "API User Documentation",
+				"conformance": "API Conformance Declaration"
 			}
 		},
 		"type": {
