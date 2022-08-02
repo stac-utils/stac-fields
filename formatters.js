@@ -367,13 +367,13 @@ var Formatters = {
 			case 'application/vnd.laszip+copc': // https://github.com/copcio/copcio.github.io/issues/53
 				return short ? 'COPC' : 'Cloud-optimized Point Cloud (LASzip)';
 			case 'application/vnd+zarr': // https://github.com/zarr-developers/zarr-specs/issues/123
-				return short ? 'zarr' : 'Cloud-optimized Point Cloud (LASzip)';
+				return 'Zarr';
 			// ToDo: Add media types for:
 			// - flatgeobuf: https://github.com/flatgeobuf/flatgeobuf/discussions/112
 			// - geoparquet: https://github.com/opengeospatial/geoparquet/issues/115
 			default:
 				let [group, format] = media.type.split('/');
-				format = _.formatKey(format.replace(/^(vnd|x)[\.\+]/, ''));
+				format = _.formatKey(format.replace(/^(vnd|x)[.+-]/, ''));
 				if (short) {
 					return format;
 				}
