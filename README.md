@@ -177,7 +177,6 @@ All methods return strings, which may contain HTML. Input is sanitized.
 * `toLink(url: string, title: string) => string`: Converts a url and title to a HTML link (`<a href="$url" target="_blank">$title</a>`).
 * `toList`
 * `toObject`
-* `normalizeFields`
 * `hextoUint8`
 * `uint8ToHex`
 * `unit`

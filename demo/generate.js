@@ -1,5 +1,5 @@
 const fs = require('fs');
-const STAC = require('../formatters');
+const STAC = require('../index');
 const item = require('./item.json');
 
 const properties = STAC.formatItemProperties(item);
