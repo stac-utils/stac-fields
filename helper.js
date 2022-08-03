@@ -6,6 +6,10 @@ const _ = {
 		}
 		return str.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, '&apos;');
 	},
+	
+	toNothing(label = 'n/a') {
+		return `<i class="null">${label}</i>`;
+	},
 
 	toList(arr, sort = false, formatter = null) {
 		let list = arr;
@@ -27,7 +31,7 @@ const _ = {
 			list = list.map(formatter);
 		}
 		if (list.length === 0) {
-			return DataTypes.null();
+			return _.toNothing();
 		}
 		else if (list.length === 1) {
 			return list[0];

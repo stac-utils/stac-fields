@@ -11,7 +11,7 @@ const DataTypes = {
 	},
 	
 	null(label = 'n/a') {
-		return `<i class="null">${label}</i>`;
+		return _.toNothing(label);
 	},
 	
 	number(num, unit = '') {
