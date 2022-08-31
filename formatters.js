@@ -21,6 +21,7 @@ const Formatters = {
 		}
 
 		switch(media.type) {
+			// not supported: image/vnd.stac.geotiff; cloud-optimized=true
 			case 'image/tiff':
 				if (media.parameters.application === "geotiff") {
 					if (media.parameters.profile === "cloud-optimized") {
@@ -61,6 +62,8 @@ const Formatters = {
 			case 'text/json':
 			case 'application/json':
 				return 'JSON';
+			case 'application/x-ndjson':
+				return short ? 'NDJSON' : 'Newline Delimited JSON';
 			case 'text/yaml':
 			case 'text/vnd.yaml':
 			case 'text/x-yaml':
@@ -68,10 +71,15 @@ const Formatters = {
 				return 'YAML';
 			case 'application/geo+json':
 				return 'GeoJSON';
+			case 'application/gml+xml':
+				return 'GML';
+			case 'application/vnd.google-earth.kml+xml':
+				return 'KML';
 			case 'application/geopackage+vnd.sqlite3':
 			case 'application/geopackage+sqlite3':
 				return 'GeoPackage';
 			case 'text/html':
+			case 'application/html':
 			case 'application/xhtml+xml':
 				return short ? 'HTML' : 'HTML (Website)';
 			case 'text/plain':
@@ -86,8 +94,11 @@ const Formatters = {
 				return short ? 'GZIP' : 'GZIP archive';
 			case 'application/x-hdf':
 				return 'HDF';
+			case 'application/netcdf':
 			case 'application/x-netcdf':
 				return 'NetCDF';
+			case 'application/x.mrf':
+				return short ? 'MRF' : 'Meta Raster Format';
 			case 'application/wmo-GRIB2':
 				return 'GRIB2';
 			case 'application/octet-stream':
@@ -98,6 +109,8 @@ const Formatters = {
 				return short ? 'COPC' : 'Cloud-optimized Point Cloud (LASzip)';
 			case 'application/vnd+zarr': // https://github.com/zarr-developers/zarr-specs/issues/123
 				return 'Zarr';
+			case 'application/x-parquet':
+				return 'Parquet'
 			// ToDo: Add media types for:
 			// - flatgeobuf: https://github.com/flatgeobuf/flatgeobuf/discussions/112
 			// - geoparquet: https://github.com/opengeospatial/geoparquet/issues/115
