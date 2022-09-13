@@ -126,7 +126,7 @@
 		"keywords": "Keywords",
 
 		"datetime": {
-			"label": "Acquired",
+			"label": "Datetime",
 			"format": "Timestamp",
 			"summary": false
 		},
@@ -142,12 +142,12 @@
 		},
 
 		"start_datetime": {
-			"label": "First Acquisition",
+			"label": "Start Datetime",
 			"format": "Timestamp",
 			"summary": false
 		},
 		"end_datetime": {
-			"label": "Last Acquisition",
+			"label": "End Datetime",
 			"format": "Timestamp",
 			"summary": false
 		},
