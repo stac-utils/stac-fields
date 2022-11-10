@@ -54,6 +54,10 @@ function formatGrouped(context, data, type, filter, coreKey) {
 					itemFieldNames = Object.keys(temp);
 				}
 
+				if (typeof filter === 'function') {
+					itemFieldNames = itemFieldNames.filter(filter)
+				}
+
 				items = {};
 				// Remove fields from list that are not available in the data
 				itemOrder = spec.itemOrder.filter(fieldName => itemFieldNames.includes(fieldName));
