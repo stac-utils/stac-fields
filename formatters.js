@@ -25,7 +25,7 @@ const Formatters = {
 			case 'image/tiff':
 				if (media.parameters.application === "geotiff") {
 					if (media.parameters.profile === "cloud-optimized") {
-						return short ? 'COG' : 'Cloud-optimized GeoTIFF image';
+						return short ? 'COG' : 'Cloud-Optimized GeoTIFF image';
 					}
 					else {
 						return short ? 'GeoTiff' : 'GeoTIFF image';
@@ -106,7 +106,7 @@ const Formatters = {
 			case 'application/vnd.laszip':
 				return 'LASzip';
 			case 'application/vnd.laszip+copc': // https://github.com/copcio/copcio.github.io/issues/53
-				return short ? 'COPC' : 'Cloud-optimized Point Cloud (LASzip)';
+				return short ? 'COPC' : 'Cloud-Optimized Point Cloud (LASzip)';
 			case 'application/vnd+zarr': // https://github.com/zarr-developers/zarr-specs/issues/123
 				return 'Zarr';
 			case 'application/x-parquet':
@@ -284,7 +284,7 @@ const Formatters = {
 
 	formatHexColor(value) {
 		if (typeof value !== 'string' || !value.match(/^#?[\dA-F]{3,8}$/i)) {
-			return _.null();
+			return DataTypes.null();
 		}
 		if (value.startsWith('#')) {
 			value = value.substring(1);
