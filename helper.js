@@ -58,11 +58,17 @@ const _ = {
 		return `<a href="${_.e(url)}" rel="${_.e(rel)}" target="${_.e(target)}">${_.e(title)}</a>`;
 	},
 
-	toObject(obj, formatter = null) {
+	toObject(obj, formatter = null, keyFormatter = null) {
 		let html = '<dl>';
 		for(let key in obj) {
 			// ToDo: also convert CamelCase? but not abbreviations like "USA".
-			let label = _.formatKey(key, true);
+			let label;
+			if (typeof keyFormatter === 'function') {
+				label = keyFormatter(key, obj);
+			}
+			else {
+				label = _.formatKey(key, true);
+			}
 			let value = obj[key];
 			if (typeof formatter === 'function') {
 				value = formatter(value, key, obj);
@@ -91,9 +97,9 @@ const _ = {
 
 	hexToUint8(hexString) {
 		if(hexString.length === 0 || hexString.length % 2 !== 0){
-			throw new Error(`The string "${hexString}" is not valid hex.`)
+			throw new Error(`The string "${hexString}" is not valid hex.`);
 		}
-  		return new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+		return new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
 	},
 
 	uint8ToHex(bytes) {

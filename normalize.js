@@ -7,13 +7,13 @@ const Normalize = {
     let parts = ['extensions', 'metadata', 'links', 'assets'];
     for (let part of parts) {
       for(let key in fields[part]) {
-        fields[part][key] = Normalize.field(fields[part][key], fields[part]);
+        fields[part][key] = Normalize.field(fields[part][key], fields[part], fields);
       }
     }
     return fields;
   },
 
-  field(spec, fields = {}) {
+  field(spec, fields = {}, allFields = {}) {
     // If just a string label is given, make a normal object with a label from it
     if (typeof spec === 'string') {
       return {
@@ -23,7 +23,11 @@ const Normalize = {
     // Resolve alias
     if (typeof spec.alias === 'string') {
       // As we don't know whether the alias has been resolved so far, resolve it here, too.
-      return Object.assign(spec, Normalize.field(fields[spec.alias], fields));
+      let aliasedSpec = fields[spec.alias] || allFields.metadata[spec.alias];
+      if (!aliasedSpec) {
+        throw new Error('Alias is invalid: ' + spec.alias);
+      }
+      return Object.assign(spec, Normalize.field(aliasedSpec, fields, allFields));
     }
 
     // Add formatting callback as `formatter`
@@ -35,7 +39,7 @@ const Normalize = {
     if (_.isObject(spec.items)) {
     let itemOrder = [];
       for(let key in spec.items) {
-        spec.items[key] = Normalize.field(spec.items[key], fields);
+        spec.items[key] = Normalize.field(spec.items[key], fields, allFields);
         itemOrder.push(Object.assign({key}, spec.items[key]));
       }
 

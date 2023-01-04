@@ -1,5 +1,6 @@
 {
 	"extensions": {
+		"alternate": "Alternative Access Methods",
 		"anon": "Anonymized Location",
 		"card4l": {
 			"label": "CARD4L",
@@ -8,14 +9,24 @@
 		"classification": "Classification",
 		"cube": "Data Cube",
 		"eo": "Electro-Optical",
+		"forecast": "Forecast",
 		"file": "File",
 		"grid": "Gridded Data",
+		"goes": {
+			"label": "NOAA GOES",
+			"explain": "NOAA Geostationary Operational Environmental Satellite"
+		},
 		"label": "Labels / ML",
 		"mgrs": {
 			"label": "MGRS",
 			"explain": "Military Grid Reference System"
 		},
+		"noaa_mrms_qpe": {
+			"label": "NOAA MRMS QPE",
+			"explain": "NOAA Multi-Radar Multi-Sensor Quantitative Precipitation Estimation"
+		},
 		"odc": "Open Data Cube",
+		"order": "Order",
 		"pc": "Point Cloud",
 		"processing": "Processing",
 		"proj": "Projection",
@@ -77,7 +88,8 @@
 				"describedby": "Description of the resource",
 				"service-desc": "API Definitions",
 				"service-doc": "API User Documentation",
-				"conformance": "API Conformance Declaration"
+				"conformance": "API Conformance Declaration",
+				"order": "Order details"
 			}
 		},
 		"type": {
@@ -107,6 +119,24 @@
 				"graphic": "Illustration"
 			}
 		},
+		"alternate": {
+			"label": "Alternatives",
+			"listWithKeys": true,
+			"items": {
+				"href": {
+					"label": "URL",
+					"format": "Url"
+				},
+				"title": {
+					"alias": "title"
+				},
+				"description": {
+					"alias": "description"
+				}
+			},
+			"summary": false,
+			"ext": "alternate"
+		},
 		"table:storage_options": {
 			"alias": "xarray:storage_options"
 		},
@@ -126,7 +156,7 @@
 		"keywords": "Keywords",
 
 		"datetime": {
-			"label": "Acquired",
+			"label": "Time of data",
 			"format": "Timestamp",
 			"summary": false
 		},
@@ -142,12 +172,12 @@
 		},
 
 		"start_datetime": {
-			"label": "First Acquisition",
+			"label": "Beginning of data",
 			"format": "Timestamp",
 			"summary": false
 		},
 		"end_datetime": {
-			"label": "Last Acquisition",
+			"label": "End of data",
 			"format": "Timestamp",
 			"summary": false
 		},
@@ -233,11 +263,6 @@
 			"summary": false,
 			"label": "Classes",
 			"items": {
-				"color-hint": {
-					"label": "Color",
-					"order": 0,
-					"format": "HexColor"
-				},
 				"color_hint": {
 					"label": "Color",
 					"order": 0,
@@ -247,14 +272,22 @@
 					"label": "Value",
 					"order": 1
 				},
-				"name": {
+				"title": {
 					"label": "Title",
 					"order": 2
 				},
+				"name": {
+					"label": "Identifier",
+					"order": 3
+				},
 				"description": {
 					"label": "Description",
-					"order": 3,
+					"order": 4,
 					"format": "CommonMark"
+				},
+				"nodata": {
+					"label": "No-data value",
+					"order": 5
 				}
 			}
 		},
@@ -435,6 +468,23 @@
 			"unit": "%"
 		},
 
+		"forecast:reference_datetime": {
+			"label": "Reference time",
+			"format": "Timestamp",
+			"summary": "r"
+		},
+		"forecast:horizon": {
+			"label": "Forecast Horizon",
+			"explain": "The time between the reference time and the forecast time",
+			"format": "Duration",
+			"summary": "r"
+		},
+		"forecast:duration": {
+			"label": "Forecast Length",
+			"format": "Duration",
+			"summary": "r"
+		},
+
 		"file:bits_per_sample": "Bits per Sample",
 		"file:byte_order": "Byte Order",
 		"file:checksum": {
@@ -480,6 +530,92 @@
 		"file:local_path": {
 			"label": "Local Path",
 			"summary": false
+		},
+
+		"goes:orbital_slot": "Oribtal Slot",
+		"goes:system_environment": {
+			"label": "System Environment",
+			"mapping": {
+				"OR": "Operational system, real-time data",
+				"OT": "Operational system, test data",
+				"IR": "Test system, real-time data",
+				"IT": "Test system, test data",
+				"IP": "Test system, playback data",
+				"IS": "Test system, simulated data"
+			}
+		},
+		"goes:image_type": {
+			"label": "Area",
+			"mapping": {
+				"FULL DISK": "The Americas (full disk)",
+				"CONUS": "North America (continental US)",
+				"MESOSCALE": "South America (mesoscale)"
+			}
+		},
+		"goes:mesoscale_image_number": {
+			"label": "Area in South America",
+			"mapping": {
+				"1": "Region 1",
+				"2": "Region 2"
+			}
+		},
+		"goes:mode": {
+			"label": "Data Coverage",
+			"mapping": {
+				"3": "3: 1x full disk, 3x continental US, 30x mesoscale region 1, 30x mesoscale region 2 (every 15 minutes)",
+				"4": "4: 1x full disk (every 5 minutes)",
+				"5": "5: 1x full disk, 2x continental US, 20x mesoscale region 1, 20x mesoscale region 2 (every 10 minutes)",
+				"6": "6: 1x full disk, 2x continental US, 10x mesoscale region 1, 10x mesoscale region 2 (every 10 minutes)"
+			}
+		},
+		"goes:group_time_threshold": {
+			"label": "Time threshold in a Group",
+			"explain": "Lightning group maximum time difference among lightning events in a group",
+			"unit": "s"
+		},
+		"goes:flash_time_threshold": {
+			"label": "Time threshold in a Flash",
+			"explain": "Lightning flash maximum time difference among lightning events in a flash",
+			"unit": "s"
+		},
+		"goes:lightning_wavelength": {
+			"label": "Central wavelength",
+			"unit": "nm"
+		},
+		"goes:yaw_flip_flag": {
+			"label": "Yaw Flip Configuration",
+			"explain": "Flag indicating that the spacecraft is operating in yaw flip configuration.",
+			"mapping": {
+				"0": "Upright",
+				"1": "Neither",
+				"2": "Inverted"
+			}
+		},
+		"goes:event_count": "Lightning Events",
+		"goes:group_count": "Lightning Groups",
+		"goes:flash_count": "Lightning Flashes",
+		"goes:nominal_satellite_subpoint_lat": {
+			"label": "Satellite subpoint latitude",
+			"unit": "°N"
+		},
+		"goes:nominal_satellite_subpoint_lon": {
+			"label": "Satellite subpoint longitude",
+			"unit": "°E"
+		},
+		"goes:nominal_satellite_height": {
+			"label": "Satellite height",
+			"explain": "Nominal satellite height above GRS 80 ellipsoid",
+			"unit": "km"
+		},
+		"goes:percent_navigated_L1b_events": {
+			"label": "Events navigated by instrument",
+			"format": "Percent0to1",
+			"unit": "%"
+		},
+		"goes:percent_uncorrectable_L0_errors": {
+			"label": "Data lost",
+			"format": "Percent0to1",
+			"unit": "%"
 		},
 
 		"grid:code": {
@@ -599,6 +735,28 @@
 		"mgrs:grid_square": "Grid Square",
 		"mgrs:utm_zone": "UTM Zone",
 
+		"noaa_mrms_qpe:pass": {
+			"label": "Pass number",
+			"mapping": {
+				"1": "1 (less latency / less gauges)",
+				"2": "2 (more latency / more gauges)"
+			}
+		},
+		"noaa_mrms_qpe:period": {
+			"label": "Accumulation Period",
+			"unit": "h"
+		},
+		"noaa_mrms_qpe:region": {
+			"label": "Region",
+			"mapping": {
+				"CONUS": "Continental US",
+				"HAWAII": "Hawaii",
+				"GUAM": "Guam",
+				"ALASKA": "Alaska",
+				"CARIB": "Caribbean Islands"
+			}
+		},
+
 		"openeo:status":  "Processing Status",
 		"api_version": {
 			"label": "API Version",
@@ -634,6 +792,29 @@
 			"custom": true,
 			"summary": false
 		},
+
+		"order:status": {
+			"label": "Status",
+			"mapping": {
+				"orderable": "Orderable (data can be ordered)",
+				"ordered": "Ordered (preparing to deliver data)",
+				"pending": "Pending (waiting for activation)",
+				"shipping": "Shipping (data is getting processed)",
+				"succeeded": "Delivered (data is available)",
+				"failed": "Failed (unable to deliver)",
+				"canceled": "Canceled (delivery stopped)"
+			}
+		},
+		"order:id": "Identifier",
+		"order:date": {
+			"label": "Submitted",
+			"format": "Timestamp",
+			"summary": "r"
+		},
+		"order:expiration_date": {
+			"alias": "expires"
+		},
+
 
 		"pc:count": {
 			"label": "Points",
@@ -1022,10 +1203,10 @@
 		"card4l:specification": {
 			"label": "Specification",
 			"mapping": {
-				"sr": "Surface Reflectance (Optical)",
-				"st": "Surface Temperature (Optical)",
-				"nrb": "Normalized Radar Backscatter (SAR)",
-				"pol": "Polarimetric Radar (SAR)"
+				"SR": "Surface Reflectance (Optical)",
+				"ST": "Surface Temperature (Optical)",
+				"NRB": "Normalized Radar Backscatter (SAR)",
+				"POL": "Polarimetric Radar (SAR)"
 			}
 		},
 		"card4l:specification_version": "Specification Version",

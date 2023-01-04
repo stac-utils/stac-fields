@@ -62,7 +62,7 @@ The following options are available in the object:
 * `label`: The human-readable title for the value.
 * `format`: The name of the formatter in formatters.js, but without the leading `format`.
 * `formatter`: A formatter function that is compatible to the formatters defined in formatters.js. Use this if no suitable pre-defined formatter is available to be specified in `format`. See also [Custom Formatters](#custom-formatters) for more details.
-* `ext`: Specify the extension prefix here, if the field belongs to an extension that has no prefix or so.
+* `ext`: Specify the extension key here, if the field belongs to an extension that has no prefix or so.
 * `unit`: A unit to add after the value.
 * `explain`: A long form for an abbreviation that should be shown in a tooltip. Can also be a http or https link, which shows a link instead of an abbreviation.
 * `mapping`: A map with the keys being the original (stringified lower-case) value and the values being the values shown to users.
@@ -99,6 +99,7 @@ The most important methods are:
 * `extension(key: string) => string`: Formats an extension, similar to `label`.
 * `formatAsset(asset: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats an asset. Also groups by extension per asset.
 * `formatLink(link: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats a link. Also groups by extension per link.
+* `formatProvider(provider: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats a provider. Also groups by extension per provider.
 * `formatCollection(collection: object, filter: function = null, coreKey: string = '') => object`: Formats a collection. Also groups by extension. *Experimental!*
 * `formatSummaries(collection: object, filter: function = null, coreKey: string = '') => object`: Formats the summaries in a collection. Also groups by extension.
 * `formatItemProperties(item: object, filter: function = null, coreKey: string = '') => object`: Formats the properties in an Item. Also groups by extension.
@@ -110,6 +111,7 @@ The most important methods are:
 * CSV (array to comma-separated values)
 * Date
 * DOI (generate a link for a DOI)
+* Duration (ISO 8601 duration)
 * EPSG (generate a link for an EPSG code)
 * Extent (array with two values formatted as range)
 * FileDataType (explains the data types defined in the file extension)

@@ -149,6 +149,11 @@ function formatLink(link, context, filter = null, coreKey = '') {
 	return formatGrouped(context, link, 'links', filter, coreKey);
 }
 
+// For Providers
+function formatProvider(provider, context, filter = null, coreKey = '') {
+	return formatGrouped(context, provider, 'providers', filter, coreKey);
+}
+
 // For Collection summaries
 function formatSummaries(collection, filter = null, coreKey = '') {
 	return formatGrouped(collection, collection.summaries, 'summaries', filter, coreKey);
@@ -166,16 +171,22 @@ function formatItemProperties(item, filter = null, coreKey = '') {
 
 function format(value, field, context = null, parent = null, spec = null) {
 	if (!_.isObject(spec)) {
-		spec = Fields.metadata[field] || {};
+		spec = Registry.getSpecification(field);
 	}
 
 	if (typeof spec.formatter === 'function') {
 		return spec.formatter(value, field, spec, context, parent);
 	}
 	else if (_.isObject(spec.mapping)) {
-		let key = String(value).toLowerCase();
+		let key = String(value);
 		if (typeof spec.mapping[key] !== 'undefined') {
 			value = spec.mapping[key];
+		}
+		else if (typeof spec.mapping[key.toLowerCase()] !== 'undefined') {
+			value = spec.mapping[key.toLowerCase()];
+		}
+		else if (typeof spec.mapping[key.toUpperCase()] !== 'undefined') {
+			value = spec.mapping[key.toUpperCase()];
 		}
 		return DataTypes.format(value, spec.unit);
 	}
@@ -192,16 +203,18 @@ function format(value, field, context = null, parent = null, spec = null) {
 		}
 	}
 	else if (_.isObject(value) && _.isObject(spec.items)) {
-		let callback = (v, k, p) => format(v, k, context, p, spec.listWithKeys ? Object.assign({}, spec, {listWithKeys: false}) : spec.items[k]);
+		let callbackSpec = k => spec.listWithKeys ? {items: spec.items} : spec.items[k];
+		let callbackValue = (v, k, p) => format(v, k, context, p, callbackSpec(k));
+		let callbackLabel = k => label(k, callbackSpec(k));
 		if (Registry.externalRenderer && (spec.custom || spec.items)) {
 			let formattedValues = {};
 			for(let key in value) {
-				formattedValues[key] = callback(value[key], key, value);
+				formattedValues[key] = callbackValue(value[key], key, value);
 			}
 			return formattedValues;
 		}
 		else {
-			return _.toObject(value, callback);
+			return _.toObject(value, callbackValue, callbackLabel);
 		}
 	}
 	else {
@@ -211,7 +224,7 @@ function format(value, field, context = null, parent = null, spec = null) {
 
 function label(key, spec = null) {
 	if (!_.isObject(spec)) {
-		spec = Fields.metadata[key] || {};
+		spec = Registry.getSpecification(key);
 	}
 	if (_.isObject(spec) && typeof spec.label === 'string') {
 		if (typeof spec.explain === 'string') {
@@ -242,6 +255,8 @@ module.exports = {
 	formatItemProperties,
 	formatAsset,
 	formatLink,
+	formatProvider,
+	formatGrouped,
 	Fields,
 	Registry,
 	Helper: _,

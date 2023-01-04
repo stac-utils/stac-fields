@@ -152,6 +152,10 @@ const Formatters = {
 		return DataTypes.null();
 	},
 
+	formatPercent0to1(value, field, spec = {}) {
+		return DataTypes.number(value * 100, spec.unit);
+	},
+
 	formatDate(value) {
 		if (typeof value === 'string') {
 			try {
@@ -161,6 +165,21 @@ const Formatters = {
 					year: 'numeric'
 				});
 			} catch (error) {}
+		}
+		return DataTypes.null();
+	},
+
+	formatDuration(value) {
+		if (typeof value === 'string') {
+			const { isoDuration, en } = require('@musement/iso-duration');
+			isoDuration.setLocales({ en }, { fallbackLocale: 'en' });
+			let formatted = isoDuration(value).humanize('en');
+			if (formatted.length === 0) {
+				return 'none';
+			}
+			else {
+				return formatted;
+			}
 		}
 		return DataTypes.null();
 	},
@@ -518,6 +537,27 @@ const Formatters = {
 				parts.push(`UTM Zone: ${zone}`);
 				parts.push(`Quadkey: ${quadkey}`);
 				break;
+			case 'EASE':
+				let [dggs, components] = code.split('-');
+				if (dggs === 'DGGS') {
+					parts.push('EASE-DGGS');
+					let [level, rowcol, ...fractions] = components.split('.');
+					parts.push(`Level: ${level}`);
+					if (rowcol.length === 6) {
+						parts.push(`Level 0 row cell: ${rowcol.substring(0,3)}`);
+						parts.push(`Level 0 column cell: ${rowcol.substring(3,6)}`);
+						for(let i in fractions) {
+							let value = fractions[i];
+							if (value.length === 2) {
+								parts.push(`Fraction of level ${i} row cell: ${value[0]}`);
+								parts.push(`Fraction of level ${i} column cell: ${value[1]}`);
+							}
+						}
+					}
+					break;
+				}
+			default:
+				parts.push(value);
 		}
 
 		return parts.join('<br />');
