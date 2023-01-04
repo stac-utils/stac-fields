@@ -564,8 +564,7 @@
 			"mapping": {
 				"3": "3: 1x full disk, 3x continental US, 30x mesoscale region 1, 30x mesoscale region 2 (every 15 minutes)",
 				"4": "4: 1x full disk (every 5 minutes)",
-				"5": "5: 1x full disk, 2x continental US, 20x mesoscale region 1, 20x mesoscale region 2 (every 10 minutes)",
-				"6": "6: 1x full disk, 2x continental US, 10x mesoscale region 1, 10x mesoscale region 2 (every 10 minutes)"
+				"6": "6: 1x full disk, 2x continental US, 20x mesoscale region 1, 20x mesoscale region 2 (every 10 minutes)"
 			}
 		},
 		"goes:group_time_threshold": {
