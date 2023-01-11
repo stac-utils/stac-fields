@@ -1,5 +1,6 @@
 const _ = require('./helper');
 const DataTypes = require('./datatypes');
+const I18N = require('./I18N');
 
 const Formatters = {
 
@@ -9,6 +10,10 @@ const Formatters = {
 	},
 
 	formatMediaType(value, field, spec = {}) {
+		return _.e(_.t(Formatters._formatMediaType(value, field, spec)));
+	},
+
+	_formatMediaType(value, field, spec = {}) {
 		let short = Boolean(spec.shorten);
 
 		let media;
@@ -135,7 +140,7 @@ const Formatters = {
 					case 'application':
 						return format;
 					default:
-						return _.e(value);
+						return value;
 				}
 		}
 	},
@@ -143,7 +148,7 @@ const Formatters = {
 	formatTimestamp(value) {
 		if (typeof value === 'string') {
 			try {
-				return new Date(value).toLocaleString([], {
+				return new Date(value).toLocaleString(I18N.locales, {
 					timeZone: "UTC",
 					timeZoneName: "short"
 				});
@@ -159,7 +164,7 @@ const Formatters = {
 	formatDate(value) {
 		if (typeof value === 'string') {
 			try {
-				return new Date(value).toLocaleString([], {
+				return new Date(value).toLocaleString(I18N.locales, {
 					day: 'numeric',
 					month: 'numeric',
 					year: 'numeric'
@@ -175,13 +180,33 @@ const Formatters = {
 			isoDuration.setLocales({ en }, { fallbackLocale: 'en' });
 			let formatted = isoDuration(value).humanize('en');
 			if (formatted.length === 0) {
-				return 'none';
+				return _.e(_.t('none'));
 			}
 			else {
-				return formatted;
+				return _.e(formatted);
 			}
 		}
 		return DataTypes.null();
+	},
+
+	formatLanguageCode(value) {
+		if (Array.isArray(value)) {
+			return _.toList(value, true, Formatters.formatLanguageCode, false);
+		}
+		else if (typeof value !== 'string' || value.length < 2) {
+			return DataTypes.null();
+		}
+
+		const list = require('./languages.json');
+		const [code, ...rest] = value.split('-');
+		if (code in list) {
+			const name = list[code];
+			if (rest.length > 0) {
+				return _.e(_.t(`${name} (${rest.join(' ')})`));
+			}
+			return _.e(_.t(name));
+		}
+		return _.e(_.t(value));
 	},
 
 	formatLicense(value, field, spec = {}, context = null) {
@@ -332,10 +357,10 @@ const Formatters = {
 			return DataTypes.null();
 		}
 		else if (typeof value[0] !== 'string') {
-			return `Until ${formatter(value[1])}`;
+			return _.t("Until {0}", [formatter(value[1])]);
 		}
 		else if (typeof value[1] !== 'string') {
-			return `${formatter(value[0])} until present`;
+			return _.t("{0} until present", [formatter(value[0])]);
 		}
 		else if (value[0] === value[1]) {
 			return Formatters.formatTimestamp(value[0]);
@@ -351,7 +376,7 @@ const Formatters = {
 				return -1;
 			}
 			else {
-				return a[0].localeCompare(b[0]);
+				return a[0].localeCompare(b[0], I18N.locales);
 			}
 		};
 		return _.toList(value, sortExtents, v => Formatters.formatTemporalExtent(v, field, spec));
@@ -408,7 +433,7 @@ const Formatters = {
 			const meta = multihash.decode(_.hexToUint8(value));
 			const name = _.e(meta.name);
 			const hex = _.e(_.uint8ToHex(meta.digest));
-			return `<div class="checksum"><input class="checksum-input" size="32" value="${hex}" readonly /><br /><span class="checksum-algo">Hashing algorithm: <strong>${name}</strong></span></div>`;
+			return `<div class="checksum"><input class="checksum-input" size="32" value="${hex}" readonly /><br /><span class="checksum-algo">${_.t('Hashing algorithm:')} <strong>${name}</strong></span></div>`;
 		} catch (error) {
 			return DataTypes.null();
 		}
@@ -425,17 +450,19 @@ const Formatters = {
 		"uint64": "unsigned 64-bit integer",
 		"float16": "16-bit float",
 		"float32": "32-bit float",
-		"float64": "64-big float",
+		"float64": "64-bit float",
 		"cint16": "16-bit complex integer",
 		"cint32": "32-bit complex integer",
 		"cfloat32": "32-bit complex float",
-		"cfloat64": "64-bit complex float",
-		"other": "Other"
+		"cfloat64": "64-bit complex float"
 	},
 
 	formatFileDataType(value) {
-		if (typeof value === 'string' && value in Formatters.fileDataTypes) {
-			return _.abbrev(value, Formatters.fileDataTypes[value]);
+		if (value === "other") {
+			return _.t("non-standard");
+		}
+		else if (typeof value === 'string' && value in Formatters.fileDataTypes) {
+			return _.abbrev(_.t(value), _.t(Formatters.fileDataTypes[value]));
 		}
 
 		return DataTypes.null();
@@ -498,59 +525,59 @@ const Formatters = {
 		let parts = [];
 		switch(designator) {
 			case 'MGRS': 
-				parts.push(_.abbrev(designator, 'Military Grid Reference System'));
+				parts.push(_.abbrev(_.t(designator), _.t('Military Grid Reference System')));
 				let [, utm, band, sq, coord] = code.match(/^(\d{2})([C-X])([A-Z]{2})(\d+)$/);
-				parts.push(`UTM Zone: ${utm}`);
-				parts.push(`Latitude Band: ${band}`);
-				parts.push(`Square Identifier: ${sq}`);
-				splitHalf(parts, coord, "Easting", "Northing");
+				parts.push(`${_.t("UTM Zone")}: ${utm}`);
+				parts.push(`${_.t("Latitude Band")}: ${band}`);
+				parts.push(`${_.t("Square Identifier")}: ${sq}`);
+				splitHalf(parts, coord, _.t("Easting"), _.t("Northing"));
 				break;
 			case 'MSIN':
-				parts.push('MODIS Sinusoidal Tile Grid');
-				splitHalf(parts, code, 'Horizontal', 'Vertical');
+				parts.push(_.t('MODIS Sinusoidal Tile Grid'));
+				splitHalf(parts, code, _.t('Horizontal'), _.t('Vertical'));
 				break;
 			case 'WRS1':
 			case 'WRS2':
 				let version = designator.substring(3,4);
-				parts.push(_.abbrev('WRS-' + version, 'Worldwide Reference System ' + version));
-				splitHalf(parts, code, 'Path', 'Row');
+				parts.push(_.abbrev(_.t('WRS-' + version), _.t('Worldwide Reference System ' + version)));
+				splitHalf(parts, code, _.t('Path'), _.t('Row'));
 				break;
 			case 'DOQ':
-				parts.push('Digital Orthophoto Quadrangle');
-				parts.push(`Quadrangle: ${code}`);
+				parts.push(_abbrev(_.t(designator), _.t('Digital Orthophoto Quadrangle')));
+				parts.push(`${_.t("Quadrangle")}: ${code}`);
 				break;
 			case 'DOQQ':
-				parts.push('Digital Orthophoto Quarter Quadrangle');
+				parts.push(_abbrev(_.t(designator), _.t('Digital Orthophoto Quarter Quadrangle')));
 				let quad = code.substr(0, code.length - 2);
-				parts.push(`Quadrangle: ${quad}`);
+				parts.push(`${_.t("Quadrangle")}: ${quad}`);
 				let quarter = code.substr(-2);
-				let a = quarter[0] === 'N' ? 'North' : 'South';
-				let b = quarter[1] === 'E' ? 'East' : 'West';
-				parts.push(`Quarter: ${a} ${b}`);
+				let a = quarter[0] === 'N' ? _.t('North') : _.t('South');
+				let b = quarter[1] === 'E' ? _.t('East') : _.t('West');
+				parts.push(`${_.t("Quarter")}: ${a} ${b}`);
 				break;
 			case 'MXRA':
-				parts.push('Maxar ARD Tile Grid');
+				parts.push(_.t('Maxar ARD Tile Grid'));
 				let [zone, quadkey] = code.split(/-(.*)/);
 				if (zone.startsWith('Z')) {
 					zone = zone.substring(1);
 				}
-				parts.push(`UTM Zone: ${zone}`);
-				parts.push(`Quadkey: ${quadkey}`);
+				parts.push(`${_.t("UTM Zone")}: ${zone}`);
+				parts.push(`${_.t("Quadkey")}: ${quadkey}`);
 				break;
 			case 'EASE':
 				let [dggs, components] = code.split('-');
 				if (dggs === 'DGGS') {
-					parts.push('EASE-DGGS');
+					parts.push(_.t('EASE-DGGS'));
 					let [level, rowcol, ...fractions] = components.split('.');
-					parts.push(`Level: ${level}`);
+					parts.push(`${_.t("Level")}: ${level}`);
 					if (rowcol.length === 6) {
-						parts.push(`Level 0 row cell: ${rowcol.substring(0,3)}`);
-						parts.push(`Level 0 column cell: ${rowcol.substring(3,6)}`);
+						parts.push(`${_.t("Level 0 row cell")}: ${rowcol.substring(0,3)}`);
+						parts.push(`${_.t("Level 0 column cell")}: ${rowcol.substring(3,6)}`);
 						for(let i in fractions) {
 							let value = fractions[i];
 							if (value.length === 2) {
-								parts.push(`Fraction of level ${i} row cell: ${value[0]}`);
-								parts.push(`Fraction of level ${i} column cell: ${value[1]}`);
+								parts.push(`${_.t("Fraction of level {i} row cell", {i})}: ${value[0]}`);
+								parts.push(`${_.t("Fraction of level {i} column cell", {i})}: ${value[1]}`);
 							}
 						}
 					}

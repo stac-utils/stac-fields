@@ -1,8 +1,8 @@
 const Registry = require('./registry');
 const _ = require('./helper');
+const I18N = require('./I18N');
 const DataTypes = require('./datatypes');
 const Formatters = require('./formatters');
-const Normalize = require('./normalize');
 var Fields = require('./fields');
 
 function formatGrouped(context, data, type, filter, coreKey) {
@@ -135,7 +135,7 @@ function formatGrouped(context, data, type, filter, coreKey) {
 			console.error(`Field '${field}' with value '${value}' resulted in an error`, error);
 		}
 	}
-	return Object.values(groups).sort((a,b) => a.extension.localeCompare(b.extension));
+	return Object.values(groups).sort((a,b) => a.extension.localeCompare(b.extension, I18N.locales));
 
 }
 
@@ -188,7 +188,7 @@ function format(value, field, context = null, parent = null, spec = null) {
 		else if (typeof spec.mapping[key.toUpperCase()] !== 'undefined') {
 			value = spec.mapping[key.toUpperCase()];
 		}
-		return DataTypes.format(value, spec.unit);
+		return DataTypes.format(_.t(value), spec.unit);
 	}
 	else if (value === null && spec.null) {
 		return DataTypes.null(spec.null);
@@ -229,14 +229,14 @@ function label(key, spec = null) {
 	if (_.isObject(spec) && typeof spec.label === 'string') {
 		if (typeof spec.explain === 'string') {
 			if (spec.explain.match(/^https?:\/\//i)) {
-				return _.toLink(spec.explain, spec.label, "about");
+				return _.toLink(spec.explain, _.t(spec.label), "about");
 			}
 			else {
-				return _.abbrev(spec.label, spec.explain);
+				return _.abbrev(_.t(spec.label), _.t(spec.explain));
 			}
 		}
 		else if (typeof spec.label === 'string') {
-			return spec.label;
+			return _.t(spec.label);
 		}
 	}
 	return _.formatKey(key);
@@ -261,5 +261,6 @@ module.exports = {
 	Registry,
 	Helper: _,
 	DataTypes,
-	Formatters
+	Formatters,
+	I18N
 };

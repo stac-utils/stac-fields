@@ -1,4 +1,5 @@
 const _ = require('./helper');
+const I18N = require('./I18N');
 
 const DataTypes = {
 
@@ -10,7 +11,10 @@ const DataTypes = {
 		return _.toObject(obj, v => DataTypes.format(v));
 	},
 	
-	null(label = 'n/a') {
+	null(label = null) {
+		if (label === null) {
+			label = _.t('n/a');
+		}
 		return _.toNothing(label);
 	},
 	
@@ -18,7 +22,7 @@ const DataTypes = {
 		if (typeof num !== 'number') {
 			num = parseFloat(num);
 		}
-		return _.unit(num.toLocaleString(undefined, {maximumFractionDigits: 10}), unit);
+		return _.unit(num.toLocaleString(I18N.locales, {maximumFractionDigits: 10}), unit);
 	},
 
 	string(str, unit = '') {

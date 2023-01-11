@@ -1,5 +1,6 @@
 const Formatters = require('./formatters');
 const _ = require('./helper');
+const I18N = require('./I18N');
 
 const Normalize = {
 
@@ -55,7 +56,7 @@ const Normalize = {
             return i1.order - i2.order;
           }
           else {
-            return i1.label.localeCompare(i2.label);
+            return _.t(i1.label).localeCompare(_.t(i2.label), I18N.locales);
           }
         })
         .map(item => item.key);

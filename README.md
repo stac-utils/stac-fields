@@ -119,7 +119,7 @@ The most important methods are:
 * GridCode (formats the `grid:code` field)
 * HexColor (formats a hex color to a box in this color)
 * License (formats a license as link based on SPDX or the links)
-* MediaType (converts media types into a more human-readable variant)
+* MediaType (converts media types into a more human-readable variant) - add `shorten:  true` to the field spec to render a shorter version
 * PROJJSON (formats PROJJSON into a more human-readable variant)
 * Providers (formats an array of providers)
 * Shape (formats an array containing shape/size information, e.g. `proj:shape`)
@@ -146,6 +146,11 @@ The returned value is always expected to be a string.
 It may contain HTML if the formatter is added to the `htmlFormats` array in `fields.json`.
 If the return value is allowed to contain HTML, ALL user input must run thorugh the `e()` function (or `parseInt` for integers, for example) to escape malicious HTML tags.
 This avoids XSS and similar security issues.
+
+### `I18N`
+
+* `translate` (function): Set a function with parameters (phrase : string, vars : array|object = null) that can translate phrases.
+* `locales` (array): Set locales to be used for JS locale functions like `localeCompare` or `localeString`.
 
 ### `Registry`
 

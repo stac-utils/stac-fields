@@ -17,6 +17,7 @@
 			"explain": "NOAA Geostationary Operational Environmental Satellite"
 		},
 		"label": "Labels / ML",
+		"language": "Internationalization / Localization",
 		"mgrs": {
 			"label": "MGRS",
 			"explain": "Military Grid Reference System"
@@ -64,6 +65,10 @@
 			"label": "URL",
 			"format": "Url"
 		},
+		"hreflang": {
+			"label": "Sprache",
+			"format": "LanguageCode"
+		},
 		"rel": {
 			"label": "Relation",
 			"explain": "based on IANA relation types",
@@ -102,6 +107,10 @@
 		"href": {
 			"label": "URL",
 			"format": "Url"
+		},
+		"hreflang": {
+			"label": "Sprache",
+			"format": "LanguageCode"
 		},
 		"type": {
 			"label": "File Format",
@@ -241,6 +250,18 @@
 		"deprecated": {
 			"label": "Deprecated",
 			"summary": false
+		},
+
+		"language": {
+			"label": "Current Language",
+			"summary": false,
+			"format": "LanguageCode",
+			"ext": "language"
+		},
+		"languages": {
+			"label": "Available Languages",
+			"format": "LanguageCode",
+			"ext": "language"
 		},
 
 		"crs": {

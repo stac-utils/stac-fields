@@ -1,3 +1,5 @@
+const I18N = require('./I18N');
+
 const _ = {
 
 	e(str) {
@@ -6,14 +8,26 @@ const _ = {
 		}
 		return str.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, '&apos;');
 	},
+
+	t(value, vars = null) {
+		if (typeof I18N.translate === 'function') {
+			return I18N.translate(value, vars);
+		}
+		else {
+			return I18N.format(value, vars);
+		}
+	},
 	
-	toNothing(label = 'n/a') {
+	toNothing(label = null) {
+		if (label === null) {
+			label = _.t('n/a');
+		}
 		return `<i class="null">${label}</i>`;
 	},
 
-	toList(arr, sort = false, formatter = null) {
+	toList(arr, sort = false, formatter = null, ordered = null) {
 		let list = arr;
-		let tag = 'ul';
+		let tag = ordered === true ? 'ol' : 'ul';
 		if (!Array.isArray(arr)) {
 			arr = [arr];
 		}
@@ -25,7 +39,9 @@ const _ = {
 			else {
 				list.sort();
 			}
-			tag = 'ol';
+			if (ordered === null) {
+				tag = 'ol';
+			}
 		}
 		if (typeof formatter === 'function') {
 			list = list.map(formatter);
@@ -61,7 +77,6 @@ const _ = {
 	toObject(obj, formatter = null, keyFormatter = null) {
 		let html = '<dl>';
 		for(let key in obj) {
-			// ToDo: also convert CamelCase? but not abbreviations like "USA".
 			let label;
 			if (typeof keyFormatter === 'function') {
 				label = keyFormatter(key, obj);
@@ -92,7 +107,8 @@ const _ = {
 		if (prefix === false) {
 			key = key.replace(/^\w+:/i, '');
 		}
-		return _.e(key).split(/[:_\-\s]/g).map(part => part.substr(0, 1).toUpperCase() + part.substr(1)).join(' ');
+		let formatted = key.split(/[:_\-\s]/g).map(part => part.substr(0, 1).toUpperCase() + part.substr(1)).join(' ');
+		return _.e(_.t(formatted));
 	},
 
 	hexToUint8(hexString) {
@@ -123,6 +139,7 @@ const _ = {
 
 	unit(value, unit = '') {
 		if (typeof unit === 'string' && unit.length > 0) {
+			unit = _.t(unit);
 			return `${value}&nbsp;<span class="unit">${unit}</unit>`;
 		}
 		return value;

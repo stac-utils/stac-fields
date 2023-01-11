@@ -1,8 +1,9 @@
 {
-	"stac_version": "1.0.0-rc.4",
+	"stac_version": "1.0.0",
 	"stac_extensions": [
 		"eo",
 		"https://example.com/stac/landsat-extension/1.0/schema.json",
+		"https://stac-extensions.github.io/language/v1.0.0/schema.json",
 		"https://stac-extensions.github.io/file/v1.0.0/schema.json",
 		"view"
 	],
@@ -56,6 +57,7 @@
 		"card4l:specification_version": "5.0",
 		"card4l:speckle_filtering": null,
 		"geoadmin:variant": "KOMB",
+		"language": "en",
 		"file:checksum": "1114a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
 		"file:data_type": "uint16",
 		"file:size": 2048,
