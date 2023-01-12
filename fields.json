@@ -254,14 +254,61 @@
 
 		"language": {
 			"label": "Current Language",
-			"summary": false,
-			"format": "LanguageCode",
-			"ext": "language"
+			"ext": "language",
+			"summary": "v",
+			"properties": {
+				"name": {
+					"label": "Name"
+				},
+				"alternate": {
+					"label": "Alternate Name"
+				},
+				"code": {
+					"label": "Code"
+				},
+				"dir": {
+					"label": "Direction",
+					"explain": "Reading and writing direction",
+					"mapping": {
+						"ltr": "Left-to-right",
+						"rtl": "Right-to-left"
+					},
+					"default": "ltr"
+				}
+			}
 		},
 		"languages": {
 			"label": "Available Languages",
-			"format": "LanguageCode",
-			"ext": "language"
+			"ext": "language",
+			"summary": false,
+			"items": {
+				"name": {
+					"label": "Name",
+					"sortable": true,
+					"order": 0
+				},
+				"alternate": {
+					"label": "Alternate Name",
+					"sortable": true,
+					"order": 1
+				},
+				"code": {
+					"label": "Code",
+					"sortable": true,
+					"order": 2
+				},
+				"dir": {
+					"label": "Direction",
+					"explain": "Reading and writing direction",
+					"sortable": true,
+					"order": 3,
+					"mapping": {
+						"ltr": "Left-to-right",
+						"rtl": "Right-to-left"
+					},
+					"default": "ltr"
+				}
+			}
 		},
 
 		"crs": {
@@ -308,7 +355,8 @@
 				},
 				"nodata": {
 					"label": "No-data value",
-					"order": 5
+					"order": 5,
+					"default": false
 				}
 			}
 		},

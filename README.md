@@ -72,6 +72,8 @@ The following options are available in the object:
 * `items`: If the value is an array of objects (or an object of objects if `listWithKeys` has ben set), a table can be created with the details in this object. It has the same structure as specified here, but in additon `sortable` and `id` are allowed:
     * `sortable`: Specfiies whether the value can be sorted (`true`, e.g. in a table) or not (`false`). Defaults to `false`.
     * `id`: Specfiies whether the value is the unique primary key (`true`) or not (`false`). Defaults to `false`.
+    * `default`: If no value is present, this value will be used instead.
+* `properties`: If the value is an object, specify the properties.
 * `null`: The value that should be given instead of `null`. If a value is null but this property is not given, defaults to "n/a".
 * Options related to Collection Summaries:
     * `summary`: Gives an indication how the field should be summarized:

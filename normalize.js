@@ -62,6 +62,13 @@ const Normalize = {
         .map(item => item.key);
     }
 
+    // Normalize properties
+    if (_.isObject(spec.properties)) {
+      for(let key in spec.properties) {
+        spec.properties[key] = Normalize.field(spec.properties[key], fields, allFields);
+      }
+    }
+
     return spec;
   }
 

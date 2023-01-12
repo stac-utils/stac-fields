@@ -88,7 +88,6 @@ const _ = {
 			if (typeof formatter === 'function') {
 				value = formatter(value, key, obj);
 			}
-			// TODO: Format label (also in arrays)
 			html += `<dt>${label}</dt><dd>${value}</dd>`;
 		}
 		html += `</dl>`;

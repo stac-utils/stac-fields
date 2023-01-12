@@ -202,11 +202,18 @@ function format(value, field, context = null, parent = null, spec = null) {
 			return _.toList(value, false, callback);
 		}
 	}
-	else if (_.isObject(value) && _.isObject(spec.items)) {
-		let callbackSpec = k => spec.listWithKeys ? {items: spec.items} : spec.items[k];
+	else if (_.isObject(value)) {
+		let callbackSpec = k => {
+			if (_.isObject(spec.items)) {
+				return spec.listWithKeys ? {items: spec.items} : spec.items[k];
+			}
+			else if (_.isObject(spec.properties)) {
+				return spec.properties[k];
+			}
+			return {};
+		};
 		let callbackValue = (v, k, p) => format(v, k, context, p, callbackSpec(k));
-		let callbackLabel = k => label(k, callbackSpec(k));
-		if (Registry.externalRenderer && (spec.custom || spec.items)) {
+		if (Registry.externalRenderer && (spec.custom || spec.items || spec.properties)) {
 			let formattedValues = {};
 			for(let key in value) {
 				formattedValues[key] = callbackValue(value[key], key, value);
@@ -214,6 +221,7 @@ function format(value, field, context = null, parent = null, spec = null) {
 			return formattedValues;
 		}
 		else {
+			let callbackLabel = k => label(k, callbackSpec(k));
 			return _.toObject(value, callbackValue, callbackLabel);
 		}
 	}
