@@ -319,7 +319,7 @@
 
 		"anon:size": {
 			"label": "Uncertainty",
-			"unit": "º",
+			"unit": "°",
 			"explain": "The size of one side of the anonymized bounding box"
 		},
 		"anon:warning": {
@@ -1147,23 +1147,23 @@
 
 		"view:off_nadir": {
 			"label": "Off-Nadir Angle",
-			"unit": "º"
+			"unit": "°"
 		},
 		"view:incidence_angle": {
 			"label": "Incidence Angle",
-			"unit": "º"
+			"unit": "°"
 		},
 		"view:azimuth": {
 			"label": "Viewing Azimuth",
-			"unit": "º"
+			"unit": "°"
 		},
 		"view:sun_azimuth": {
 			"label": "Sun Azimuth",
-			"unit": "º"
+			"unit": "°"
 		},
 		"view:sun_elevation": {
 			"label": "Sun Elevation",
-			"unit": "º"
+			"unit": "°"
 		},
 
 		"pl:clear_percent": {
@@ -1284,11 +1284,11 @@
 		},
 		"card4l:incidence_angle_near_range": {
 			"label": "Incidence Angle (near)",
-			"unit": "º"
+			"unit": "°"
 		},
 		"card4l:incidence_angle_far_range": {
 			"label": "Incidence Angle (far)",
-			"unit": "º"
+			"unit": "°"
 		},
 		"card4l:noise_equivalent_intensity": {
 			"label": "Noise Equivalent Intensity",
@@ -1296,7 +1296,7 @@
 		},
 		"card4l:mean_faraday_rotation_angle": {
 			"label": "Mean Faraday Rotation",
-			"unit": "º"
+			"unit": "°"
 		},
 		"card4l:speckle_filtering": {
 			"label": "Speckle Filtering",
