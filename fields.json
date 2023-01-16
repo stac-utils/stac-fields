@@ -78,6 +78,7 @@
 				"parent": "Parent STAC Catalog",
 				"collection": "STAC Collection",
 				"derived_from": "STAC Item for input data",
+				"about": "About this resource",
 				"alternate": "Alternative representation",
 				"via": "Source metadata",
 				"next": "Next page",
