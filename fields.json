@@ -66,7 +66,7 @@
 			"format": "Url"
 		},
 		"hreflang": {
-			"label": "Sprache",
+			"label": "Language",
 			"format": "LanguageCode"
 		},
 		"rel": {
@@ -109,7 +109,7 @@
 			"format": "Url"
 		},
 		"hreflang": {
-			"label": "Sprache",
+			"label": "Language",
 			"format": "LanguageCode"
 		},
 		"type": {
@@ -618,11 +618,11 @@
 			"mapping": {
 				"FULL DISK": "The Americas (full disk)",
 				"CONUS": "North America (continental US)",
-				"MESOSCALE": "South America (mesoscale)"
+				"MESOSCALE": "Central/South America (mesoscale)"
 			}
 		},
 		"goes:mesoscale_image_number": {
-			"label": "Area in South America",
+			"label": "Area in Central/South America",
 			"mapping": {
 				"1": "Region 1",
 				"2": "Region 2"
