@@ -114,7 +114,7 @@
 		},
 		"type": {
 			"label": "File Format",
-			"explain": "based on the IANA media (MIME) types",
+			"explain": "Based on the IANA media (MIME) types",
 			"format": "MediaType"
 		},
 		"roles": {
@@ -270,8 +270,8 @@
 					"label": "Direction",
 					"explain": "Reading and writing direction",
 					"mapping": {
-						"ltr": "Left-to-right",
-						"rtl": "Right-to-left"
+						"ltr": "left-to-right",
+						"rtl": "right-to-left"
 					},
 					"default": "ltr"
 				}
