@@ -71,7 +71,7 @@
 		},
 		"rel": {
 			"label": "Relation",
-			"explain": "based on IANA relation types",
+			"explain": "Based on IANA relation types",
 			"mapping": {
 				"self": "This document",
 				"root": "Root STAC Catalog",
@@ -83,23 +83,23 @@
 				"next": "Next page",
 				"prev": "Previous page",
 				"canonical": "Origin of this document",
-				"processing-expression": "Processing Instructions",
+				"processing-expression": "Processing inctructions/code",
 				"latest-version": "Latest version",
 				"predecessor-version": "Predecessor version",
 				"successor-version": "Successor version",
 				"source": "Source data",
-				"cite-as": "Citation",
+				"cite-as": "Citation information",
 				"related": "Related resource",
 				"describedby": "Description of the resource",
-				"service-desc": "API Definitions",
-				"service-doc": "API User Documentation",
-				"conformance": "API Conformance Declaration",
+				"service-desc": "API definitions",
+				"service-doc": "API user socumentation",
+				"conformance": "API conformance declaration",
 				"order": "Order details"
 			}
 		},
 		"type": {
 			"label": "File Format",
-			"explain": "based on the IANA media (MIME) types",
+			"explain": "Based on the IANA media (MIME) types",
 			"format": "MediaType"
 		}
 	},
@@ -165,7 +165,7 @@
 		"keywords": "Keywords",
 
 		"datetime": {
-			"label": "Time of data",
+			"label": "Time of Data",
 			"format": "Timestamp",
 			"summary": false
 		},
@@ -181,12 +181,12 @@
 		},
 
 		"start_datetime": {
-			"label": "Beginning of data",
+			"label": "Time of Data begins",
 			"format": "Timestamp",
 			"summary": false
 		},
 		"end_datetime": {
-			"label": "End of data",
+			"label": "Time of Data ends",
 			"format": "Timestamp",
 			"summary": false
 		},
@@ -303,8 +303,8 @@
 					"sortable": true,
 					"order": 3,
 					"mapping": {
-						"ltr": "Left-to-right",
-						"rtl": "Right-to-left"
+						"ltr": "left-to-right",
+						"rtl": "right-to-left"
 					},
 					"default": "ltr"
 				}
@@ -427,7 +427,7 @@
 					"order": 5
 				},
 				"reference_system": {
-					"label": "Ref. Sys.",
+					"label": "Reference System",
 					"explain": "Coordinate / Temporal / Other Reference System",
 					"order": 6
 				}
@@ -496,7 +496,7 @@
 				},
 				"center_wavelength": {
 					"label": "Wavelength",
-					"explain": "Center Wavelength",
+					"explain": "The center wavelength of the band",
 					"unit": "μm",
 					"sortable": true,
 					"order": 5
@@ -538,7 +538,7 @@
 		},
 
 		"forecast:reference_datetime": {
-			"label": "Reference time",
+			"label": "Reference Time",
 			"format": "Timestamp",
 			"summary": "r"
 		},
@@ -571,7 +571,7 @@
 			"summary": false
 		},
 		"file:nodata": {
-			"label": "No-data Values",
+			"label": "No-Data Values",
 			"format": "CSV",
 			"summary": false
 		},
@@ -586,7 +586,7 @@
 			"summary": false,
 			"items": {
 				"values": {
-					"label": "Value(s)",
+					"label": "Values",
 					"format": "CSV",
 					"order": 1
 				},
@@ -629,7 +629,7 @@
 			}
 		},
 		"goes:mode": {
-			"label": "Data Coverage",
+			"label": "Capture Mode",
 			"mapping": {
 				"3": "3: 1x full disk, 3x continental US, 30x mesoscale region 1, 30x mesoscale region 2 (every 15 minutes)",
 				"4": "4: 1x full disk (every 5 minutes)",
@@ -637,17 +637,17 @@
 			}
 		},
 		"goes:group_time_threshold": {
-			"label": "Time threshold in a Group",
+			"label": "Time Threshold in a Group",
 			"explain": "Lightning group maximum time difference among lightning events in a group",
 			"unit": "s"
 		},
 		"goes:flash_time_threshold": {
-			"label": "Time threshold in a Flash",
+			"label": "Time Threshold in a Flash",
 			"explain": "Lightning flash maximum time difference among lightning events in a flash",
 			"unit": "s"
 		},
 		"goes:lightning_wavelength": {
-			"label": "Central wavelength",
+			"label": "Central Wavelength",
 			"unit": "nm"
 		},
 		"goes:yaw_flip_flag": {
@@ -663,25 +663,25 @@
 		"goes:group_count": "Lightning Groups",
 		"goes:flash_count": "Lightning Flashes",
 		"goes:nominal_satellite_subpoint_lat": {
-			"label": "Satellite subpoint latitude",
+			"label": "Satellite Subpoint Latitude",
 			"unit": "°N"
 		},
 		"goes:nominal_satellite_subpoint_lon": {
-			"label": "Satellite subpoint longitude",
+			"label": "Satellite Subpoint Longitude",
 			"unit": "°E"
 		},
 		"goes:nominal_satellite_height": {
-			"label": "Satellite height",
+			"label": "Satellite Height",
 			"explain": "Nominal satellite height above GRS 80 ellipsoid",
 			"unit": "km"
 		},
 		"goes:percent_navigated_L1b_events": {
-			"label": "Events navigated by instrument",
+			"label": "Events navigated by Instrument",
 			"format": "Percent0to1",
 			"unit": "%"
 		},
 		"goes:percent_uncorrectable_L0_errors": {
-			"label": "Data lost",
+			"label": "Data Lost",
 			"format": "Percent0to1",
 			"unit": "%"
 		},
@@ -804,7 +804,7 @@
 		"mgrs:utm_zone": "UTM Zone",
 
 		"noaa_mrms_qpe:pass": {
-			"label": "Pass number",
+			"label": "Pass Number",
 			"mapping": {
 				"1": "1 (less latency / less gauges)",
 				"2": "2 (more latency / more gauges)"
@@ -831,11 +831,11 @@
 			"ext": "openeo"
 		},
 		"backend_version": {
-			"label": "Back-end Version",
+			"label": "Back-End Version",
 			"ext": "openeo"
 		},
 		"production": {
-			"label": "Production-ready",
+			"label": "Production-Ready",
 			"ext": "openeo"
 		},
 		"endpoints": {
@@ -988,12 +988,12 @@
 			"summary": false
 		},
 		"proj:shape": {
-			"label": "Shape",
+			"label": "Image Dimensions",
 			"format": "Shape",
 			"summary": false
 		},
 		"proj:transform": {
-			"label": "Transform",
+			"label": "Transformation Matrix",
 			"format": "Transform",
 			"summary": false
 		},
@@ -1035,7 +1035,7 @@
 
 		"sat:platform_international_designator": {
 			"label": "Int. Designator",
-			"explain": "International Designator for the platform, also known as COSPAR ID and NSSDCA ID."
+			"explain": "International designator for the platform, also known as COSPAR ID and NSSDCA ID."
 		},
 		"sat:orbit_state": "Orbit State",
 		"sat:absolute_orbit": {
@@ -1047,7 +1047,7 @@
 			"explain": "Relative Orbit Number"
 		},
 		"sat:anx_datetime": {
-			"label": "ANX time",
+			"label": "ANX Time",
 			"explain": "Ascending Node Crossing time",
 			"summary": "r"
 		},
@@ -1188,7 +1188,7 @@
 			"label": "Type",
 			"mapping": {
 				"image": "Single image",
-				"image_collection": "Image Collection",
+				"image_collection": "Image collection",
 				"table": "Table"
 			}
 		},
@@ -1202,7 +1202,7 @@
 			},
 			"summary": false
 		},
-		"gee:revisit_interval": "Revisit interval",
+		"gee:revisit_interval": "Revisit Interval",
 		"gee:terms_of_use": {
 			"label": "Terms of Use",
 			"format": "CommonMark",
@@ -1241,9 +1241,9 @@
 			"summary": false
 		},
 		
-		"sentinel:utm_zone": "UTM zone",
-		"sentinel:latitude_band": "Latitude band",
-		"sentinel:grid_square": "Grid square",
+		"sentinel:utm_zone": "UTM Zone",
+		"sentinel:latitude_band": "Latitude Band",
+		"sentinel:grid_square": "Grid Square",
 		"sentinel:sequence": "Sequence",
 		"sentinel:product_id": {
 			"label": "Product ID",
@@ -1256,7 +1256,7 @@
 		"sentinel:valid_cloud_cover": "Valid Cloud Cover",
 
 		"cbers:data_type": {
-			"label": "Data type",
+			"label": "Processing Level",
 			"explain": "Geolocation precision level",
 			"mapping": {
 				"L2": "Geolocation using only satellite telemetry",
@@ -1279,7 +1279,7 @@
 		},
 		"card4l:specification_version": "Specification Version",
 		"card4l:orbit_mean_altitude": {
-			"label": "Platform altitude",
+			"label": "Platform Altitude",
 			"unit": "m"
 		},
 		"card4l:incidence_angle_near_range": {
@@ -1325,11 +1325,6 @@
 		"card4l:ellipsoidal_height": {
 			"label": "Ellipsoidal Height",
 			"unit": "m"
-		},
-		"card4l:processing_chain": {
-			"label": "Processing",
-			"custom": true,
-			"summary": false
 		},
 
 		"geoadmin:variant": {
