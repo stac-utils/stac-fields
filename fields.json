@@ -43,6 +43,7 @@
 		"table": "Tabular Data",
 		"tiles": "Tiled Assets",
 		"view": "View Geometry",
+		"web-map-links": "Web Maps",
 		"xarray": "xarray",
 
 		"gee": "Google Earth Engine",
@@ -95,13 +96,27 @@
 				"service-desc": "API definitions",
 				"service-doc": "API user socumentation",
 				"conformance": "API conformance declaration",
-				"order": "Order details"
+				"order": "Order details",
+				"xyz": "XYZ web map",
+				"wmts": "OGC WMTS web map"
 			}
 		},
 		"type": {
 			"label": "File Format",
 			"explain": "Based on the IANA media (MIME) types",
 			"format": "MediaType"
+		},
+		"href:servers": {
+			"label": "Servers",
+			"ext": "web-map-links"
+		},
+		"wmts:layer": {
+			"label": "WMTS Layers",
+			"ext": "web-map-links"
+		},
+		"wmts:dimensions": {
+			"label": "WMTS Dimensions",
+			"ext": "web-map-links"
 		}
 	},
 	"assets": {
