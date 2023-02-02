@@ -1195,7 +1195,7 @@
 		"pl:grid_cell": "Grid Cell",
 		"pl:ground_control": "Positional Accuracy",
 		"pl:ground_control_ratio": "Successful Rectification Ratio",
-		"pl:item_type": "Typ",
+		"pl:item_type": "Type",
 		"pl:pixel_resolution": {
 			"label": "Spatial Resolution",
 			"unit": "m"
