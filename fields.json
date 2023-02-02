@@ -162,6 +162,8 @@
 			"summary": false,
 			"ext": "alternate"
 		},
+		"pl:asset_type": "Asset Type",
+		"pl:bundle_type": "Bundle Type",
 		"table:storage_options": {
 			"alias": "xarray:storage_options"
 		},
@@ -1182,23 +1184,38 @@
 			"unit": "°"
 		},
 
+		"pl:black_fill": {
+			"label": "Unfilled Image Parts",
+			"unit": "%"
+		},
 		"pl:clear_percent": {
 			"label": "Clear Sky",
 			"unit": "%"
 		},
-		"pl:ground_control": "Ground Control",
+		"pl:grid_cell": "Grid Cell",
+		"pl:ground_control": "Positional Accuracy",
+		"pl:ground_control_ratio": "Successful Rectification Ratio",
+		"pl:item_type": "Typ",
 		"pl:pixel_resolution": {
-			"label": "Pixel Resolution",
+			"label": "Spatial Resolution",
 			"unit": "m"
 		},
-		"pl:publishing_stage": "Publishing Stage",
-		"pl:quality_category": "Quality Category",
-		"pl:satellite_azimuth": {
-			"label": "Satellite Azimuth",
-			"unit": "°"
+		"pl:publishing_stage": {
+			"label": "Publishing Stage",
+			"mapping": {
+				"preview": "Preview",
+				"standard": "Standard",
+				"finalized": "Finalized"
+			}
 		},
-		"pl:source_type": "Source Type",
-		"pl:strip_id": "Strip ID",
+		"pl:quality_category": {
+			"label": "Quality Category",
+			"mapping": {
+				"standard": "Standard",
+				"test": "Test"
+			}
+		},
+		"pl:strip_id": "Image Strip ID",
 
 		"gee:type": {
 			"label": "Type",
