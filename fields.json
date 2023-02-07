@@ -619,7 +619,7 @@
 			"summary": false
 		},
 
-		"goes:orbital_slot": "Oribtal Slot",
+		"goes:orbital_slot": "Orbital Slot",
 		"goes:system_environment": {
 			"label": "System Environment",
 			"mapping": {
