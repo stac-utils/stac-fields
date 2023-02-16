@@ -1,24 +1,52 @@
 const Normalize = require('./normalize');
-var Fields = require('./fields');
 
 const Registry = {
 
 	externalRenderer: false,
+	dependencies: {},
+	fields: {
+		assets: {},
+		extensions: {},
+		links: {},
+		metadata: {}
+	},
+
+	exportFields() {
+		return this.fields;
+	},
+
+	importFields(fields) {
+		fields = Normalize.fields(fields);
+		for(let key in this.fields) {
+			Object.assign(this.fields[key], fields[key]);
+		}
+	},
+
+	getDependency(name) {
+		if (!this.dependencies[name]) {
+			console.warn(`Dependency '{name}' not registered.`);
+		}
+		return this.dependencies[name];
+	},
+
+	addDependency(name, library) {
+		this.dependencies[name] = library;
+	},
 
 	addExtension(prefix, spec) {
-		Fields.extensions[prefix] = Normalize.field(spec, Fields.extensions);
+		this.fields.extensions[prefix] = Normalize.field(spec, this.fields.extensions);
 	},
 
 	addMetadataField(field, spec) {
-		Fields.metadata[field] = Normalize.field(spec, Fields.metadata);
+		this.fields.metadata[field] = Normalize.field(spec, this.fields.metadata);
 	},
 
 	addLinkField(field, spec) {
-		Fields.links[field] = Normalize.field(spec, Fields.links);
+		this.fields.links[field] = Normalize.field(spec, this.fields.links);
 	},
 
 	addAssetField(field, spec) {
-		Fields.assets[field] = Normalize.field(spec, Fields.assets);
+		this.fields.assets[field] = Normalize.field(spec, this.fields.assets);
 	},
 
 	addMetadataFields(specs) {
@@ -27,16 +55,25 @@ const Registry = {
 		}
 	},
 
+	getExtension(name) {
+		if (this.fields.extensions[name]) {
+			return this.fields.extensions[name];
+		}
+		else {
+			return {};
+		}
+	},
+
 	getSpecification(field, type = null) {
 		let spec = {};
-		if (type === 'assets' && Fields.assets[field]) {
-			spec = Fields.assets[field];
+		if (type === 'assets' && this.fields.assets[field]) {
+			spec = this.fields.assets[field];
 		}
-		else if (type === 'links' && Fields.links[field]) {
-			spec = Fields.links[field];
+		else if (type === 'links' && this.fields.links[field]) {
+			spec = this.fields.links[field];
 		}
-		else if (Fields.metadata[field]) {
-			spec = Fields.metadata[field];
+		else if (this.fields.metadata[field]) {
+			spec = this.fields.metadata[field];
 		}
 		return spec;
 	}

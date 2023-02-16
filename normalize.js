@@ -1,4 +1,3 @@
-const Formatters = require('./formatters');
 const _ = require('./helper');
 const I18N = require('./I18N');
 
@@ -29,11 +28,6 @@ const Normalize = {
         throw new Error('Alias is invalid: ' + spec.alias);
       }
       return Object.assign(spec, Normalize.field(aliasedSpec, fields, allFields));
-    }
-
-    // Add formatting callback as `formatter`
-    if (typeof spec.format === 'string') {
-      spec.formatter = Formatters[`format${spec.format}`];
     }
 
     // Normalize items

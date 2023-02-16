@@ -1,6 +1,7 @@
 const _ = require('./helper');
 const DataTypes = require('./datatypes');
 const I18N = require('./I18N');
+const Registry = require('./registry');
 
 const Formatters = {
 
@@ -16,9 +17,13 @@ const Formatters = {
 	_formatMediaType(value, field, spec = {}) {
 		let short = Boolean(spec.shorten);
 
+		const mediaType = Registry.getDependency('content-type');
+		if (!mediaType) {
+			return short ? "" : _.e(value);
+		}
+
 		let media;
 		try {
-			const mediaType = require('content-type');
 			media = mediaType.parse(value);
 		} catch (error) {
 			console.warn(error);
@@ -176,7 +181,11 @@ const Formatters = {
 
 	formatDuration(value) {
 		if (typeof value === 'string') {
-			const { isoDuration, en } = require('@musement/iso-duration');
+			const lib = Registry.getDependency('@musement/iso-duration');
+			if (!lib) {
+				return _.e(value);
+			}
+			const { isoDuration, en } = lib;
 			isoDuration.setLocales({ en }, { fallbackLocale: 'en' });
 			let formatted = isoDuration(value).humanize('en');
 			if (formatted.length === 0) {
@@ -252,7 +261,10 @@ const Formatters = {
 		if (typeof value !== 'string' || value.length === 0) {
 			return DataTypes.null();
 		}
-		const commonmark = require('commonmark');
+		const commonmark = Registry.getDependency('commonmark');
+		if (!commonmark) {
+			return _.e(value);
+		}
 		let reader = new commonmark.Parser();
 		let writer = new commonmark.HtmlRenderer({safe: true, smart: true});
 		let html = writer.render(reader.parse(value));
@@ -428,8 +440,12 @@ const Formatters = {
 			return DataTypes.null();
 		}
 
+		const multihash = Registry.getDependency('multihashes');
+		if (!multihash) {
+			return _.e(value);
+		}
+
 		try {
-			const multihash = require('multihashes');
 			const meta = multihash.decode(_.hexToUint8(value));
 			const name = _.e(meta.name);
 			const hex = _.e(_.uint8ToHex(meta.digest));
