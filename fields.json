@@ -554,6 +554,10 @@
 			"label": "Cloud Cover",
 			"unit": "%"
 		},
+		"eo:snow_cover": {
+			"label": "Snow/Ice Cover",
+			"unit": "%"
+		},
 
 		"forecast:reference_datetime": {
 			"label": "Reference Time",
