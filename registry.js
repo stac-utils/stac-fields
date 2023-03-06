@@ -24,7 +24,7 @@ const Registry = {
 
 	getDependency(name) {
 		if (!this.dependencies[name]) {
-			console.warn(`Dependency '{name}' not registered.`);
+			console.warn(`Dependency '${name}' not registered.`);
 		}
 		return this.dependencies[name];
 	},
