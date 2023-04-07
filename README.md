@@ -2,7 +2,7 @@
 
 A minimal STAC library that contains a list of STAC fields with some metadata (title, unit, prefix) and helper functions.
 
-Version: **1.0.0-rc.2**
+Version: **1.0.0**
 
 ## Usage
 
