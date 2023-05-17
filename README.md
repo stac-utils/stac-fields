@@ -137,12 +137,13 @@ The most important methods are:
 
 Formatters are always functions that have the following signature:
 
-`method(value : any, field : string, spec : object, context = null) => string`
+`method(value : any, field : string, spec : object, context = null, parent = null) => string`
 
-- `value` is the value of the field in the STAC JSON
-- `field` is the key of the field in the STAC JSON
+- `value` is the value of the field in the STAC JSON.
+- `field` is the key of the field in the STAC JSON.
 - `spec` is the normalized object for the field from the `fields.json`.
-- `context` is the full STAC JSON
+- `context` is the full STAC JSON.
+- `parent` is the parent object, if any.
 
 The returned value is always expected to be a string.
 It may contain HTML if the formatter is added to the `htmlFormats` array in `fields.json`.

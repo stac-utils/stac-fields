@@ -180,6 +180,9 @@ function format(value, field, context = null, parent = null, spec = null) {
 		}
 		return fn(value, field, spec, context, parent);
 	}
+	else if (typeof spec.formatter === 'function') {
+		return spec.formatter(value, field, spec, context, parent);
+	}
 	else if (_.isObject(spec.mapping)) {
 		let key = String(value);
 		if (typeof spec.mapping[key] !== 'undefined') {
