@@ -132,6 +132,7 @@ The most important methods are:
 * Timestamp (ISO8601 timestamp formatted according to local rules)
 * Url (Formats a STAC Link Object)
 * WKT2 (splits a WKT2 string into nicely formatted chunks for better readability - experimental!)
+* ... (see the source file for more)
 
 ### Custom formatters
 
