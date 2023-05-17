@@ -2,14 +2,13 @@
 	"stac_version": "1.0.0",
 	"stac_extensions": [
 		"https://stac-extensions.github.io/eo/v1.1.0/schema.json",
-		"https://example.com/stac/landsat-extension/1.0/schema.json",
 		"https://stac-extensions.github.io/language/v1.0.0/schema.json",
 		"https://stac-extensions.github.io/file/v1.0.0/schema.json",
-		"https://stac-extensions.github.io/forecast/v1.0.0/schema.json",
-		"https://stac-extensions.github.io/view/v1.0.0/schema.json"
+		"https://stac-extensions.github.io/view/v1.0.0/schema.json",
+		"https://stac-extensions.github.io/contacts/v0.1.1/schema.json",
+		"https://stac-extensions.github.io/themes/v1.0.0/schema.json"
 	],
 	"id": "LC08_L1TP_107018_20181001_20181001_01_RT",
-	"collection": "landsat-8-l1",
 	"type": "Feature",
 	"bbox": [
 		148.13933,
@@ -52,8 +51,6 @@
 		"view:sun_azimuth": 168.8989761,
 		"view:sun_elevation": 26.32596431,
 		"view:off_nadir": 0,
-		"landsat:path": 107,
-		"landsat:row": 18,
 		"card4l:specification": "NRB",
 		"card4l:specification_version": "5.0",
 		"card4l:speckle_filtering": null,
@@ -76,7 +73,6 @@
 			}
 		],
 		"eo:cloud_cover": 78,
-		"forecast:duration": "P3Y6M4DT12H30M17S",
 		"contacts": [
 			{
 				"name": "John Doe",
