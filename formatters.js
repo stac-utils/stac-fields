@@ -10,6 +10,10 @@ const Formatters = {
 		return _.toLink(value, title, parent.rel || "");
 	},
 
+	formatLink(value) {
+		return _.toList(value, false, value => _.toLink(value.href, value.title, value.rel));
+	},
+
 	formatMediaType(value, field, spec = {}) {
 		return _.e(_.t(Formatters._formatMediaType(value, field, spec)));
 	},
@@ -449,7 +453,7 @@ const Formatters = {
 			const meta = multihash.decode(_.hexToUint8(value));
 			const name = _.e(meta.name);
 			const hex = _.e(_.uint8ToHex(meta.digest));
-			return `<div class="checksum"><input class="checksum-input" size="32" value="${hex}" readonly /><br /><span class="checksum-algo">${_.t('Hashing algorithm:')} <strong>${name}</strong></span></div>`;
+			return `<div class="checksum"><input class="checksum-input" size="32" value="${hex}" readonly><br><span class="checksum-algo">${_.t('Hashing algorithm:')} <strong>${name}</strong></span></div>`;
 		} catch (error) {
 			return DataTypes.null();
 		}
@@ -491,7 +495,7 @@ const Formatters = {
 				let chunk = value.slice(i, i + 3);
 				rows.push(`[${Formatters.formatCSV(chunk)}]`);
 			}
-			return rows.join('<br />');
+			return rows.join('<br>');
 		}
 		else {
 			return Formatters.formatCSV(value);
@@ -516,6 +520,103 @@ const Formatters = {
 		else {
 			return DataTypes.format(value);
 		}
+	},
+
+	formatImage(value, field) { // from url or link
+		let title = "";
+		let src = null;
+		if (_.isObject(value)) {
+			src = value.href;
+			title = value.title || "";
+		}
+		else if (typeof value === 'string') {
+			src = value;
+		}
+		else {
+			return DataTypes.format(src);
+		}
+
+		return `<img src="${_.e(src)}" title="${_.e(title)}" class="${_.e(field.replace(':', '_'))}">`;
+	},
+
+	formatPhone(value) {
+		return _.toLink(`tel:${value}`, value);
+	},
+
+	formatEmail(value) {
+		return _.toLink(`mailto:${value}`, value);
+	},
+
+	formatConcepts(value) {
+		return _.toList(value, false, concept => {
+			if (!_.isObject(concept)) {
+				return DataTypes.format(concept);
+			}
+
+			let html = "";
+			if (concept.title) {
+				let title = concept.title;
+				if (concept.url) {
+					title = _.toLink(concept.url, concept.title);
+				}
+				html += `<strong>${title}</strong> (<code>${_.e(concept.id)}</code>)`;
+			}
+			else {
+				let title = concept.id;
+				if (concept.url) {
+					title = _.toLink(concept.url, concept.id);
+				}
+				html += `<strong><code>${title}</code></strong>`;
+			}
+			if (concept.description) {
+				html += `<br><small>${_.e(concept.description)}</small>`;
+			}
+			return html;
+		});
+	},
+
+	formatAddress(value) { // array or object
+		return _.toList(value, false, address => {
+			if (!_.isObject(address)) {
+				return DataTypes.format(address);
+			}
+
+			let lines = Array.isArray(address.deliveryPoint) ? address.deliveryPoint.slice(0) : [];
+
+			if (address.postalCode && address.city) {
+				// Try to create a compact address
+				let line = `${address.postalCode} ${address.city}`;
+				if (address.administrativeArea) {
+					line += ` (${address.administrativeArea})`;
+				}
+				if (typeof address.country === 'string' && address.country.length > 0) {
+					if (address.country.length === 2 && address.country.toUpperCase() === address.country) { // is ISO code
+						line = address.country + '-' + line;
+						lines.push(line);
+					}
+					else {
+						lines.push(line);
+						lines.push(address.country.toUpperCase());
+					}
+				}
+			}
+			else {
+				// Long version of the address
+				if (address.city) {
+					lines.push(address.city);
+				}
+				if (address.administrativeArea) {
+					lines.push(address.administrativeArea);
+				}
+				if (address.postalCode) {
+					lines.push(address.postalCode);
+				}
+				if (typeof address.country === 'string' && address.country.length > 0) {
+					lines.push(address.country.toUpperCase());
+				}
+			}
+			return DataTypes.string(lines.join("\n\n"));
+		});
 	},
 
 	formatGridCode(value) {
@@ -599,11 +700,16 @@ const Formatters = {
 					}
 					break;
 				}
+			case 'CDEM':
+				let [, n, e] = code.match(/^([A-Z]\d+)([A-Z]\d+)$/);
+				parts.push(_.t("Copernicus Digital Elevation Model Grid"));
+				parts.push(`${_.t("Easting")}: ${e}`);
+				parts.push(`${_.t("Northing")}: ${n}`);
 			default:
 				parts.push(value);
 		}
 
-		return parts.join('<br />');
+		return parts.join('<br>');
 	}
 
 };

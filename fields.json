@@ -7,6 +7,7 @@
 			"explain": "CEOS Analysis Ready Data for Land"
 		},
 		"classification": "Classification",
+		"contacts": "Contacts",
 		"cube": "Data Cube",
 		"eo": "Electro-Optical",
 		"forecast": "Forecast",
@@ -41,6 +42,7 @@
 		"ssys": "Solar System",
 		"storage": "Cloud Storage",
 		"table": "Tabular Data",
+		"themes": "Themes",
 		"tiles": "Tiled Assets",
 		"view": "View Geometry",
 		"web-map-links": "Web Maps",
@@ -269,6 +271,10 @@
 			"label": "Deprecated",
 			"summary": false
 		},
+		"experimental": {
+			"label": "Experimental",
+			"summary": false
+		},
 
 		"language": {
 			"label": "Current Language",
@@ -325,6 +331,139 @@
 						"rtl": "right-to-left"
 					},
 					"default": "ltr"
+				}
+			}
+		},
+
+		"contacts": {
+			"label": "Contacts",
+			"ext": "contacts",
+			"summary": "v",
+			"items": {
+				"name": {
+					"label": "Name"
+				},
+				"identifier": {
+					"label": "Identifier"
+				},
+				"positionName": {
+					"label": "Position"
+				},
+				"organization": {
+					"label": "Organization"
+				},
+				"logo": {
+					"label": "Logo",
+					"format": "Image"
+				},
+				"phones": {
+					"label": "Phones",
+					"items": {
+						"value": {
+							"label": "Number",
+							"format": "Phone",
+							"order": 0
+						},
+						"roles": {
+							"label": "Used For",
+							"order": 1,
+							"mapping": {
+								"work": "Work",
+								"home": "Personal",
+								"fax": "Fax"
+							}
+						}
+					}
+				},
+				"emails": {
+					"label": "Emails",
+					"items": {
+						"value": {
+							"label": "Address",
+							"format": "Email",
+							"order": 0
+						},
+						"roles": {
+							"label": "Used For",
+							"order": 1,
+							"mapping": {
+								"work": "Work",
+								"home": "Personal"
+							}
+						}
+					}
+				},
+				"addresses": {
+					"label": "Postal Addresses",
+					"format": "Address",
+					"items": {
+						"deliveryPoint": {
+							"label": "Street / House",
+							"order": 0
+						},
+						"city": {
+							"label": "City",
+							"order": 1
+						},
+						"administrativeArea": {
+							"label": "State / Province",
+							"order": 2
+						},
+						"postalCode": {
+							"label": "Postal Code",
+							"order": 3
+						},
+						"country": {
+							"label": "Country",
+							"order": 4
+						}
+					}
+				},
+				"links": {
+					"label": "Additional Resources",
+					"format": "Link"
+				},
+				"contactInstructions": "Further Instructions",
+				"roles": {
+					"label": "Types",
+					"format": "CSV"
+				}
+			}
+		},
+
+		"themes": {
+			"label": "Themes",
+			"ext": "themes",
+			"summary": false,
+			"items": {
+				"scheme": {
+					"label": "Vocabulary",
+					"order": 0,
+					"format": "Url"
+				},
+				"concepts": {
+					"label": "Terms",
+					"order": 1,
+					"format": "Concepts",
+					"items": {
+						"id": {
+							"label": "Identifier",
+							"order": 0
+						},
+						"title": {
+							"label": "Title",
+							"order": 1
+						},
+						"description": {
+							"label": "Description",
+							"order": 2
+						},
+						"url": {
+							"label": "URL",
+							"order": 3,
+							"format": "Url"
+						}
+					}
 				}
 			}
 		},
@@ -432,6 +571,10 @@
 					"format": "Extent",
 					"order": 3
 				},
+				"bbox": {
+					"alias": "proj:bbox",
+					"order": 3
+				},
 				"values": {
 					"label": "Values",
 					"order": 4
@@ -442,6 +585,10 @@
 				},
 				"unit": {
 					"alias": "file:unit",
+					"order": 5
+				},
+				"geometry_types": {
+					"label": "Geometry Types",
 					"order": 5
 				},
 				"reference_system": {

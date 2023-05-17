@@ -26,7 +26,7 @@ const DataTypes = {
 	},
 
 	string(str, unit = '') {
-		return _.unit(_.e(str).replace(/(\r\n|\r|\n){2,}/g, '<br />'), unit);
+		return _.unit(_.e(str).replace(/(\r\n|\r|\n){2,}/g, '<br>'), unit);
 	},
 	
 	boolean(bool) {
