@@ -42,6 +42,7 @@
 		"storage": "Cloud Storage",
 		"table": "Tabular Data",
 		"tiles": "Tiled Assets",
+		"video": "Video",
 		"view": "View Geometry",
 		"web-map-links": "Web Maps",
 		"xarray": "xarray",
@@ -1006,8 +1007,9 @@
 			"summary": false
 		},
 		"proj:shape": {
-			"label": "Image Dimensions",
+			"label": "Size",
 			"format": "Shape",
+			"unit": "px",
 			"summary": false
 		},
 		"proj:transform": {
@@ -1162,6 +1164,34 @@
 			"custom": true,
 			"summary": false
 		},
+
+		"video:shape": {
+			"label": "Size",
+			"format": "Shape",
+			"unit": "px",
+			"summary": false
+		},
+		"video:frame_rate": {
+			"label": "Frame rate",
+			"unit": "fps"
+		},
+		"video:frame_count": {
+			"label": "Frame count"
+		},
+		"video:codec_name": {
+			"label": "Codec",
+			"explain": "https://mp4ra.org/#/codecs"
+		},
+		"video:constant_scene": {
+			"label": ""
+		},
+		"video:letterbox": {
+			"label": ""
+		},
+		"video:sensor_name": {
+			"alias": "instruments"
+		},
+		"video:miis_core_id": "MIIS Core ID",
 
 		"view:off_nadir": {
 			"label": "Off-Nadir Angle",
