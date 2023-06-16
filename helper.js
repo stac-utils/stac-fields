@@ -74,9 +74,13 @@ const _ = {
 		return `<a href="${_.e(url)}" rel="${_.e(rel)}" target="${_.e(target)}">${_.e(title)}</a>`;
 	},
 
-	toObject(obj, formatter = null, keyFormatter = null) {
+	toObject(obj, formatter = null, keyFormatter = null, keyOrder = []) {
 		let html = '<dl>';
-		for(let key in obj) {
+		let keys = Array.isArray(keyOrder) && keyOrder.length >= 2 ? keyOrder : Object.keys(obj);
+		for(let key of keys) {
+			if (!(key in obj)) {
+				continue;
+			}
 			let label;
 			if (typeof keyFormatter === 'function') {
 				label = keyFormatter(key, obj);

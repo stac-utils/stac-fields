@@ -163,6 +163,11 @@ function formatCollection(collection, filter = null, coreKey = '') {
 	return formatGrouped(collection, collection, 'collection', filter, coreKey);
 }
 
+// For Catalogs
+function formatCatalog(catalog, filter = null, coreKey = '') {
+	return formatGrouped(catalog, catalog, 'catalog', filter, coreKey);
+}
+
 // For item properties
 function formatItemProperties(item, filter = null, coreKey = '') {
 	return formatGrouped(item, item.properties, 'metadata', filter, coreKey);
@@ -228,7 +233,7 @@ function format(value, field, context = null, parent = null, spec = null) {
 		}
 		else {
 			let callbackLabel = k => label(k, callbackSpec(k));
-			return _.toObject(value, callbackValue, callbackLabel);
+			return _.toObject(value, callbackValue, callbackLabel, spec.itemOrder);
 		}
 	}
 	else {
@@ -264,6 +269,7 @@ module.exports = {
 	format,
 	label,
 	extension,
+	formatCatalog,
 	formatCollection,
 	formatSummaries,
 	formatItemProperties,
