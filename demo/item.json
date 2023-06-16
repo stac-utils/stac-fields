@@ -55,6 +55,10 @@
 		"card4l:specification_version": "5.0",
 		"card4l:speckle_filtering": null,
 		"geoadmin:variant": "KOMB",
+		"processing:software": {
+			"pystac": "1.0",
+			"geopyspark": "0.1"
+		},
 		"language": {
 			"code": "en"
 		},

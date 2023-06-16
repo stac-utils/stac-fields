@@ -290,7 +290,7 @@ const Formatters = {
 				list.push(software);
 			}
 		}
-		return _.toList(list, true);
+		return _.toList(list, true, null, false);
 	},
 
 	formatDOI(value) {
