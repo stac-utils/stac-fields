@@ -25,11 +25,10 @@ const _ = {
 		return `<i class="null">${label}</i>`;
 	},
 
-	toList(arr, sort = false, formatter = null, ordered = null) {
-		let list = arr;
+	toList(list, sort = false, formatter = null, ordered = null) {
 		let tag = ordered === true ? 'ol' : 'ul';
-		if (!Array.isArray(arr)) {
-			arr = [arr];
+		if (!Array.isArray(list)) {
+			list = [list];
 		}
 		if (sort) {
 			list = list.slice(0);
