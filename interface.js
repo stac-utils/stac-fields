@@ -176,7 +176,7 @@ function format(value, field, context = null, parent = null, spec = null) {
 	if (typeof spec.format === 'string') {
 		let fn = Formatters[`format${spec.format}`];
 		if (!fn) {
-			console.warn(`Formatter '{spec.format}' not available.`);
+			console.warn(`Formatter '${spec.format}' not available.`);
 		}
 		return fn(value, field, spec, context, parent);
 	}
