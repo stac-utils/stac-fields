@@ -107,8 +107,12 @@ const _ = {
 	},
 
 	formatKey(key, prefix = false) {
+		if (key.includes('/')) {
+			// Slashes are strong indicators for URIs or media types, don't format
+			return _.e(_.t(key));
+		}
 		if (prefix === false) {
-			key = key.replace(/^\w+:/i, '');
+			key = key.replace(/^[\w-]+:/i, '');
 		}
 		let formatted = key.split(/[:_\-\s]/g).map(part => part.substr(0, 1).toUpperCase() + part.substr(1)).join(' ');
 		return _.e(_.t(formatted));
