@@ -55,6 +55,7 @@
 		"msft": "Microsoft",
 		"openeo": "openEO",
 		"pl": "Planet Labs PBC",
+		"s2": "Sentinel-2",
 		"sentinel": "Copernicus Sentinel",
 		"cbers": {
 			"label": "CBERS",
