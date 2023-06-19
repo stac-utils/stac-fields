@@ -103,6 +103,7 @@ The most important methods are:
 * `formatLink(link: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats a link. Also groups by extension per link.
 * `formatProvider(provider: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats a provider. Also groups by extension per provider.
 * `formatCollection(collection: object, filter: function = null, coreKey: string = '') => object`: Formats a collection. Also groups by extension. *Experimental!*
+* `formatCatalog(catalog: object, filter: function = null, coreKey: string = '') => object`: Formats a collection. Also groups by extension. *Experimental!*
 * `formatSummaries(collection: object, filter: function = null, coreKey: string = '') => object`: Formats the summaries in a collection. Also groups by extension.
 * `formatItemProperties(item: object, filter: function = null, coreKey: string = '') => object`: Formats the properties in an Item. Also groups by extension.
 
