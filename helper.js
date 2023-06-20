@@ -73,11 +73,11 @@ const _ = {
 		return `<a href="${_.e(url)}" rel="${_.e(rel)}" target="${_.e(target)}">${_.e(title)}</a>`;
 	},
 
-	toObject(obj, formatter = null, keyFormatter = null, keyOrder = []) {
+	toObject(obj, formatter = null, keyFormatter = null, keyOrder = [], filter = null, path = []) {
 		let html = '<dl>';
 		let keys = Array.isArray(keyOrder) && keyOrder.length >= 2 ? keyOrder : Object.keys(obj);
 		for(let key of keys) {
-			if (!(key in obj)) {
+			if (!(key in obj) || (typeof filter === 'function' && path.length > 0 && !filter(path[0], path.concat([key]))) ) {
 				continue;
 			}
 			let label;

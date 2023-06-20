@@ -40,8 +40,13 @@ for(let field in stacItem.properties) {
 }
 
 // Option 2: Group by extension and format item properties
-// The second parameter is a filter function to skip specific properties, remove to get all properties
-let groups = StacFields.formatStacProperties(stacItem, key => key !== 'eo:bands');
+// The second parameter is a filter function to skip specific properties or paths, remove to get all properties
+let groups = StacFields.formatStacProperties(stacItem, (key, path) => key !== 'eo:bands');
+```
+
+To filter by path (remove all common_name fields from bands):
+```js
+let groups = StacFields.formatStacProperties(stacItem, (key, path) => !(path[0] === 'eo:bands' && path[2] === 'common_name'));
 ```
 
 This library is written for the latest version of the STAC specification (1.0.0-rc.4).
@@ -96,15 +101,15 @@ has the `alias`es resolved and all fields and extensions are defined as objects 
 
 The most important methods are:
 
-* `format(value: any, field: string, spec: object, context: object = null, parent: object = null) => string`: Applies the right formatting depending on the data type of the a single property.
+* `format(value: any, field: string, spec: object, context: object = null, parent: object = null, filter: function = null, path: array = []) => string`: Applies the right formatting depending on the data type of the a single property.
 * `label(key: string, spec: object = null)`: Formats a label according to the rules given in `spec`. By default uses the metadata labels from fields.json.
 * `extension(key: string) => string`: Formats an extension, similar to `label`.
 * `formatAsset(asset: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats an asset. Also groups by extension per asset.
 * `formatLink(link: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats a link. Also groups by extension per link.
 * `formatProvider(provider: object, context: object, filter: function = null, coreKey: string = '') => object`: Formats a provider. Also groups by extension per provider.
 * `formatCollection(collection: object, filter: function = null, coreKey: string = '') => object`: Formats a collection. Also groups by extension. *Experimental!*
-* `formatCatalog(catalog: object, filter: function = null, coreKey: string = '') => object`: Formats a collection. Also groups by extension. *Experimental!*
-* `formatSummaries(collection: object, filter: function = null, coreKey: string = '') => object`: Formats the summaries in a collection. Also groups by extension.
+* `formatCatalog(catalog: object, filter: function = null, coreKey: string = '') => object`: Formats a catalog. Also groups by extension. *Experimental!*
+* `formatSummaries(collection: object, filter: function = null, coreKey: string = '') => object`: Formats the summaries in a collection. Also groups by extension. The filter only works on the top-level!
 * `formatItemProperties(item: object, filter: function = null, coreKey: string = '') => object`: Formats the properties in an Item. Also groups by extension.
 
 ### Pre-defined formatters (`Formatters`)

@@ -15,7 +15,7 @@ function formatGrouped(context, data, type, filter, coreKey) {
 				parts.unshift(coreKey);
 			}
 			let ext = parts[0];
-			if (typeof filter === 'function' && !filter(field)) {
+			if (typeof filter === 'function' && !filter(field, [field])) {
 				continue;
 			}
 
@@ -110,7 +110,7 @@ function formatGrouped(context, data, type, filter, coreKey) {
 
 			// Fallback to "normal" rendering if not handled by summaries yet
 			if (typeof formatted === 'undefined') {
-				formatted = format(value, field, context, data, spec);
+				formatted = format(value, field, context, data, spec, filter, [field]);
 			}
 
 			// Add group if missing
@@ -173,7 +173,7 @@ function formatItemProperties(item, filter = null, coreKey = '') {
 	return formatGrouped(item, item.properties, 'metadata', filter, coreKey);
 }
 
-function format(value, field, context = null, parent = null, spec = null) {
+function format(value, field, context = null, parent = null, spec = null, filter = null, path = []) {
 	if (!_.isObject(spec)) {
 		spec = Registry.getSpecification(field);
 	}
@@ -205,7 +205,10 @@ function format(value, field, context = null, parent = null, spec = null) {
 		return DataTypes.null(spec.null);
 	}
 	else if (Array.isArray(value)) {
-		let callback = v => format(v, field, context, parent, spec);
+		let callback = (v, i) => format(v, field, context, parent, spec, filter, path.concat([i]));
+		if (typeof filter === 'function' && path.length > 0) {
+			value = value.filter((v, i) => filter(path[0], path.concat([i])));
+		}
 		if (Registry.externalRenderer && (spec.custom || spec.items)) {
 			return value.map(callback);
 		}
@@ -223,17 +226,20 @@ function format(value, field, context = null, parent = null, spec = null) {
 			}
 			return {};
 		};
-		let callbackValue = (v, k, p) => format(v, k, context, p, callbackSpec(k));
+		let callbackValue = (v, k, p) => format(v, k, context, p, callbackSpec(k), filter, path.concat([k]));
 		if (Registry.externalRenderer && (spec.custom || spec.items || spec.properties)) {
 			let formattedValues = {};
 			for(let key in value) {
+				if (typeof filter === 'function' && path.length > 0 && !filter(path[0], path.concat([k]))) {
+					continue;
+				}
 				formattedValues[key] = callbackValue(value[key], key, value);
 			}
 			return formattedValues;
 		}
 		else {
 			let callbackLabel = k => label(k, callbackSpec(k));
-			return _.toObject(value, callbackValue, callbackLabel, spec.itemOrder);
+			return _.toObject(value, callbackValue, callbackLabel, spec.itemOrder, filter, path);
 		}
 	}
 	else {
