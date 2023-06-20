@@ -88,6 +88,7 @@ const Formatters = {
 			case 'application/gml+xml':
 				return 'GML';
 			case 'application/vnd.google-earth.kml+xml':
+			case 'application/vnd.google-earth.kmz':
 				return 'KML';
 			case 'application/geopackage+vnd.sqlite3':
 			case 'application/geopackage+sqlite3':
