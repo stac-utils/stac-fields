@@ -360,7 +360,7 @@
 					"format": "Image"
 				},
 				"phones": {
-					"label": "Phones",
+					"label": "Phone",
 					"items": {
 						"value": {
 							"label": "Number",
@@ -379,7 +379,7 @@
 					}
 				},
 				"emails": {
-					"label": "Emails",
+					"label": "Email",
 					"items": {
 						"value": {
 							"label": "Address",
