@@ -1194,7 +1194,7 @@
 			"unit": "m"
 		},
 		"sar:pixel_spacing_azimuth": {
-			"label": "Aziumth Pixel Spacing",
+			"label": "Azimuth Pixel Spacing",
 			"unit": "m"
 		},
 		"sar:looks_range": "Range Looks",
