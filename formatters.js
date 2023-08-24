@@ -126,6 +126,8 @@ const Formatters = {
 				return 'Zarr';
 			case 'application/x-parquet':
 				return 'Parquet'
+			case 'application/vnd.pmtiles':
+				return 'PMTiles';
 			// ToDo: Add media types for:
 			// - flatgeobuf: https://github.com/flatgeobuf/flatgeobuf/discussions/112
 			// - geoparquet: https://github.com/opengeospatial/geoparquet/issues/115
