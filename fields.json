@@ -102,8 +102,12 @@
 				"service-doc": "API user documentation",
 				"conformance": "API conformance declaration",
 				"order": "Order details",
-				"xyz": "XYZ web map",
-				"wmts": "OGC WMTS web map"
+				"3d-tiles": "3D Tiles",
+				"pmtiles": "PMTiles",
+				"tilejson": "TileJSON",
+				"wms": "OGC Web Map Service (WMS)",
+				"wmts": "OGC Web Map Tile Service (WMTS)",
+				"xyz": "XYZ Web Map"
 			}
 		},
 		"type": {
@@ -115,12 +119,32 @@
 			"label": "Servers",
 			"ext": "web-map-links"
 		},
+		"pmtiles:layers": {
+			"label": "Layers",
+			"ext": "web-map-links"
+		},
+		"wms:layers": {
+			"label": "Layers",
+			"ext": "web-map-links"
+		},
+		"wms:styles": {
+			"label": "Styles",
+			"ext": "web-map-links"
+		},
+		"wms:dimensions": {
+			"label": "Dimensions",
+			"ext": "web-map-links"
+		},
+		"wms:transparent": {
+			"label": "Transparency",
+			"ext": "web-map-links"
+		},
 		"wmts:layer": {
-			"label": "WMTS Layers",
+			"label": "Layers",
 			"ext": "web-map-links"
 		},
 		"wmts:dimensions": {
-			"label": "WMTS Dimensions",
+			"label": "Dimensions",
 			"ext": "web-map-links"
 		}
 	},
