@@ -114,38 +114,6 @@
 			"label": "File Format",
 			"explain": "Based on the IANA media (MIME) types",
 			"format": "MediaType"
-		},
-		"href:servers": {
-			"label": "Servers",
-			"ext": "web-map-links"
-		},
-		"pmtiles:layers": {
-			"label": "Layers",
-			"ext": "web-map-links"
-		},
-		"wms:layers": {
-			"label": "Layers",
-			"ext": "web-map-links"
-		},
-		"wms:styles": {
-			"label": "Styles",
-			"ext": "web-map-links"
-		},
-		"wms:dimensions": {
-			"label": "Dimensions",
-			"ext": "web-map-links"
-		},
-		"wms:transparent": {
-			"label": "Transparency",
-			"ext": "web-map-links"
-		},
-		"wmts:layer": {
-			"label": "Layers",
-			"ext": "web-map-links"
-		},
-		"wmts:dimensions": {
-			"label": "Dimensions",
-			"ext": "web-map-links"
 		}
 	},
 	"assets": {
@@ -1546,6 +1514,39 @@
 				"kgrel": "Grayscale with relief",
 				"kgrs": "Grayscale without relief"
 			}
+		},
+
+		"href:servers": {
+			"label": "Servers",
+			"ext": "web-map-links"
+		},
+		"pmtiles:layers": {
+			"label": "Layers",
+			"ext": "web-map-links"
+		},
+		"wms:layers": {
+			"label": "Layers",
+			"ext": "web-map-links"
+		},
+		"wms:styles": {
+			"label": "Styles",
+			"ext": "web-map-links"
+		},
+		"wms:dimensions": {
+			"label": "Dimensions",
+			"ext": "web-map-links"
+		},
+		"wms:transparent": {
+			"label": "Transparency",
+			"ext": "web-map-links"
+		},
+		"wmts:layer": {
+			"label": "Layers",
+			"ext": "web-map-links"
+		},
+		"wmts:dimensions": {
+			"label": "Dimensions",
+			"ext": "web-map-links"
 		}
 	}
 }
