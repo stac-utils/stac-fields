@@ -9,7 +9,13 @@ Version: **1.3.1**
 Add to your project with `npm install @radiantearth/stac-fields --save`
 
 Import the utilities to format values:
-`const StacFields = require('@radiantearth/stac-fields');`
+```js
+const StacFields = require('@radiantearth/stac-fields');
+```
+or
+```js
+import StacFields from '@radiantearth/stac-fields';
+```
 
 Format a value:
 ```js
@@ -116,6 +122,11 @@ The most important methods are:
 
 * Checksum (multihashes, show original hash and hashing algorithm)
 * CommonMark
+   Use the following code to allow rendering HTML in CommonMark:
+   ```js
+   import { Formatters } from '@radiantearth/stac-fields';
+   Formatters.allowHtmlInCommonMark = false;
+   ```
 * CSV (array to comma-separated values)
 * Date
 * DOI (generate a link for a DOI)

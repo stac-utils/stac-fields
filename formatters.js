@@ -5,6 +5,8 @@ const Registry = require('./registry');
 
 const Formatters = {
 
+	allowHtmlInCommonMark: false,
+
 	formatUrl(value, field, spec = {}, context = null, parent = null) {
 		let title = _.isObject(parent) && typeof parent === 'string' ? parent.title : value;
 		return _.toLink(value, title, parent.rel || "");
@@ -269,12 +271,18 @@ const Formatters = {
 			return DataTypes.null();
 		}
 		const commonmark = Registry.getDependency('commonmark');
-		if (!commonmark) {
-			return _.e(value);
+		let html;
+		if (commonmark) {
+			let reader = new commonmark.Parser();
+			let writer = new commonmark.HtmlRenderer({safe: !Formatters.allowHtmlInCommonMark, smart: true});
+			html = writer.render(reader.parse(value));
 		}
-		let reader = new commonmark.Parser();
-		let writer = new commonmark.HtmlRenderer({safe: true, smart: true});
-		let html = writer.render(reader.parse(value));
+		else if (Formatters.allowHtmlInCommonMark) {
+			html = value;
+		}
+		else {
+			html = _.e(value);
+		}
 		return `<div class="description">${html}</div>`;
 	},
 
