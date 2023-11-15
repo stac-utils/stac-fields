@@ -130,6 +130,8 @@ const Formatters = {
 				return 'Parquet'
 			case 'application/vnd.pmtiles':
 				return 'PMTiles';
+			case 'application/vnd.cov+json':
+				return 'CoverageJSON';
 			// ToDo: Add media types for:
 			// - flatgeobuf: https://github.com/flatgeobuf/flatgeobuf/discussions/112
 			// - geoparquet: https://github.com/opengeospatial/geoparquet/issues/115
