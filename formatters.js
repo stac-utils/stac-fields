@@ -126,16 +126,16 @@ const Formatters = {
 				return short ? 'COPC' : 'Cloud-Optimized Point Cloud (LASzip)';
 			case 'application/vnd+zarr': // https://github.com/zarr-developers/zarr-specs/issues/123
 				return 'Zarr';
-			case 'application/x-parquet':
+			case 'application/x-parquet': // Inofficial
+			case 'application/vnd.apache.parquet': // Official (tbc): https://github.com/opengeospatial/geoparquet/issues/115
 				return 'Parquet'
 			case 'application/vnd.pmtiles':
 				return 'PMTiles';
 			case 'application/vnd.cov+json':
 				return 'CoverageJSON';
-			// ToDo: Add media types for:
-			// - flatgeobuf: https://github.com/flatgeobuf/flatgeobuf/discussions/112
-			// - geoparquet: https://github.com/opengeospatial/geoparquet/issues/115
-			default:
+			case 'application/vnd.flatgeobuf':
+				return 'FlatGeobuf'; // inofficial: https://github.com/flatgeobuf/flatgeobuf/discussions/112
+			default: {
 				let [group, format] = media.type.split('/');
 				format = _.formatKey(format.replace(/^(vnd|x)[.+-]/, ''));
 				if (short) {
@@ -158,6 +158,7 @@ const Formatters = {
 					default:
 						return value;
 				}
+			}
 		}
 	},
 
