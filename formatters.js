@@ -657,11 +657,13 @@ const Formatters = {
 		switch(designator) {
 			case 'MGRS': 
 				parts.push(_.abbrev(_.t(designator), _.t('Military Grid Reference System')));
-				let [, utm, band, sq, coord] = code.match(/^(\d{2})([C-X])([A-Z]{2})(\d+)$/);
+				let [, utm, band, sq, coord] = code.match(/^(\d{2})([C-X])([A-Z]{2})(\d*)$/);
 				parts.push(`${_.t("UTM Zone")}: ${utm}`);
 				parts.push(`${_.t("Latitude Band")}: ${band}`);
 				parts.push(`${_.t("Square Identifier")}: ${sq}`);
-				splitHalf(parts, coord, _.t("Easting"), _.t("Northing"));
+				if (coord) {
+					splitHalf(parts, coord, _.t("Easting"), _.t("Northing"));
+				}
 				break;
 			case 'MSIN':
 				parts.push(_.t('MODIS Sinusoidal Tile Grid'));
