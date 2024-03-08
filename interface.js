@@ -231,7 +231,7 @@ function format(value, field, context = null, parent = null, spec = null, filter
 	else if (_.isObject(value)) {
 		let callbackSpec = k => {
 			if (_.isObject(spec.items)) {
-				return spec.listWithKeys ? {items: spec.items} : spec.items[k];
+				return spec.listWithKeys ? {items: spec.items, itemOrder: spec.itemOrder} : spec.items[k];
 			}
 			else if (_.isObject(spec.properties)) {
 				return spec.properties[k];
@@ -251,7 +251,8 @@ function format(value, field, context = null, parent = null, spec = null, filter
 		}
 		else {
 			let callbackLabel = k => label(k, callbackSpec(k));
-			return _.toObject(value, callbackValue, callbackLabel, spec.itemOrder, filter, path);
+			let itemOrder = spec.listWithKeys ? [] : spec.itemOrder;
+			return _.toObject(value, callbackValue, callbackLabel, itemOrder, filter, path);
 		}
 	}
 	else {
