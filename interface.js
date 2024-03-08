@@ -82,7 +82,19 @@ function formatGrouped(context, data, type, filter, coreKey) {
 			if (type === 'summaries') {
 				if (!isSummarizedListWithKeys && _.isObject(value)) {
 					if (typeof value.minimum !== 'undefined' && typeof value.maximum !== 'undefined') {
-						formatted = Formatters.formatExtent([value.minimum, value.maximum], field, spec);
+						const formatSummaryValue = x => format(x, field, context, data, spec, filter, [field]);
+						if (value.minimum === value.maximum) {
+							formatted = formatSummaryValue(value.minimum);
+						}
+						else if (value.minimum === null) {
+							formatted = `< ${formatSummaryValue(value.maximum)}`;
+						}
+						else if (value.maximum === null) {
+							formatted = `> ${formatSummaryValue(value.minimum)}`;
+						}
+						else {
+							formatted = `${formatSummaryValue(value.minimum)} – ${formatSummaryValue(value.maximum)}`;
+						}
 					}
 					else {
 						formatted = DataTypes.object(value);

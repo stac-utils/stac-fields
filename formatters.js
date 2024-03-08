@@ -339,17 +339,17 @@ const Formatters = {
 	},
 
 	formatExtent(value, field, spec = {}) {
-		if (!Array.isArray(value) || value.length < 2 || (value[0] === null && value[1] === null)) {
+		if (!Array.isArray(value) || value.length < 2) {
 			return DataTypes.null();
-		}
-		else if (value[0] === null) {
-			return `Until ${DataTypes.format(value[1], spec.unit)}`;
-		}
-		else if (value[1] === null) {
-			return `From ${DataTypes.format(value[0], spec.unit)}`;
 		}
 		else if (value[0] === value[1]) {
 			return DataTypes.format(value[0], spec.unit);
+		}
+		else if (value[0] === null) {
+			return `< ${DataTypes.format(value[1], spec.unit)}`;
+		}
+		else if (value[1] === null) {
+			return `> ${DataTypes.format(value[0], spec.unit)}`;
 		}
 		else {
 			return value.map(v => DataTypes.format(v, spec.unit)).join(' – ');
