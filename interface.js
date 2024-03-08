@@ -81,7 +81,7 @@ function formatGrouped(context, data, type, filter, coreKey) {
 			// Handle summaries
 			if (type === 'summaries') {
 				if (!isSummarizedListWithKeys && _.isObject(value)) {
-					if (typeof value.minimum !== 'undefined' && typeof value.minimum !== 'undefined') {
+					if (typeof value.minimum !== 'undefined' && typeof value.maximum !== 'undefined') {
 						formatted = Formatters.formatExtent([value.minimum, value.maximum], field, spec);
 					}
 					else {
