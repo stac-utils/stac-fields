@@ -32,6 +32,7 @@
 		"order": "Order",
 		"pc": "Point Cloud",
 		"processing": "Processing",
+		"product": "Product",
 		"proj": "Projection",
 		"raster": "Raster Imagery",
 		"sar": {
@@ -490,14 +491,17 @@
 				},
 				"value": {
 					"label": "Value",
+					"sortable": true,
 					"order": 1
 				},
 				"title": {
 					"label": "Title",
+					"sortable": true,
 					"order": 2
 				},
 				"name": {
 					"label": "Identifier",
+					"sortable": true,
 					"order": 3
 				},
 				"description": {
@@ -505,9 +509,20 @@
 					"order": 4,
 					"format": "CommonMark"
 				},
+				"percentage": {
+					"label": "Percentage of samples",
+					"sortable": true,
+					"order": 5,
+					"unit": "%"
+				},
+				"count": {
+					"label": "Number of samples",
+					"sortable": true,
+					"order": 6
+				},
 				"nodata": {
 					"label": "No-data value",
-					"order": 5,
+					"order": 7,
 					"default": false
 				}
 			}
@@ -518,6 +533,7 @@
 			"items": {
 				"name": {
 					"label": "Name",
+					"sortable": true,
 					"order": 0
 				},
 				"offset": {
@@ -709,13 +725,11 @@
 		"forecast:horizon": {
 			"label": "Forecast Horizon",
 			"explain": "The time between the reference time and the forecast time",
-			"format": "Duration",
-			"summary": "r"
+			"format": "Duration"
 		},
 		"forecast:duration": {
 			"label": "Forecast Length",
-			"format": "Duration",
-			"summary": "r"
+			"format": "Duration"
 		},
 
 		"file:bits_per_sample": "Bits per Sample",
@@ -1118,6 +1132,19 @@
 			"format": "Software",
 			"summary": false
 		},
+		"processing:version": "Processor Version",
+		"processing:datetime": {
+			"label": "Processing Time",
+			"format": "Timestamp",
+			"summary": "r"
+		},
+
+		"product:type": "Product Type",
+		"product:timeliness": {
+			"label": "Timeliness",
+			"format": "Duration"
+		},
+		"product:timeliness_category": "Timeliness Category",
 
 		"proj:epsg": {
 			"label": "EPSG Code",
@@ -1212,6 +1239,7 @@
 		},
 		"sat:anx_datetime": {
 			"label": "ANX Time",
+			"format": "Timestamp",
 			"explain": "Ascending Node Crossing time",
 			"summary": "r"
 		},
