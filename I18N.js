@@ -9,6 +9,12 @@ const Defaults = {
 		year: 'numeric'
 	},
 	dateTimeFormatterOptions: {
+		day: 'numeric',
+		month: 'numeric',
+		year: 'numeric',
+		hour: 'numeric',
+		minute: 'numeric',
+		second: 'numeric',
 		timeZone: "UTC",
 		timeZoneName: "short"
 	}
@@ -17,25 +23,29 @@ const Defaults = {
 const I18N = {
 
 	locales: [],
-	collator: new Intl.Collator(),
-	dateFormatter: new Intl.DateTimeFormat(),
-	dateTimeFormatter: new Intl.DateTimeFormat(),
-	numberFormatter: new Intl.NumberFormat(),
+	collator: new Intl.Collator(Defaults.collatorOptions),
+	dateFormatter: new Intl.DateTimeFormat(Defaults.dateFormatterOptions),
+	dateTimeFormatter: new Intl.DateTimeFormat(Defaults.dateTimeFormatterOptions),
+	numberFormatter: new Intl.NumberFormat(Defaults.numberFormatterOptions),
 	translate: null, // function(value: string, vars: array|object = null) : string
+
+	getDefaults() {
+		return Defaults;
+	},
 
 	setLocales(locales, dateFormatterOptions = {}, dateTimeFormatterOptions = {}, numberFormatterOptions = {}, collatorOptions = {}) {
 		this.locales = locales;
 
-		collatorOptions = Object.assign({}, this.collatorOptions, collatorOptions);
+		collatorOptions = Object.assign({}, Defaults.collatorOptions, collatorOptions);
 		this.collator = new Intl.Collator(locales, collatorOptions);
 
-		dateFormatterOptions = Object.assign({}, this.dateFormatterOptions, dateFormatterOptions);
+		dateFormatterOptions = Object.assign({}, Defaults.dateFormatterOptions, dateFormatterOptions);
 		this.dateFormatter = new Intl.DateTimeFormat(locales, dateFormatterOptions);
 
-		dateTimeFormatterOptions = Object.assign({}, this.dateTimeFormatterOptions, dateTimeFormatterOptions);
+		dateTimeFormatterOptions = Object.assign({}, Defaults.dateTimeFormatterOptions, dateTimeFormatterOptions);
 		this.dateTimeFormatter = new Intl.DateTimeFormat(locales, dateTimeFormatterOptions);
 
-		numberFormatterOptions = Object.assign({}, this.numberFormatterOptions, numberFormatterOptions);
+		numberFormatterOptions = Object.assign({}, Defaults.numberFormatterOptions, numberFormatterOptions);
 		this.numberFormatter = new Intl.NumberFormat(locales, numberFormatterOptions);
 	},
 

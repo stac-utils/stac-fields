@@ -374,23 +374,36 @@ const Formatters = {
 		}
 	},
 
-	formatTemporalExtent(value, field, spec = {}) {
-		let formatter = spec.shorten ? Formatters.formatDate : Formatters.formatTimestamp;
-		if (!Array.isArray(value) || value.length < 2 || (typeof value[0] !== 'string' && typeof value[1] !== 'string')) {
+	formatTemporalExtent(value, field, spec = {}) {	
+		if (!Array.isArray(value) || value.length !== 2) {
 			return DataTypes.null();
 		}
-		else if (typeof value[0] !== 'string') {
-			return _.t("Until {0}", [formatter(value[1])]);
-		}
-		else if (typeof value[1] !== 'string') {
-			return _.t("{0} until present", [formatter(value[0])]);
-		}
-		else if (value[0] === value[1]) {
-			return Formatters.formatTimestamp(value[0]);
-		}
-		else {
-			return value.map(date => formatter(date)).join(' - ');
-		}
+
+		value = value.map(d => {
+			try {
+				return d ? new Date(d) : null;
+			} catch(e) {
+				return null;
+			}
+		});
+
+		try {
+			const [start, end] = value;
+			if (start || end) {
+				const base = spec.shorten ? I18N.dateFormatter : I18N.dateTimeFormatter;
+				if (!start) {
+					return _.t("Until {0}", [base.format(end)]);
+				}
+				else if (!end) {
+					return _.t("{0} until present", [base.format(start)]);
+				}
+				else {
+					return base.formatRange(start, end);
+				}
+			}
+		} catch (error) {}
+
+		return DataTypes.null();
 	},
 
 	formatTemporalExtents(value, field, spec = {}) {
