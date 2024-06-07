@@ -170,8 +170,11 @@ This avoids XSS and similar security issues.
 
 ### `I18N`
 
-* `translate` (function): Set a function with parameters (phrase : string, vars : array|object = null) that can translate phrases.
-* `locales` (array): Set locales to be used for JS locale functions like `localeCompare` or `localeString`.
+All properties on the I18N class should only be used in read-only mode.
+You should use the following functions instead:
+
+* `setTranslator(function fn)`: Set a function with parameters (phrase : string, vars : array|object = null) that can translate phrases.
+* `setLocales(array<string> locales, object dateFormatterOptions = {}, object dateTimeFormatterOptions = {}, object numberFormatterOptions = {}, object collatorOptions = {})`: Set locales to be used for JS Intl functions.
 
 ### `Registry`
 

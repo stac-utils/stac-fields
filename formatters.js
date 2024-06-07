@@ -165,10 +165,7 @@ const Formatters = {
 	formatTimestamp(value) {
 		if (typeof value === 'string') {
 			try {
-				return new Date(value).toLocaleString(I18N.locales, {
-					timeZone: "UTC",
-					timeZoneName: "short"
-				});
+				return I18N.dateTimeFormatter.format(new Date(value));
 			} catch (error) {}
 		}
 		return DataTypes.null();
@@ -181,11 +178,7 @@ const Formatters = {
 	formatDate(value) {
 		if (typeof value === 'string') {
 			try {
-				return new Date(value).toLocaleString(I18N.locales, {
-					day: 'numeric',
-					month: 'numeric',
-					year: 'numeric'
-				});
+				return I18N.dateFormatter.format(new Date(value));
 			} catch (error) {}
 		}
 		return DataTypes.null();
@@ -406,7 +399,7 @@ const Formatters = {
 				return -1;
 			}
 			else {
-				return a[0].localeCompare(b[0], I18N.locales);
+				return I18N.collator.compare(a[0], b[0]);
 			}
 		};
 		return _.toList(value, sortExtents, v => Formatters.formatTemporalExtent(v, field, spec));

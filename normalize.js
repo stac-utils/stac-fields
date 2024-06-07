@@ -50,7 +50,7 @@ const Normalize = {
             return i1.order - i2.order;
           }
           else {
-            return _.t(i1.label).localeCompare(_.t(i2.label), I18N.locales);
+            return I18N.collator.compare(_.t(i1.label), _.t(i2.label));
           }
         })
         .map(item => item.key);

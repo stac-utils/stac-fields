@@ -22,7 +22,7 @@ const DataTypes = {
 		if (typeof num !== 'number') {
 			num = parseFloat(num);
 		}
-		return _.unit(num.toLocaleString(I18N.locales, {maximumFractionDigits: 10}), unit);
+		return _.unit(I18N.numberFormatter.format(num), unit);
 	},
 
 	string(str, unit = '') {

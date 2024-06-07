@@ -146,7 +146,7 @@ function formatGrouped(context, data, type, filter, coreKey) {
 			console.error(`Field '${field}' with value '${value}' resulted in an error`, error);
 		}
 	}
-	return Object.values(groups).sort((a,b) => a.extension.localeCompare(b.extension, I18N.locales));
+	return Object.values(groups).sort((a,b) => I18N.collator.compare(a.extension, b.extension));
 
 }
 
