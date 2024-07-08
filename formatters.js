@@ -135,6 +135,10 @@ const Formatters = {
 				return 'CoverageJSON';
 			case 'application/vnd.flatgeobuf':
 				return 'FlatGeobuf'; // inofficial: https://github.com/flatgeobuf/flatgeobuf/discussions/112
+			case 'application/x-filegdb':
+				return short ? 'Geodatabase' : 'Esri File Geodatabase';
+			case 'application/vnd.nitf':
+				return short ? 'NITF' : 'National Imagery Transmission Format';
 			default: {
 				let [group, format] = media.type.split('/');
 				format = _.formatKey(format.replace(/^(vnd|x)[.+-]/, ''));
