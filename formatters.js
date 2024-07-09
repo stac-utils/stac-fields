@@ -117,7 +117,11 @@ const Formatters = {
 			case 'application/x.mrf':
 				return short ? 'MRF' : 'Meta Raster Format';
 			case 'application/wmo-GRIB2':
-				return 'GRIB2';
+				return 'GRIB 2';
+			case 'application/grib':
+				return `GRIB ${media.parameters.edition || ""}`.trim();
+			case 'application/bufr':
+				return `BUFR ${media.parameters.edition || ""}`.trim();
 			case 'application/octet-stream':
 				return short ? 'Binary' : 'Binary file';
 			case 'application/vnd.laszip':
