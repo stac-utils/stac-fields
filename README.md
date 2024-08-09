@@ -9,15 +9,19 @@ Version: **1.3.1**
 Add to your project with `npm install @radiantearth/stac-fields --save`
 
 Import the utilities to format values:
+
 ```js
 const StacFields = require('@radiantearth/stac-fields');
 ```
+
 or
+
 ```js
 import StacFields from '@radiantearth/stac-fields';
 ```
 
 Format a value:
+
 ```js
 let stacItem = {
     stac_version: '1.0.0',
@@ -47,12 +51,13 @@ for(let field in stacItem.properties) {
 
 // Option 2: Group by extension and format item properties
 // The second parameter is a filter function to skip specific properties or paths, remove to get all properties
-let groups = StacFields.formatStacProperties(stacItem, (key, path) => key !== 'eo:bands');
+let groups = StacFields.formatItemProperties(stacItem, (key, path) => key !== 'eo:bands');
 ```
 
 To filter by path (remove all common_name fields from bands):
+
 ```js
-let groups = StacFields.formatStacProperties(stacItem, (key, path) => !(path[0] === 'eo:bands' && path[2] === 'common_name'));
+let groups = StacFields.formatItemProperties(stacItem, (key, path) => !(path[0] === 'eo:bands' && path[2] === 'common_name'));
 ```
 
 This library is written for the latest version of the STAC specification (1.0.0-rc.4).
@@ -157,11 +162,11 @@ Formatters are always functions that have the following signature:
 
 `method(value : any, field : string, spec : object, context = null, parent = null) => string`
 
-- `value` is the value of the field in the STAC JSON.
-- `field` is the key of the field in the STAC JSON.
-- `spec` is the normalized object for the field from the `fields.json`.
-- `context` is the full STAC JSON.
-- `parent` is the parent object, if any.
+* `value` is the value of the field in the STAC JSON.
+* `field` is the key of the field in the STAC JSON.
+* `spec` is the normalized object for the field from the `fields.json`.
+* `context` is the full STAC JSON.
+* `parent` is the parent object, if any.
 
 The returned value is always expected to be a string.
 It may contain HTML if the formatter is added to the `htmlFormats` array in `fields.json`.
