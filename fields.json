@@ -284,7 +284,8 @@
 					"alias": "nodata"
 				},
 				"data_type": {
-					"alias": "data_type"
+					"alias": "data_type",
+					"sortable": true
 				},
 				"statistics": {
 					"alias": "statistics"
@@ -307,22 +308,28 @@
 					"sortable": true
 				},
 				"raster:sampling": {
-					"alias": "raster:sampling"
+					"alias": "raster:sampling",
+					"sortable": true
 				},
 				"unit": {
-					"alias": "unit"
+					"alias": "unit",
+					"sortable": true
 				},
 				"raster:bits_per_sample": {
-					"alias": "raster:bits_per_sample"
+					"alias": "raster:bits_per_sample",
+					"sortable": true
 				},
 				"raster:spatial_resolution": {
-					"alias": "raster:spatial_resolution"
+					"alias": "raster:spatial_resolution",
+					"sortable": true
 				},
 				"raster:scale": {
-					"alias": "raster:scale"
+					"alias": "raster:scale",
+					"sortable": true
 				},
 				"raster:offset": {
-					"alias": "raster:offset"
+					"alias": "raster:offset",
+					"sortable": true
 				},
 				"raster:histogram": {
 					"alias": "raster:histogram"
@@ -995,28 +1002,35 @@
 					"alias": "nodata"
 				},
 				"sampling": {
-					"alias": "raster:sampling"
+					"alias": "raster:sampling",
+					"sortable": true
 				},
 				"data_type": {
-					"alias": "data_type"
+					"alias": "data_type",
+					"sortable": true
 				},
 				"bits_per_sample": {
-					"alias": "raster:bits_per_sample"
+					"alias": "raster:bits_per_sample",
+					"sortable": true
 				},
 				"spatial_resolution": {
-					"alias": "raster:spatial_resolution"
+					"alias": "raster:spatial_resolution",
+					"sortable": true
 				},
 				"statistics": {
 					"alias": "statistics"
 				},
 				"unit": {
-					"alias": "unit"
+					"alias": "unit",
+					"sortable": true
 				},
 				"scale": {
-					"alias": "raster:scale"
+					"alias": "raster:scale",
+					"sortable": true
 				},
 				"offset": {
-					"alias": "raster:offset"
+					"alias": "raster:offset",
+					"sortable": true
 				},
 				"histogram": {
 					"alias": "raster:histogram"
