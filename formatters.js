@@ -238,7 +238,7 @@ const Formatters = {
 
 		// We could use the spdx-license-ids and/or spdx-to-html packages previously used in STAC Browser,
 		// but let's try it without additional dependency for now.
-		if (value !== 'proprietary' && value !== 'various' && value.match(/^[\w\.\-]+$/i)) { // SPDX
+		if (value !== 'other' && value !== 'proprietary' && value !== 'various' && value.match(/^[\w\.\-]+$/i)) { // SPDX
 			return _.toLink(`https://spdx.org/licenses/${value}.html`, value, "license");
 		}
 		

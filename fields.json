@@ -115,7 +115,10 @@
 			"label": "File Format",
 			"explain": "Based on the IANA media (MIME) types",
 			"format": "MediaType"
-		}
+		},
+		"method": "HTTP Method",
+		"headers": "HTTP Headers",
+		"body": "Request Body"
 	},
 	"assets": {
 		"href": {
@@ -195,6 +198,7 @@
 			"format": "CommonMark",
 			"summary": false
 		},
+		"roles": "Purpose",
 
 		"start_datetime": {
 			"label": "Time of Data begins",
@@ -257,6 +261,117 @@
 			"label": "GSD",
 			"explain": "Ground Sample Distance",
 			"unit": "m"
+		},
+
+		"bands": {
+			"label": "Bands",
+			"items": {
+				"name": {
+					"label": "Name",
+					"sortable": true,
+					"id": true,
+					"order": 0
+				},
+				"description": {
+					"alias": "description",
+					"order": 2
+				},
+				"gsd": {
+					"alias": "gsd",
+					"sortable": true
+				},
+				"nodata": {
+					"alias": "nodata"
+				},
+				"data_type": {
+					"alias": "data_type"
+				},
+				"statistics": {
+					"alias": "statistics"
+				},
+				"eo:common_name": {
+					"alias": "eo:common_name",
+					"sortable": true,
+					"order": 1
+				},
+				"eo:center_wavelength": {
+					"alias": "eo:center_wavelength",
+					"sortable": true
+				},
+				"eo:full_width_half_max": {
+					"alias": "eo:full_width_half_max",
+					"sortable": true
+				},
+				"eo:solar_illumination": {
+					"alias": "eo:solar_illumination",
+					"sortable": true
+				},
+				"raster:sampling": {
+					"alias": "raster:sampling"
+				},
+				"unit": {
+					"alias": "unit"
+				},
+				"raster:bits_per_sample": {
+					"alias": "raster:bits_per_sample"
+				},
+				"raster:spatial_resolution": {
+					"alias": "raster:spatial_resolution"
+				},
+				"raster:scale": {
+					"alias": "raster:scale"
+				},
+				"raster:offset": {
+					"alias": "raster:offset"
+				},
+				"raster:histogram": {
+					"alias": "raster:histogram"
+				},
+				"classification:classes": {
+					"alias": "classification:classes"
+				},
+				"classification:bitfields": {
+					"alias": "classification:bitfields"
+				}
+			}
+		},
+
+		"nodata": {
+			"label": "No-Data Values",
+			"format": "CSV",
+			"summary": false
+		},
+		"data_type": {
+			"label": "Data Type of Values",
+			"format": "FileDataType"
+		},
+		"unit": "Unit of Values",
+		"statistics": {
+			"label": "Statistics",
+			"items": {
+				"mean": "Average",
+				"maximum": {
+					"label": "Max.",
+					"explain": "Maxmimum value"
+				},
+				"minimum": {
+					"label": "Min.",
+					"explain": "Minimum value"
+				},
+				"stdev": {
+					"label": "Std. Dev.",
+					"explain": "Standard Deviation"
+				},
+				"count": {
+					"label": "Count",
+					"explain": "Total number of values"
+				},
+				"valid_percent": {
+					"label": "Valid",
+					"explain": "Percentage of valid values",
+					"unit": "%"
+				}
+			}
 		},
 
 		"version": {
@@ -595,7 +710,7 @@
 					"order": 5
 				},
 				"unit": {
-					"alias": "file:unit",
+					"alias": "unit",
 					"order": 5
 				},
 				"geometry_types": {
@@ -645,7 +760,7 @@
 					"order": 5
 				},
 				"unit": {
-					"alias": "file:unit",
+					"alias": "unit",
 					"order": 6
 				}
 			}
@@ -661,50 +776,35 @@
 					"order": 0
 				},
 				"common_name": {
-					"label": "Common Name",
+					"alias": "eo:common_name",
 					"sortable": true,
 					"order": 1
 				},
-				"description": {
-					"label": "Description",
-					"format": "CommonMark",
+				"center_wavelength": {
+					"alias": "eo:center_wavelength",
+					"sortable": true,
 					"order": 2
 				},
-				"center_wavelength": {
-					"label": "Wavelength",
-					"explain": "The center wavelength of the band",
-					"unit": "μm",
-					"sortable": true,
-					"order": 5
-				},
 				"full_width_half_max": {
-					"label": "FWHM",
-					"explain": "Full Width Half Max",
-					"unit": "μm",
-					"sortable": true,
-					"order": 6
-				},
-				"gsd": {
-					"alias": "gsd",
+					"alias": "eo:full_width_half_max",
 					"sortable": true,
 					"order": 3
 				},
+				"solar_illumination": {
+					"alias": "eo:solar_illumination",
+					"sortable": true,
+					"order": 7
+				},
+				"description": {
+					"alias": "description"
+				},
+				"gsd": {
+					"alias": "gsd",
+					"sortable": true
+				},
 				"cloud_cover": {
 					"alias": "eo:cloud_cover",
-					"sortable": true,
-					"order": 4
-				},
-				"solar_illumination": {
-					"label": "Solar Illumination",
-					"sortable": true,
-					"order": 7,
-					"unit": "W/m²/μm"
-				},
-				"classification:classes": {
-					"alias": "classification:classes"
-				},
-				"classification:bitfields": {
-					"alias": "classification:bitfields"
+					"sortable": true
 				}
 			}
 		},
@@ -715,6 +815,21 @@
 		"eo:snow_cover": {
 			"label": "Snow/Ice Cover",
 			"unit": "%"
+		},
+		"eo:common_name": "Common Name",
+		"eo:center_wavelength": {
+			"label": "Wavelength",
+			"explain": "The center wavelength of the band",
+			"unit": "μm"
+		},
+		"eo:full_width_half_max": {
+			"label": "FWHM",
+			"explain": "Full Width Half Max",
+			"unit": "μm"
+		},
+		"eo:solar_illumination": {
+			"label": "Solar Illumination",
+			"unit": "W/m²/μm"
 		},
 
 		"forecast:reference_datetime": {
@@ -732,7 +847,9 @@
 			"format": "Duration"
 		},
 
-		"file:bits_per_sample": "Bits per Sample",
+		"file:bits_per_sample": {
+			"alias": "raster:bits_per_sample"
+		},
 		"file:byte_order": "Byte Order",
 		"file:checksum": {
 			"label": "Checksum",
@@ -740,8 +857,7 @@
 			"summary": false
 		},
 		"file:data_type": {
-			"label": "Data Type of Values",
-			"format": "FileDataType"
+			"alias": "data_type"
 		},
 		"file:header_size": {
 			"label": "Header Size",
@@ -749,16 +865,16 @@
 			"summary": false
 		},
 		"file:nodata": {
-			"label": "No-Data Values",
-			"format": "CSV",
-			"summary": false
+			"alias": "nodata"
 		},
 		"file:size": {
 			"label": "Size",
 			"format": "FileSize",
 			"summary": false
 		},
-		"file:unit": "Unit of Values",
+		"file:unit": {
+			"alias": "unit"
+		},
 		"file:values": {
 			"label": "Map of Values",
 			"summary": false,
@@ -777,6 +893,9 @@
 		"file:local_path": {
 			"label": "Local Path",
 			"summary": false
+		},
+		"nodata:values": {
+			"alias": "nodata"
 		},
 
 		"goes:orbital_slot": "Orbital Slot",
@@ -870,68 +989,58 @@
 		},
 
 		"raster:bands": {
-			"label": "Bands",
+			"label": "Layers",
 			"items": {
 				"nodata": {
-					"alias": "file:nodata"
+					"alias": "nodata"
 				},
 				"sampling": {
-					"label": "Sampling",
-					"mapping": {
-						"area": "Area",
-						"point": "Point (at pixel center)"
-					}
+					"alias": "raster:sampling"
 				},
 				"data_type": {
-					"alias": "file:data_type"
+					"alias": "data_type"
 				},
 				"bits_per_sample": {
-					"alias": "file:bits_per_sample"
+					"alias": "raster:bits_per_sample"
 				},
 				"spatial_resolution": {
-					"label": "Resolution",
-					"explain": "Average spatial resolution",
-					"unit": "m"
+					"alias": "raster:spatial_resolution"
 				},
 				"statistics": {
-					"label": "Statistics",
-					"items": {
-						"mean": "Average",
-						"maximum": {
-							"label": "Max.",
-							"explain": "Maxmimum value"
-						},
-						"minimum": {
-							"label": "Min.",
-							"explain": "Minimum value"
-						},
-						"stdev": {
-							"label": "Std. Dev.",
-							"explain": "Standard Deviation"
-						},
-						"valid_percent": {
-							"label": "Valid",
-							"explain": "Percentage of valid pixels",
-							"unit": "%"
-						}
-					}
+					"alias": "statistics"
 				},
 				"unit": {
-					"alias": "file:unit"
+					"alias": "unit"
 				},
-				"scale": "Scale",
-				"offset": "Offset",
+				"scale": {
+					"alias": "raster:scale"
+				},
+				"offset": {
+					"alias": "raster:offset"
+				},
 				"histogram": {
-					"label": "Histogram",
-					"custom": true
-				},
-				"classification:classes": {
-					"alias": "classification:classes"
-				},
-				"classification:bitfields": {
-					"alias": "classification:bitfields"
+					"alias": "raster:histogram"
 				}
 			}
+		},
+		"raster:sampling": {
+			"label": "Sampling",
+			"mapping": {
+				"area": "Area",
+				"point": "Point (at pixel center)"
+			}
+		},
+		"raster:bits_per_sample": "Bits per Sample",
+		"raster:spatial_resolution": {
+			"label": "Resolution",
+			"explain": "Average spatial resolution",
+			"unit": "m"
+		},
+		"raster:scale": "Scale",
+		"raster:offset": "Offset",
+		"raster:histogram": {
+			"label": "Histogram",
+			"custom": true
 		},
 
 		"label:properties": {
@@ -1145,6 +1254,14 @@
 			"format": "Duration"
 		},
 		"product:timeliness_category": "Timeliness Category",
+		"product:acquisition_type": {
+			"label": "Acquisition Type",
+			"mapping": {
+				"nominal": "Nominal",
+				"calibration": "Calibration",
+				"other": "Other"
+			}
+		},
 
 		"proj:epsg": {
 			"label": "EPSG Code",
