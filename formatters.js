@@ -325,18 +325,36 @@ const Formatters = {
 		});
 	},
 
-	formatEPSG(value) {
-		// Remove leading 'epsg:' which people sometimes prepend
+	formatCrsCode(value) {
 		if (typeof value === 'string') {
-			value = value.replace(/^epsg:/i, '');
+			const [authority, code] = value.split(':', 2);
+			switch(authority.toUpperCase()) {
+				case 'EPSG':
+				case 'ESRI':
+				case 'IAU_2015':
+				case 'IGNF':
+				case 'MKG':
+				case 'OGC':
+					return _.toLink(`https://spatialreference.org/ref/${authority.toLowerCase()}/${code}/`, value);
+				default:
+					return DataTypes.string(value);
+			}
 		}
-		value = parseInt(value, 10);
-		if (value > 0) {
-			return _.toLink(`http://epsg.io/${value}`, value);
+		
+		return DataTypes.null();
+	},
+
+	/**
+	 * @deprecated Use formatCrsCode instead
+	 */
+	formatEPSG(value) {
+		if (typeof value === 'number') {
+			return Formatters.formatCrsCode(`EPSG:${value}`);
 		}
-		else {
-			return DataTypes.null();
+		else if (typeof value === 'string') {
+			return Formatters.formatCrsCode(value);
 		}
+		return DataTypes.null();
 	},
 
 	formatExtent(value, field, spec = {}) {

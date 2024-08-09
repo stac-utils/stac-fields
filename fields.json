@@ -1151,6 +1151,11 @@
 			"format": "EPSG",
 			"summary": "v"
 		},
+		"proj:code": {
+			"label": "Code",
+			"format": "CrsCode",
+			"summary": "v"
+		},
 		"proj:wkt2": {
 			"label": "WKT2",
 			"explain": "Well-Known Text, version 2",

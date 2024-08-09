@@ -132,11 +132,12 @@ The most important methods are:
    import { Formatters } from '@radiantearth/stac-fields';
    Formatters.allowHtmlInCommonMark = false;
    ```
+* CrsCode (CRS Codes such as `EPSG:1234`)
 * CSV (array to comma-separated values)
 * Date
 * DOI (generate a link for a DOI)
 * Duration (ISO 8601 duration)
-* EPSG (generate a link for an EPSG code)
+* EPSG (generate a link for an EPSG code - deprecated in favor of CrsCode)
 * Extent (array with two values formatted as range)
 * FileDataType (explains the data types defined in the file extension)
 * FileSize (formats a number of bytes into kB, MB, ...)
