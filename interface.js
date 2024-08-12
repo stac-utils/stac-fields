@@ -242,7 +242,7 @@ function format(value, field, context = null, parent = null, spec = null, filter
 		if (Registry.externalRenderer && (spec.custom || spec.items || spec.properties)) {
 			let formattedValues = {};
 			for(let key in value) {
-				if (typeof filter === 'function' && path.length > 0 && !filter(path[0], path.concat([k]))) {
+				if (typeof filter === 'function' && path.length > 0 && !filter(path[0], path.concat([key]))) {
 					continue;
 				}
 				formattedValues[key] = callbackValue(value[key], key, value);
