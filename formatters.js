@@ -143,6 +143,8 @@ const Formatters = {
 				return short ? 'Geodatabase' : 'Esri File Geodatabase';
 			case 'application/vnd.nitf':
 				return short ? 'NITF' : 'National Imagery Transmission Format';
+			case 'application/3dtiles+json':
+				return '3D Tiles';
 			default: {
 				let [group, format] = media.type.split('/');
 				format = _.formatKey(format.replace(/^(vnd|x)[.+-]/, ''));
