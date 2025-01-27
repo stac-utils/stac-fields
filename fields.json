@@ -355,8 +355,7 @@
 		"unit": "Unit of Values",
 		"statistics": {
 			"label": "Statistics",
-			"listWithKeys": true,
-			"items": {
+			"properties": {
 				"mean": "Average",
 				"maximum": {
 					"label": "Max.",
