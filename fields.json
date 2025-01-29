@@ -2,6 +2,7 @@
 	"extensions": {
 		"alternate": "Alternative Access Methods",
 		"anon": "Anonymized Location",
+		"auth": "Authentication",
 		"card4l": {
 			"label": "CARD4L",
 			"explain": "CEOS Analysis Ready Data for Land"
@@ -149,6 +150,7 @@
 			"label": "Alternatives",
 			"listWithKeys": true,
 			"items": {
+				"alternate:name": "Identifier",
 				"href": {
 					"label": "URL",
 					"format": "Url"
@@ -1405,20 +1407,78 @@
 
 		"ssys:targets": "Target Body",
 
-		"storage:platform": {
-			"label": "Provider",
-			"mapping": {
-				"ALIBABA": "Alibaba Cloud",
-				"AWS": "Amazon AWS",
-				"AZURE": "Microsoft Azure",
-				"GCP": "Google Cloud Platform",
-				"IBM": "IBM Cloud",
-				"ORACLE": "Oracle Cloud"
+		"auth:refs": "Methods",
+		"auth:schemes": {
+			"label": "Methods",
+			"listWithKeys": true,
+			"items": {
+				"type": {
+					"label": "Method",
+					"order": 0,
+					"mapping": {
+						"http": "HTTP",
+						"s3": "S3",
+						"signedUrl": "Signed URL",
+						"oauth2": "OAuth2",
+						"openIdConnect": "OpenID Connect",
+						"apiKey": "API Token"
+					}
+				},
+				"description": {
+					"alias": "description",
+					"order": 1
+				},
+				"in": {
+					"label": "Provide token as",
+					"mapping": {
+						"query": "Query parameter",
+						"header": "HTTP header",
+						"cookie": "Cookie"
+					},
+					"order": 1
+				},
+				"name": {
+					"label": "Parameter",
+					"order": 2
+				},
+				"scheme": "HTTP Scheme",
+				"flows": "Flows",
+				"openIdConnectUrl": "OpenID Connect metadata"
 			}
 		},
-		"storage:region": "Region",
-		"storage:requester_pays": "Requester Pays",
-		"storage:tier": "Tier Type",
+
+		"storage:refs": "Providers",
+		"storage:schemes": {
+			"label": "Providers",
+			"listWithKeys": true,
+			"items": {
+				"type": {
+					"label": "Type",
+					"order": 0,
+					"mapping": {
+						"s3": "S3 (Amazon Web Services)",
+						"custom-s3": "S3 (self-hosted)",
+						"ms-azure": "Microsoft Azure"
+					}
+				},
+				"platform": {
+					"label": "Host",
+					"order": 1
+				},
+				"region": {
+					"label": "Region",
+					"order": 2
+				},
+				"requester_pays": {
+					"label": "Payment",
+					"mapping": {
+						"true": "Requester Pays",
+						"false": "Provider Pays"
+					},
+					"order": 3
+				}
+			}
+		},
 
 		"table:columns": {
 			"label": "Columns",
