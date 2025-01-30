@@ -1452,9 +1452,18 @@
 			"label": "Providers",
 			"listWithKeys": true,
 			"items": {
+				"title": {
+					"label": "Title",
+					"order": 0
+				},
+				"description": {
+					"title": "Description",
+					"format": "CommonMark",
+					"order": 1
+				},
 				"type": {
 					"label": "Type",
-					"order": 0,
+					"order": 2,
 					"mapping": {
 						"s3": "S3 (Amazon Web Services)",
 						"custom-s3": "S3 (self-hosted)",
@@ -1463,11 +1472,11 @@
 				},
 				"platform": {
 					"label": "Host",
-					"order": 1
+					"order": 3
 				},
 				"region": {
 					"label": "Region",
-					"order": 2
+					"order": 4
 				},
 				"requester_pays": {
 					"label": "Payment",
@@ -1475,7 +1484,7 @@
 						"true": "Requester Pays",
 						"false": "Provider Pays"
 					},
-					"order": 3
+					"order": 5
 				}
 			}
 		},
