@@ -23,10 +23,10 @@ const Defaults = {
 const I18N = {
 
 	locales: [],
-	collator: new Intl.Collator(this.locales, Defaults.collatorOptions),
-	dateFormatter: new Intl.DateTimeFormat(this.locales, Defaults.dateFormatterOptions),
-	dateTimeFormatter: new Intl.DateTimeFormat(this.locales, Defaults.dateTimeFormatterOptions),
-	numberFormatter: new Intl.NumberFormat(this.locales, Defaults.numberFormatterOptions),
+	collator: new Intl.Collator([], Defaults.collatorOptions),
+	dateFormatter: new Intl.DateTimeFormat([], Defaults.dateFormatterOptions),
+	dateTimeFormatter: new Intl.DateTimeFormat([], Defaults.dateTimeFormatterOptions),
+	numberFormatter: new Intl.NumberFormat([], Defaults.numberFormatterOptions),
 	translate: null, // function(value: string, vars: array|object = null) : string
 
 	getDefaults() {
