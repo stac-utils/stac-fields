@@ -27,7 +27,7 @@ const DataTypes = {
 
 	string(str, unit = '') {
 		try {
-			const url = new URL(string);
+			const url = new URL(str);
 			return _.toLink(url.toString(), url.toString())
 		} catch (exception) {
 			return _.unit(_.e(str).replace(/(\r\n|\r|\n){2,}/g, '<br>'), unit);
