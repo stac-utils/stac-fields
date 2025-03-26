@@ -29,7 +29,7 @@ const DataTypes = {
 		try {
 			const url = new URL(string);
 			return _.toLink(url.toString(), url.toString())
-		} catch (_) {
+		} catch (exception) {
 			return _.unit(_.e(str).replace(/(\r\n|\r|\n){2,}/g, '<br>'), unit);
 		}
 	},
