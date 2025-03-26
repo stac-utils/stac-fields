@@ -26,7 +26,12 @@ const DataTypes = {
 	},
 
 	string(str, unit = '') {
-		return _.unit(_.e(str).replace(/(\r\n|\r|\n){2,}/g, '<br>'), unit);
+		try {
+			const url = new URL(string);
+			return _.toLink(url.toString(), url.toString())
+		} catch (_) {
+			return _.unit(_.e(str).replace(/(\r\n|\r|\n){2,}/g, '<br>'), unit);
+		}
 	},
 	
 	boolean(bool) {
