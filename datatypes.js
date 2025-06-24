@@ -27,10 +27,10 @@ const DataTypes = {
 
 	string(str, unit = '') {
 		if(str.startsWith("http://") || str.startsWith("https://")){
-			try {
-				const url = new URL(str);
-				return _.toLink(url.toString(), url.toString())
-			} catch (exception) {}
+			const url = URL.parse(str);
+			if (url) {
+				return _.toLink(url.toString());
+			}
 		}
 		return _.unit(_.e(str).replace(/(\r\n|\r|\n){2,}/g, '<br>'), unit);
 	},
