@@ -1685,99 +1685,85 @@
 			"label": "CADIP Session UUID",
 			"ext": "cadip",
 			"format": "String",
-			"explain": "UUID for the Session instance within CADIP.",
-			"summary": "v"
+			"explain": "UUID for the Session instance within CADIP."
 		},
 		"cadip:acquisition_id": {
 			"label": "Acquisition ID",
 			"ext": "cadip",
 			"format": "String",
-			"explain": "Acquisition ID code from the acquisition plan.",
-			"summary": "v"
+			"explain": "Acquisition ID code from the acquisition plan."
 		},
 		"cadip:num_channels": {
 			"label": "Number of Channels",
 			"ext": "cadip",
 			"format": "Number",
-			"explain": "Number of channels in the session (1–4).",
-			"summary": "r"
+			"explain": "Number of channels in the session (1–4)."
 		},
 		"cadip:station_id": {
 			"label": "Station ID",
 			"ext": "cadip",
 			"format": "String",
-			"explain": "Identifier distinguishing the acquisition station.",
-			"summary": "v"
+			"explain": "Identifier distinguishing the acquisition station."
 		},
 		"cadip:station_unit_id": {
 			"label": "Station Unit ID",
 			"ext": "cadip",
 			"format": "String",
-			"explain": "2-digit X-band station unit identifier.",
-			"summary": "v"
+			"explain": "2-digit X-band station unit identifier."
 		},
 		"cadip:antenna_id": {
 			"label": "Antenna ID",
 			"ext": "cadip",
 			"format": "String",
-			"explain": "Identification of the antenna used.",
-			"summary": "v"
+			"explain": "Identification of the antenna used."
 		},
 		"cadip:front_end_id": {
 			"label": "Front-End Processor ID",
 			"ext": "cadip",
 			"format": "String",
-			"explain": "FEP identifier; stations may use dual acquisition chains.",
-			"summary": "v"
+			"explain": "FEP identifier; stations may use dual acquisition chains."
 		},
 		"cadip:planned_data_start": {
 			"label": "Planned Data Start",
 			"ext": "cadip",
 			"format": "Timestamp",
-			"explain": "Planned start of the downlink from the SAPF plan.",
-			"summary": "r"
+			"explain": "Planned start of the downlink from the SAPF plan."
 		},
 		"cadip:planned_data_stop": {
 			"label": "Planned Data Stop",
 			"ext": "cadip",
 			"format": "Timestamp",
-			"explain": "Planned stop of the downlink from the SAPF plan.",
-			"summary": "r"
+			"explain": "Planned stop of the downlink from the SAPF plan."
 		},
 		"cadip:retransfer": {
 			"label": "Retransfer Session",
 			"ext": "cadip",
 			"format": "Boolean",
-			"explain": "True if the session corresponds to a retransfer.",
-			"summary": "v"
+			"explain": "True if the session corresponds to a retransfer."
 		},
 		"cadip:antenna_status_ok": {
 			"label": "Antenna Status OK",
 			"ext": "cadip",
 			"format": "Boolean",
-			"explain": "Quality flag for the acquired pass at antenna level.",
-			"summary": "v"
+			"explain": "Quality flag for the acquired pass at antenna level."
 		},
 		"cadip:front_end_status_ok": {
 			"label": "Front-End Status OK",
 			"ext": "cadip",
 			"format": "Boolean",
-			"explain": "Quality flag for the acquired pass at FEP level.",
-			"summary": "v"
+			"explain": "Quality flag for the acquired pass at FEP level."
 		},
 		"cadip:downlink_status_ok": {
 			"label": "Downlink Status OK",
 			"ext": "cadip",
 			"format": "Boolean",
-			"explain": "Overall status of the downlink.",
-			"summary": "v"
+			"explain": "Overall status of the downlink."
 		},
 		"cadip:delivery_push_ok": {
 			"label": "Delivery Push OK",
 			"ext": "cadip",
 			"format": "Boolean",
-			"explain": "Evaluation of data dissemination to the DDP.",
-			"summary": "v"
+			"explain": "Evaluation of data dissemination to the DDP."
 		},
 		"card4l:specification": {
 			"label": "Specification",
