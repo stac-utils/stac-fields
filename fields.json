@@ -11,6 +11,10 @@
 			"label": "CEOS-ARD",
 			"explain": "CEOS Analysis Ready Data"
 		},
+		"cf": {
+			"label": "CF Metadata Conventions",
+			"explain": "Climate and Forecast Metadata Conventions"
+		},
 		"classification": "Classification",
 		"contacts": "Contacts",
 		"cube": "Data Cube",
@@ -631,6 +635,20 @@
 			}
 		},
 		"ceosard:specification_version": "PFS Version",
+
+		"cf:parameter": {
+			"label": "Parameters",
+			"items": {
+				"name": {
+					"label": "Standard Name",
+					"order": 0
+				},
+				"unit": {
+					"label": "Unit",
+					"order": 1
+				}
+			}
+		},
 
 		"classification:classes": {
 			"summary": false,
