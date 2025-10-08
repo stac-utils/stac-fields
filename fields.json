@@ -7,6 +7,10 @@
 			"label": "CARD4L",
 			"explain": "CEOS Analysis Ready Data for Land"
 		},
+		"ceosard": {
+			"label": "CEOS-ARD",
+			"explain": "CEOS Analysis Ready Data"
+		},
 		"classification": "Classification",
 		"contacts": "Contacts",
 		"cube": "Data Cube",
@@ -603,6 +607,30 @@
 			"label": "Warning",
 			"summary": false
 		},
+
+		"ceosard:type": {
+			"label": "Sensor Type",
+			"mapping": {
+				"optical": "Optical",
+				"radar": "Radar (SAR)"
+			}
+		},
+		"ceosard:specification": {
+			"label": "PFS",
+			"explain": "CEOS-ARD Product Family Specification",
+			"mapping": {
+				"SR": "Surface Reflectance",
+				"ST": "Surface Temperature",
+				"AR": "Aquatic Reflectance",
+				"NLSR": "Nighttime Lights Surface Radiance",
+				"NRB": "Normalised Radar Backscatter",
+				"POL": "Polarimetric Radar",
+				"ORB": "Ocean Radar Backscatter",
+				"GSLC": "Geocoded Single-Look Complex",
+				"INSAR": "Interferometric Radar"
+			}
+		},
+		"ceosard:specification_version": "PFS Version",
 
 		"classification:classes": {
 			"summary": false,
