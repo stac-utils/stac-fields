@@ -1729,10 +1729,10 @@
 		"card4l:specification": {
 			"label": "Specification",
 			"mapping": {
-				"SR": "Surface Reflectance (Optical)",
-				"ST": "Surface Temperature (Optical)",
-				"NRB": "Normalized Radar Backscatter (SAR)",
-				"POL": "Polarimetric Radar (SAR)"
+				"SR": "Surface Reflectance",
+				"ST": "Surface Temperature",
+				"NRB": "Normalised Radar Backscatter",
+				"POL": "Polarimetric Radar"
 			}
 		},
 		"card4l:specification_version": "Specification Version",
