@@ -117,7 +117,8 @@
 				"tilejson": "TileJSON",
 				"wms": "OGC Web Map Service (WMS)",
 				"wmts": "OGC Web Map Tile Service (WMTS)",
-				"xyz": "XYZ Web Map"
+				"xyz": "XYZ Web Map",
+				"license": "License"
 			}
 		},
 		"type": {
