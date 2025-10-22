@@ -1,6 +1,6 @@
 {
 	"name": "@radiantearth/stac-fields",
-	"version": "1.5.5",
+	"version": "1.5.6",
 	"description": "A list of STAC fields with metadata and formatting instructions.",
 	"main": "index.js",
 	"files": [
