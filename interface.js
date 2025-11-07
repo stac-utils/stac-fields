@@ -105,7 +105,7 @@ function formatGrouped(context, data, type, filter, coreKey) {
 					// Go through each field's summary
 					for(let i in formatted) {
 						let result = _.isObject(formatted[i]) ? {} : [];
-						// Go through each entry in a field's summary (this is besically a single value as defined in the Item spec)
+						// Go through each entry in a field's summary (this is basically a single value as defined in the Item spec)
 						for(let key in items) {
 							result[key] = format(formatted[i][key], key, context, data, items[key]);
 						}
