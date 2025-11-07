@@ -370,7 +370,7 @@
 				"mean": "Average",
 				"maximum": {
 					"label": "Max.",
-					"explain": "Maxmimum value"
+					"explain": "Maximum value"
 				},
 				"minimum": {
 					"label": "Min.",
@@ -1274,7 +1274,7 @@
 				"count": "Count",
 				"maximum": {
 					"label": "Max.",
-					"explain": "Maxmimum value"
+					"explain": "Maximum value"
 				},
 				"minimum": {
 					"label": "Min.",

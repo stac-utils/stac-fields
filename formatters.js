@@ -130,7 +130,7 @@ const Formatters = {
 				return short ? 'COPC' : 'Cloud-Optimized Point Cloud (LASzip)';
 			case 'application/vnd+zarr': // https://github.com/zarr-developers/zarr-specs/issues/123
 				return 'Zarr';
-			case 'application/x-parquet': // Inofficial
+			case 'application/x-parquet': // Unofficial
 			case 'application/vnd.apache.parquet': // Official (tbc): https://github.com/opengeospatial/geoparquet/issues/115
 				return 'Parquet'
 			case 'application/vnd.pmtiles':
@@ -138,7 +138,7 @@ const Formatters = {
 			case 'application/vnd.cov+json':
 				return 'CoverageJSON';
 			case 'application/vnd.flatgeobuf':
-				return 'FlatGeobuf'; // inofficial: https://github.com/flatgeobuf/flatgeobuf/discussions/112
+				return 'FlatGeobuf'; // unofficial: https://github.com/flatgeobuf/flatgeobuf/discussions/112
 			case 'application/x-filegdb':
 				return short ? 'Geodatabase' : 'Esri File Geodatabase';
 			case 'application/vnd.nitf':
