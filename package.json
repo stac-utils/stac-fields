@@ -1,40 +1,40 @@
 {
-	"name": "@radiantearth/stac-fields",
-	"version": "1.5.6",
-	"description": "A list of STAC fields with metadata and formatting instructions.",
-	"main": "index.js",
-	"files": [
-		"fields.json",
-		"languages.json",
-		"fields-normalized.json",
-		"*.js"
-	],
-	"bugs": {
-		"url": "https://github.com/stac-utils/stac-fields/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/stac-utils/stac-fields.git"
-	},
+  "name": "@radiantearth/stac-fields",
+  "version": "1.5.7",
+  "description": "A list of STAC fields with metadata and formatting instructions.",
+  "main": "index.js",
+  "files": [
+    "fields.json",
+    "languages.json",
+    "fields-normalized.json",
+    "*.js"
+  ],
+  "bugs": {
+    "url": "https://github.com/stac-utils/stac-fields/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stac-utils/stac-fields.git"
+  },
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/m-mohr"
   },
-	"author": "Radiant Earth Foundation <hello@radiant.earth>",
-	"contributors": [
-		{
-			"name": "Matthias Mohr"
-		}
-	],
-	"license": "Apache-2.0",
-	"dependencies": {
-		"@musement/iso-duration": "^1.0.0",
-		"commonmark": "^0.29.3",
-		"content-type": "^1.0.4",
-		"multihashes": "^3.1.2"
-	},
-	"scripts": {
-		"demo": "node demo/generate.js",
-		"normalize": "node build/normalize.js"
-	}
+  "author": "Radiant Earth Foundation <hello@radiant.earth>",
+  "contributors": [
+    {
+      "name": "Matthias Mohr"
+    }
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@musement/iso-duration": "^1.0.0",
+    "commonmark": "^0.29.3",
+    "content-type": "^1.0.4",
+    "multihashes": "^3.1.2"
+  },
+  "scripts": {
+    "demo": "node demo/generate.js",
+    "normalize": "node build/normalize.js"
+  }
 }

@@ -2,7 +2,7 @@
 
 A minimal STAC library that contains a list of STAC fields with some metadata (title, unit, prefix) and helper functions for styling as HTML.
 
-Version: **1.5.6**
+Version: **1.5.7**
 
 ## Usage
 
@@ -86,19 +86,19 @@ The following options are available in the object:
 * `alias`: If a field has multiple keys, declare the field to use the specification of the other field.
 * `listWithKeys`: Set to `true` to allow the option `items` to specify items in an object of objects (like assets). Defaults to `false`.
 * `items`: If the value is an array of objects (or an object of objects if `listWithKeys` has ben set), a table can be created with the details in this object. It has the same structure as specified here, but in addition `sortable` and `id` are allowed:
-    * `sortable`: Specifies whether the value can be sorted (`true`, e.g. in a table) or not (`false`). Defaults to `false`.
-    * `id`: Specifies whether the value is the unique primary key (`true`) or not (`false`). Defaults to `false`.
-    * `default`: If no value is present, this value will be used instead.
+  * `sortable`: Specifies whether the value can be sorted (`true`, e.g. in a table) or not (`false`). Defaults to `false`.
+  * `id`: Specifies whether the value is the unique primary key (`true`) or not (`false`). Defaults to `false`.
+  * `default`: If no value is present, this value will be used instead.
 * `properties`: If the value is an object, specify the properties.
 * `null`: The value that should be given instead of `null`. If a value is null but this property is not given, defaults to "n/a".
 * Options related to Collection Summaries:
-    * `summary`: Gives an indication how the field should be summarized:
-        * `false` (boolean): Don't summarize
-        * `r` (string): Summarize as Range Object (minimum and maximum value)
-        * `v` (string): Summarize as array of all values (may require merging arrays)
-        * `s` (string): Summarize as JSON Schema Object (usually for very complex values or very long non-numerical lists of values)
-        * `true` (boolean) or not set: Detect based on the given data type of the values. Use Range Objects for numerical values, use JSON Schema Objects for objects and all other data types provide as array of all values.
-    * `order`: The order of the items in ascending order, e.g. for a table. If not given, the first entry is always the item with `id` set to `true`, all other items are in alphabetic order.
+  * `summary`: Gives an indication how the field should be summarized:
+    * `false` (boolean): Don't summarize
+    * `r` (string): Summarize as Range Object (minimum and maximum value)
+    * `v` (string): Summarize as array of all values (may require merging arrays)
+    * `s` (string): Summarize as JSON Schema Object (usually for very complex values or very long non-numerical lists of values)
+    * `true` (boolean) or not set: Detect based on the given data type of the values. Use Range Objects for numerical values, use JSON Schema Objects for objects and all other data types provide as array of all values.
+  * `order`: The order of the items in ascending order, e.g. for a table. If not given, the first entry is always the item with `id` set to `true`, all other items are in alphabetic order.
 
 If only a label is available, it can be passed as string instead of an object.
 
@@ -128,10 +128,12 @@ The most important methods are:
 * Checksum (multihashes, show original hash and hashing algorithm)
 * CommonMark
    Use the following code to allow rendering HTML in CommonMark:
+
    ```js
    import { Formatters } from '@radiantearth/stac-fields';
    Formatters.allowHtmlInCommonMark = false;
    ```
+
 * CrsCode (CRS Codes such as `EPSG:1234`)
 * CSV (array to comma-separated values)
 * Date
@@ -193,7 +195,8 @@ You should use the following functions instead:
 
 ### Data Types (`DataTypes`)
 
-This object has functions to format the native JSON data types as HTML strings: 
+This object has functions to format the native JSON data types as HTML strings:
+
 * array => `array(arr: array, sort: boolean = false) => string`
 * object => `object(obj: object) => string`
 * null => `null(label: string = 'n/a') => string`
@@ -208,7 +211,7 @@ All methods return strings, which may contain HTML. Input is sanitized.
 ### `Helpers`
 
 * `e(str: string) => string`: Escapes the values for HTML output.
-* `formatKey(key: string, prefix: boolean = false) => string`: Formats the property key nicely (e.g. the key `eo:cloud_cover` will be `Cloud Cover`). If `prefix` is set to true, the prefix will not be removed (e.g. the key `eo:cloud_cover` will then be `Eo Cloud Cover`). 
+* `formatKey(key: string, prefix: boolean = false) => string`: Formats the property key nicely (e.g. the key `eo:cloud_cover` will be `Cloud Cover`). If `prefix` is set to true, the prefix will not be removed (e.g. the key `eo:cloud_cover` will then be `Eo Cloud Cover`).
 * `groupByExtensions`
 * `isObject`
 * `toLink(url: string, title: string) => string`: Converts a url and title to a HTML link (`<a href="$url" target="_blank">$title</a>`).
