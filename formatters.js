@@ -128,8 +128,21 @@ const Formatters = {
 				return 'LASzip';
 			case 'application/vnd.laszip+copc': // https://github.com/copcio/copcio.github.io/issues/53
 				return short ? 'COPC' : 'Cloud-Optimized Point Cloud (LASzip)';
-			case 'application/vnd+zarr': // https://github.com/zarr-developers/zarr-specs/issues/123
-				return 'Zarr';
+			case 'application/vnd+zarr':
+			case 'application/x-zarr':
+			// both from https://github.com/zarr-developers/zarr-specs/issues/123
+			case 'application/vnd.zarr':
+			// from https://github.com/radiantearth/stac-best-practices/blob/main/best-practices-zarr.md#asset-organization
+				let title = 'Zarr';
+				if (!short) {
+					if (media.parameters.version) {
+						title += ` v${media.parameters.version}`;
+					}
+					if (media.parameters.profile) {
+						title += ` (${media.parameters.profile})`;
+					}
+				}
+				return title;
 			case 'application/x-parquet': // Unofficial
 			case 'application/vnd.apache.parquet': // Official (tbc): https://github.com/opengeospatial/geoparquet/issues/115
 				return 'Parquet'
