@@ -133,17 +133,14 @@ const Formatters = {
 			case 'application/x-zarr': // deprecated
 			// both from https://github.com/zarr-developers/zarr-specs/issues/123
 			case 'application/vnd.zarr': // unofficial
-			// from https://github.com/radiantearth/stac-best-practices/blob/main/best-practices-zarr.md#asset-organization
-				let title = 'Zarr';
-				if (!short) {
-					if (media.parameters.version) {
-						title += ` v${media.parameters.version}`;
-					}
-					if (media.parameters.profile) {
-						title += ` (${media.parameters.profile})`;
-					}
+				if (media.parameters.profile === 'multiscales') {
+					// from https://github.com/radiantearth/stac-best-practices/blob/main/best-practices-zarr.md#asset-organization
+					return short ? 'WOZ' : 'Web-Optimized Zarr';
 				}
-				return title;
+				else {
+					const version = media.parameters.version;
+					return short ? 'Zarr' : (version ? `Zarr (${version})` : 'Zarr');
+				}
 			case 'application/x-parquet': // Unofficial
 			case 'application/vnd.apache.parquet': // Official (tbc): https://github.com/opengeospatial/geoparquet/issues/115
 				return 'Parquet'
