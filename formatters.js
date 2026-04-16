@@ -38,6 +38,7 @@ const Formatters = {
 
 		switch(media.type) {
 			// not supported: image/vnd.stac.geotiff; cloud-optimized=true
+			case 'image/vnd.stac.geotiff': // deprecated
 			case 'image/tiff':
 				if (media.parameters.application === "geotiff") {
 					if (media.parameters.profile === "cloud-optimized") {
@@ -54,18 +55,18 @@ const Formatters = {
 				return short ? 'JPEG 2000' : 'JPEG 2000 image';
 			case 'image/png':
 			case 'image/apng':
-			case 'image/vnd.mozilla.apng':
+			case 'image/vnd.mozilla.apng': // deprecated
 				return short ? 'PNG' : 'PNG image';
 			case 'image/gif':
 				return short ? 'GIF' : 'GIF image';
 			case 'image/jpeg':
-			case 'image/jpg':
+			case 'image/jpg': // deprecated
 				return short ? 'JPEG' : 'JPEG image';
 			case 'image/webp':
 				return short ? 'WebP' : 'WebP image';
 			case 'image/bmp':
-			case 'image/x-bmp':
-			case 'image/x-ms-bmp':
+			case 'image/x-bmp': // deprecated
+			case 'image/x-ms-bmp': // deprecated
 			case 'image/wbmp':
 				return short ? 'Bitmap' : 'Bitmap image';
 			case 'image/svg+xml':
@@ -81,8 +82,8 @@ const Formatters = {
 			case 'application/x-ndjson':
 				return short ? 'NDJSON' : 'Newline Delimited JSON';
 			case 'text/yaml':
-			case 'text/vnd.yaml':
-			case 'text/x-yaml':
+			case 'text/vnd.yaml': // deprecated
+			case 'text/x-yaml': // deprecated
 			case 'application/x-yaml':
 				return 'YAML';
 			case 'application/geo+json':
@@ -92,7 +93,7 @@ const Formatters = {
 			case 'application/vnd.google-earth.kml+xml':
 			case 'application/vnd.google-earth.kmz':
 				return 'KML';
-			case 'application/geopackage+vnd.sqlite3':
+			case 'application/geopackage+vnd.sqlite3': // deprecated
 			case 'application/geopackage+sqlite3':
 				return 'GeoPackage';
 			case 'text/html':
@@ -128,8 +129,18 @@ const Formatters = {
 				return 'LASzip';
 			case 'application/vnd.laszip+copc': // https://github.com/copcio/copcio.github.io/issues/53
 				return short ? 'COPC' : 'Cloud-Optimized Point Cloud (LASzip)';
-			case 'application/vnd+zarr': // https://github.com/zarr-developers/zarr-specs/issues/123
-				return 'Zarr';
+			case 'application/vnd+zarr': // deprecated
+			case 'application/x-zarr': // deprecated
+			// both from https://github.com/zarr-developers/zarr-specs/issues/123
+			case 'application/vnd.zarr': // unofficial
+				if (media.parameters.profile === 'multiscales') {
+					// from https://github.com/radiantearth/stac-best-practices/blob/main/best-practices-zarr.md#asset-organization
+					return short ? 'WOZ' : 'Web-Optimized Zarr';
+				}
+				else {
+					const version = media.parameters.version;
+					return (!short && Version) ? `Zarr (${version})` : 'Zarr';
+				}
 			case 'application/x-parquet': // Unofficial
 			case 'application/vnd.apache.parquet': // Official (tbc): https://github.com/opengeospatial/geoparquet/issues/115
 				return 'Parquet'
