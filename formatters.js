@@ -139,7 +139,7 @@ const Formatters = {
 				}
 				else {
 					const version = media.parameters.version;
-					return (!short && Version) ? `Zarr (${version})` : 'Zarr';
+					return (!short && version) ? `Zarr (${version})` : 'Zarr';
 				}
 			case 'application/x-parquet': // Unofficial
 			case 'application/vnd.apache.parquet': // Official (tbc): https://github.com/opengeospatial/geoparquet/issues/115
