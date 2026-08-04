@@ -57,6 +57,8 @@ const Formatters = {
 			case 'image/apng':
 			case 'image/vnd.mozilla.apng': // deprecated
 				return short ? 'PNG' : 'PNG image';
+			case 'image/avif':
+				return short ? 'AVIF' : 'AVIF image';
 			case 'image/gif':
 				return short ? 'GIF' : 'GIF image';
 			case 'image/jpeg':
@@ -64,6 +66,9 @@ const Formatters = {
 				return short ? 'JPEG' : 'JPEG image';
 			case 'image/webp':
 				return short ? 'WebP' : 'WebP image';
+			case 'video/webm': // inofficial
+			case 'image/webm': // inofficial
+				return short ? 'WebM' : 'WebM video';
 			case 'image/bmp':
 			case 'image/x-bmp': // deprecated
 			case 'image/x-ms-bmp': // deprecated
