@@ -2,6 +2,7 @@
 	"extensions": {
 		"alternate": "Alternative Access Methods",
 		"anon": "Anonymized Location",
+		"archive": "Archive",
 		"auth": "Authentication",
 		"card4l": {
 			"label": "CARD4L",
@@ -56,17 +57,16 @@
 		"table": "Tabular Data",
 		"themes": "Themes",
 		"tiles": "Tiled Assets",
+		"vector": "Vector Data",
 		"view": "View Geometry",
 		"web-map-links": "Web Maps",
-		"xarray": "xarray",
+		"zarr": "Zarr",
 
 		"gee": "Google Earth Engine",
 		"landsat": "Landsat",
 		"msft": "Microsoft",
 		"openeo": "openEO",
-		"pl": "Planet Labs PBC",
 		"s2": "Sentinel-2",
-		"sentinel": "Copernicus Sentinel",
 		"cbers": {
 			"label": "CBERS",
 			"explain": "China-Brazil Earth Resources Satellite Program"
@@ -173,25 +173,25 @@
 			},
 			"summary": false,
 			"ext": "alternate"
-		},
-		"pl:asset_type": "Asset Type",
-		"pl:bundle_type": "Bundle Type",
-		"table:storage_options": {
-			"alias": "xarray:storage_options"
-		},
-		"xarray:open_kwargs": {
-			"label": "Read Options",
-			"custom": true,
-			"summary": false
-		},
-		"xarray:storage_options": {
-			"label": "fsspec Options",
-			"custom": true,
-			"summary": false
 		}
 	},
 	"metadata": {
 		"id": "Identifier",
+		"externalIds": {
+			"label": "Additional Identifiers",
+			"summary": false,
+			"items": {
+				"value": {
+					"label": "Value",
+					"id": true,
+					"order": 0
+				},
+				"scheme": {
+					"label": "Scheme",
+					"order": 1
+				}
+			}
+		},
 		"keywords": "Keywords",
 
 		"datetime": {
@@ -260,10 +260,15 @@
 			"format": "Providers",
 			"summary": false
 		},
+		"attribution": "Attribution",
 
 		"platform": "Platform",
 		"instruments": {
 			"label": "Instruments",
+			"format": "CSV"
+		},
+		"instrument_modes": {
+			"label": "Instrument Modes",
 			"format": "CSV"
 		},
 		"constellation": "Constellation",
@@ -637,18 +642,10 @@
 		},
 		"ceosard:specification_version": "PFS Version",
 
-		"cf:parameter": {
-			"label": "Parameters",
-			"items": {
-				"name": {
-					"label": "Standard Name",
-					"order": 0
-				},
-				"unit": {
-					"label": "Unit",
-					"order": 1
-				}
-			}
+		"cf:standard_name": "Standard Name",
+		"cf:cell_methods": {
+			"label": "Cell Methods",
+			"format": "CSV"
 		},
 
 		"classification:classes": {
@@ -901,6 +898,13 @@
 		"forecast:duration": {
 			"label": "Forecast Length",
 			"format": "Duration"
+		},
+
+		"archive": {
+			"label": "Files in the archive",
+			"custom": true,
+			"summary": false,
+			"ext": "archive"
 		},
 
 		"file:bits_per_sample": {
@@ -1380,6 +1384,10 @@
 			"label": "Center Frequency",
 			"unit": "GHz"
 		},
+		"sar:bandwidth": {
+			"label": "Bandwidth",
+			"unit": "GHz"
+		},
 		"sar:polarizations": {
 			"label": "Polarizations",
 			"format": "CSV"
@@ -1408,6 +1416,11 @@
 			"explain": "Equivalent Number of Looks"
 		},
 		"sar:observation_direction": "Observation Direction",
+		"sar:relative_burst": "Relative Burst",
+		"sar:beam_ids": {
+			"label": "Beam IDs",
+			"format": "CSV"
+		},
 
 		"sat:platform_international_designator": {
 			"label": "Int. Designator",
@@ -1558,6 +1571,7 @@
 			}
 		},
 		"table:primary_geometry": "Primary Geometry Column",
+		"table:primary_datetime": "Primary Datetime Column",
 		"table:row_count": "Rows",
 		"table:tables": {
 			"label": "Tables",
@@ -1589,6 +1603,22 @@
 			"summary": false
 		},
 
+		"vector:geometry_types": {
+			"label": "Geometry Types",
+			"format": "CSV"
+		},
+		"vector:mmu": {
+			"label": "Minimum Mapping Unit",
+			"explain": "The smallest polygon area represented",
+			"unit": "m²"
+		},
+		"vector:mmw": {
+			"label": "Minimum Mapping Width",
+			"explain": "The smallest real-world width represented as polygon",
+			"unit": "m"
+		},
+		"vector:reference_scale": "Reference Scale",
+
 		"view:off_nadir": {
 			"label": "Off-Nadir Angle",
 			"unit": "°"
@@ -1610,38 +1640,15 @@
 			"unit": "°"
 		},
 
-		"pl:black_fill": {
-			"label": "Unfilled Image Parts",
-			"unit": "%"
-		},
-		"pl:clear_percent": {
-			"label": "Clear Sky",
-			"unit": "%"
-		},
-		"pl:grid_cell": "Grid Cell",
-		"pl:ground_control": "Positional Accuracy",
-		"pl:ground_control_ratio": "Successful Rectification Ratio",
-		"pl:item_type": "Type",
-		"pl:pixel_resolution": {
-			"label": "Spatial Resolution",
-			"unit": "m"
-		},
-		"pl:publishing_stage": {
-			"label": "Publishing Stage",
+		"zarr:consolidated": "Consolidated Metadata",
+		"zarr:node_type": {
+			"label": "Node Type",
 			"mapping": {
-				"preview": "Preview",
-				"standard": "Standard",
-				"finalized": "Finalized"
+				"group": "Group",
+				"array": "Array"
 			}
 		},
-		"pl:quality_category": {
-			"label": "Quality Category",
-			"mapping": {
-				"standard": "Standard",
-				"test": "Test"
-			}
-		},
-		"pl:strip_id": "Image Strip ID",
+		"zarr:zarr_format": "Zarr Version",
 
 		"gee:type": {
 			"label": "Type",
@@ -1699,20 +1706,7 @@
 			"label": "Summary",
 			"summary": false
 		},
-		
-		"sentinel:utm_zone": "UTM Zone",
-		"sentinel:latitude_band": "Latitude Band",
-		"sentinel:grid_square": "Grid Square",
-		"sentinel:sequence": "Sequence",
-		"sentinel:product_id": {
-			"label": "Product ID",
-			"summary": "s"
-		},
-		"sentinel:data_coverage": {
-			"label": "Data Coverage",
-			"unit": "%"
-		},
-		"sentinel:valid_cloud_cover": "Valid Cloud Cover",
+	
 
 		"cbers:data_type": {
 			"label": "Processing Level",
