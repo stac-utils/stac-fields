@@ -1,6 +1,7 @@
 const _ = require('./helper');
 const DataTypes = require('./datatypes');
 const I18N = require('./I18N');
+const Multihash = require('./multihash');
 const Registry = require('./registry');
 
 const Formatters = {
@@ -508,15 +509,10 @@ const Formatters = {
 			return DataTypes.null();
 		}
 
-		const multihash = Registry.getDependency('multihashes');
-		if (!multihash) {
-			return _.e(value);
-		}
-
 		try {
-			const meta = multihash.decode(_.hexToUint8(value));
+			const meta = Multihash.decode(value);
 			const name = _.e(meta.name);
-			const hex = _.e(_.uint8ToHex(meta.digest));
+			const hex = _.e(meta.digest);
 			return `<div class="checksum"><input class="checksum-input" size="32" value="${hex}" readonly><br><span class="checksum-algo">${_.t('Hashing algorithm:')} <strong>${name}</strong></span></div>`;
 		} catch (error) {
 			return DataTypes.null();
