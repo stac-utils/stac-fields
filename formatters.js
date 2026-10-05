@@ -328,8 +328,11 @@ const Formatters = {
 	},
 
 	formatDOI(value) {
+		if (typeof value !== 'string' || value.length === 0) {
+			return DataTypes.null();
+		}
 		value = DataTypes.format(value);
-		return _.toLink(`http://doi.org/${value}`, value);
+		return _.toLink(`https://doi.org/${value}`, value);
 	},
 
 	formatCRS(value) {
