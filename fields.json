@@ -28,6 +28,7 @@
 			"label": "NOAA GOES",
 			"explain": "NOAA Geostationary Operational Environmental Satellite"
 		},
+		"instrument": "Instruments",
 		"label": "Labels / ML",
 		"language": "Internationalization / Localization",
 		"mgrs": {
@@ -267,9 +268,13 @@
 			"label": "Instruments",
 			"format": "CSV"
 		},
-		"instrument_modes": {
+		"instrument:modes": {
 			"label": "Instrument Modes",
 			"format": "CSV"
+		},
+		"instrument:datatake_id": {
+			"label": "Datatake ID",
+			"summary": false
 		},
 		"constellation": "Constellation",
 		"mission": "Mission",
