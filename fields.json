@@ -1349,6 +1349,26 @@
 				"other": "Other"
 			}
 		},
+		"product:status": {
+			"label": "Status",
+			"mapping": {
+				"accepted": "Accepted",
+				"acquired": "Acquired",
+				"archived": "Archived",
+				"cancelled": "Cancelled",
+				"failed": "Failed",
+				"planned": "Planned",
+				"potential": "Potential",
+				"rejected": "Rejected"
+			}
+		},
+		"product:quality_status": {
+			"label": "Quality Status",
+			"mapping": {
+				"nominal": "Nominal",
+				"degraded": "Degraded"
+			}
+		},
 
 		"proj:epsg": {
 			"label": "EPSG Code",
