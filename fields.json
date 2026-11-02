@@ -119,7 +119,14 @@
 				"wms": "OGC Web Map Service (WMS)",
 				"wmts": "OGC Web Map Tile Service (WMTS)",
 				"xyz": "XYZ Web Map",
-				"license": "License"
+				"license": "License",
+				"application": "Application",
+				"application-platform": "Application platform",
+				"application-input": "Application inputs",
+				"application-execute": "Application execution",
+				"example": "Example code",
+				"manifest": "Application manifest",
+				"vcs": "Version Control System"
 			}
 		},
 		"type": {
