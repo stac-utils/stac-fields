@@ -1370,11 +1370,6 @@
 			}
 		},
 
-		"proj:epsg": {
-			"label": "EPSG Code",
-			"format": "EPSG",
-			"summary": "v"
-		},
 		"proj:code": {
 			"label": "Code",
 			"format": "CrsCode",
