@@ -1,5 +1,6 @@
 {
 	"extensions": {
+		"access": "Access",
 		"alternate": "Alternative Access Methods",
 		"anon": "Anonymized Location",
 		"archive": "Archive",
@@ -130,7 +131,11 @@
 				"application-execute": "Application execution",
 				"example": "Example code",
 				"manifest": "Application manifest",
-				"vcs": "Version Control System"
+				"vcs": "Version Control System",
+				"registration": "Registration",
+				"access-request": "Access request",
+				"terms-of-service": "Terms of service",
+				"payment": "Payment"
 			}
 		},
 		"type": {
@@ -622,6 +627,44 @@
 			"label": "CRS",
 			"format": "CRS",
 			"explain": "Coordinate Reference System"
+		},
+
+		"access:type": {
+			"label": "Type",
+			"mapping": {
+				"open": "Open",
+				"embargoed": "Embargoed",
+				"restricted": "Restricted",
+				"closed": "Closed"
+			}
+		},
+		"access:restrictions": {
+			"label": "Restrictions",
+			"mapping": {
+				"registration": "Registration",
+				"agreement": "Agreement",
+				"data_fee": "Data Fee",
+				"transfer_fee": "Transfer Fee",
+				"membership": "Membership",
+				"approval": "Approval"
+			}
+		},
+		"access:instructions": {
+			"label": "Instructions",
+			"format": "CommonMark",
+			"summary": false
+		},
+		"access:availability": {
+			"label": "Availability",
+			"mapping": {
+				"online": "Online",
+				"nearline": "Nearline",
+				"offline": "Offline"
+			}
+		},
+		"access:retrieval_time": {
+			"label": "Retrieval Time",
+			"format": "Duration"
 		},
 
 		"anon:size": {
