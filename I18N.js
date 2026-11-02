@@ -6,7 +6,8 @@ const Defaults = {
 	dateFormatterOptions: {
 		day: 'numeric',
 		month: 'numeric',
-		year: 'numeric'
+		year: 'numeric',
+		timeZone: "UTC"
 	},
 	dateTimeFormatterOptions: {
 		day: 'numeric',
