@@ -95,6 +95,7 @@
 				"parent": "Parent STAC Catalog",
 				"collection": "STAC Collection",
 				"derived_from": "STAC Item for input data",
+				"source_for": "STAC Item derived from this data",
 				"about": "About this resource",
 				"alternate": "Alternative representation",
 				"via": "Source metadata",
@@ -102,6 +103,9 @@
 				"prev": "Previous page",
 				"canonical": "Origin of this document",
 				"processing-expression": "Processing instructions/code",
+				"processing-execution": "Processing execution",
+				"processing-software": "Processing software",
+				"processing-validation": "Processing validation",
 				"latest-version": "Latest version",
 				"predecessor-version": "Predecessor version",
 				"successor-version": "Successor version",
@@ -1325,6 +1329,10 @@
 			"label": "Processing Time",
 			"format": "Timestamp",
 			"summary": "r"
+		},
+		"processing:datastrip_id": {
+			"label": "Datastrip ID",
+			"summary": false
 		},
 
 		"product:type": "Product Type",
