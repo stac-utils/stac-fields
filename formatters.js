@@ -26,7 +26,7 @@ const Formatters = {
 
 		const mediaType = Registry.getDependency('content-type');
 		if (!mediaType) {
-			return short ? "" : _.e(value);
+			return short ? "" : value;
 		}
 
 		let media;
@@ -34,7 +34,7 @@ const Formatters = {
 			media = mediaType.parse(value);
 		} catch (error) {
 			console.warn(error);
-			return short ? "" : _.e(value);
+			return short ? "" : value;
 		}
 
 		switch(media.type) {
@@ -164,7 +164,7 @@ const Formatters = {
 				return '3D Tiles';
 			default: {
 				let [group, format] = media.type.split('/');
-				format = _.formatKey(format.replace(/^(vnd|x)[.+-]/, ''));
+				format = _._formatKey(format.replace(/^(vnd|x)[.+-]/, ''));
 				if (short) {
 					return format;
 				}
@@ -272,11 +272,11 @@ const Formatters = {
 
 	formatProviders(value) {
 		return _.toList(value, false, provider => {
-			let name = provider.name;
+			let name = _.e(provider.name);
 			let roles = '';
 			let description = '';
 			if (typeof provider.url === 'string' && provider.url.length > 0) {
-				name = _.toLink(provider.url, name);
+				name = _.toLink(provider.url, provider.name);
 			}
 			if (Array.isArray(provider.roles) && provider.roles.length > 0) {
 				roles = provider.roles.map(r => DataTypes.format(r)).join(', ');
@@ -318,10 +318,10 @@ const Formatters = {
 		for(let software in value) {
 			let version = value[software];
 			if ((typeof version === 'string' && version.length > 0) || typeof version === 'number') {
-				list.push(`${software} (${version})`);
+				list.push(`${_.e(software)} (${_.e(version)})`);
 			}
 			else {
-				list.push(software);
+				list.push(_.e(software));
 			}
 		}
 		return _.toList(list, true, null, false);
@@ -331,7 +331,6 @@ const Formatters = {
 		if (typeof value !== 'string' || value.length === 0) {
 			return DataTypes.null();
 		}
-		value = DataTypes.format(value);
 		return _.toLink(`https://doi.org/${value}`, value);
 	},
 
@@ -618,14 +617,14 @@ const Formatters = {
 
 			let html = "";
 			if (concept.title) {
-				let title = concept.title;
+				let title = _.e(concept.title);
 				if (concept.url) {
 					title = _.toLink(concept.url, concept.title);
 				}
 				html += `<strong>${title}</strong> (<code>${_.e(concept.id)}</code>)`;
 			}
 			else {
-				let title = concept.id;
+				let title = _.e(concept.id);
 				if (concept.url) {
 					title = _.toLink(concept.url, concept.id);
 				}
@@ -690,14 +689,14 @@ const Formatters = {
 		let splitHalf = function(parts, value, labelA, labelB) {
 			let len = value.length;
 			if ((len % 2) === 1) {
-				parts.push(`Code: ${value}`);
+				parts.push(`Code: ${_.e(value)}`);
 			}
 			else {
 				let mid = len/2;
 				let a = value.substring(0, mid);
-				parts.push(`${labelA}: ${a}`);
+				parts.push(`${labelA}: ${_.e(a)}`);
 				let b = value.substring(mid, len);
-				parts.push(`${labelB}: ${b}`);
+				parts.push(`${labelB}: ${_.e(b)}`);
 			}
 		};
 
@@ -725,13 +724,13 @@ const Formatters = {
 				splitHalf(parts, code, _.t('Path'), _.t('Row'));
 				break;
 			case 'DOQ':
-				parts.push(_abbrev(_.t(designator), _.t('Digital Orthophoto Quadrangle')));
-				parts.push(`${_.t("Quadrangle")}: ${code}`);
+				parts.push(_.abbrev(_.t(designator), _.t('Digital Orthophoto Quadrangle')));
+				parts.push(`${_.t("Quadrangle")}: ${_.e(code)}`);
 				break;
 			case 'DOQQ':
-				parts.push(_abbrev(_.t(designator), _.t('Digital Orthophoto Quarter Quadrangle')));
+				parts.push(_.abbrev(_.t(designator), _.t('Digital Orthophoto Quarter Quadrangle')));
 				let quad = code.substr(0, code.length - 2);
-				parts.push(`${_.t("Quadrangle")}: ${quad}`);
+				parts.push(`${_.t("Quadrangle")}: ${_.e(quad)}`);
 				let quarter = code.substr(-2);
 				let a = quarter[0] === 'N' ? _.t('North') : _.t('South');
 				let b = quarter[1] === 'E' ? _.t('East') : _.t('West');
@@ -743,23 +742,23 @@ const Formatters = {
 				if (zone.startsWith('Z')) {
 					zone = zone.substring(1);
 				}
-				parts.push(`${_.t("UTM Zone")}: ${zone}`);
-				parts.push(`${_.t("Quadkey")}: ${quadkey}`);
+				parts.push(`${_.t("UTM Zone")}: ${_.e(zone)}`);
+				parts.push(`${_.t("Quadkey")}: ${_.e(quadkey)}`);
 				break;
 			case 'EASE':
 				let [dggs, components] = code.split('-');
 				if (dggs === 'DGGS') {
 					parts.push(_.t('EASE-DGGS'));
 					let [level, rowcol, ...fractions] = components.split('.');
-					parts.push(`${_.t("Level")}: ${level}`);
+					parts.push(`${_.t("Level")}: ${_.e(level)}`);
 					if (rowcol.length === 6) {
-						parts.push(`${_.t("Level 0 row cell")}: ${rowcol.substring(0,3)}`);
-						parts.push(`${_.t("Level 0 column cell")}: ${rowcol.substring(3,6)}`);
+						parts.push(`${_.t("Level 0 row cell")}: ${_.e(rowcol.substring(0,3))}`);
+						parts.push(`${_.t("Level 0 column cell")}: ${_.e(rowcol.substring(3,6))}`);
 						for(let i in fractions) {
 							let value = fractions[i];
 							if (value.length === 2) {
-								parts.push(`${_.t("Fraction of level {i} row cell", {i})}: ${value[0]}`);
-								parts.push(`${_.t("Fraction of level {i} column cell", {i})}: ${value[1]}`);
+								parts.push(`${_.t("Fraction of level {i} row cell", {i})}: ${_.e(value[0])}`);
+								parts.push(`${_.t("Fraction of level {i} column cell", {i})}: ${_.e(value[1])}`);
 							}
 						}
 					}
@@ -770,8 +769,9 @@ const Formatters = {
 				parts.push(_.t("Copernicus Digital Elevation Model Grid"));
 				parts.push(`${_.t("Easting")}: ${e}`);
 				parts.push(`${_.t("Northing")}: ${n}`);
+				break;
 			default:
-				parts.push(value);
+				parts.push(_.e(value));
 		}
 
 		return parts.join('<br>');
