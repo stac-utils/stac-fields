@@ -6,7 +6,7 @@ const _ = {
 		if (typeof str !== 'string') {
 			str = String(str);
 		}
-		return str.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, '&apos;');
+		return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, '&apos;');
 	},
 
 	t(value, vars = null) {
@@ -70,7 +70,18 @@ const _ = {
 				title = url.replace(/^\w+:\/\//i, '');
 			}
 		}
+		if (!_.isSafeUrl(url)) {
+			return _.e(title);
+		}
 		return `<a href="${_.e(url)}" rel="${_.e(rel)}" target="${_.e(target)}">${_.e(title)}</a>`;
+	},
+
+	unsafeUrlSchemes: ['javascript', 'vbscript'],
+
+	isSafeUrl(url) {
+		// Browsers ignore whitespace and control characters in the scheme, e.g. "java\tscript:"
+		const scheme = String(url).replace(/[\u0000- \u007F]/g, '').match(/^([a-z][a-z\d+.-]*):/i);
+		return !scheme || !_.unsafeUrlSchemes.includes(scheme[1].toLowerCase());
 	},
 
 	toObject(obj, formatter = null, keyFormatter = null, keyOrder = [], filter = null, path = []) {
@@ -106,15 +117,19 @@ const _ = {
 	},
 
 	formatKey(key, prefix = false) {
+		return _.e(_._formatKey(key, prefix));
+	},
+
+	_formatKey(key, prefix = false) {
 		if (key.includes('/')) {
 			// Slashes are strong indicators for URIs or media types, don't format
-			return _.e(_.t(key));
+			return _.t(key);
 		}
 		if (prefix === false) {
 			key = key.replace(/^[\w-]+:/i, '');
 		}
 		let formatted = key.split(/[:_\-\s]/g).map(part => part.substr(0, 1).toUpperCase() + part.substr(1)).join(' ');
-		return _.e(_.t(formatted));
+		return _.t(formatted);
 	},
 
 	hexToUint8(hexString) {
@@ -145,8 +160,8 @@ const _ = {
 
 	unit(value, unit = '') {
 		if (typeof unit === 'string' && unit.length > 0) {
-			unit = _.t(unit);
-			return `${value}&nbsp;<span class="unit">${unit}</unit>`;
+			unit = _.e(_.t(unit));
+			return `${value}&nbsp;<span class="unit">${unit}</span>`;
 		}
 		return value;
 	}
