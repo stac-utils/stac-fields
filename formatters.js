@@ -494,7 +494,7 @@ const Formatters = {
 			
 		}
 
-		return `<pre>${formatted}</pre>`;
+		return `<pre>${_.e(formatted)}</pre>`;
 	},
 
 	fileSizeUnits: ['B', 'kB', 'MB', 'GB', 'TB'],
