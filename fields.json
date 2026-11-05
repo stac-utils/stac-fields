@@ -36,6 +36,7 @@
 			"label": "MGRS",
 			"explain": "Military Grid Reference System"
 		},
+		"mlm": "Machine Learning Model",
 		"noaa_mrms_qpe": {
 			"label": "NOAA MRMS QPE",
 			"explain": "NOAA Multi-Radar Multi-Sensor Quantitative Precipitation Estimation"
@@ -249,7 +250,7 @@
 			"format": "Timestamp",
 			"summary": "r"
 		},
-	
+
 		"published": {
 			"label": "Published",
 			"format": "Timestamp",
@@ -1757,7 +1758,7 @@
 			"custom": true,
 			"summary": false
 		},
-		
+
 		"landsat:scene_id": "Scene ID",
 		"landsat:collection_category": "Collection Category",
 		"landsat:collection_number": "Collection Number",
@@ -1784,7 +1785,7 @@
 			"label": "Summary",
 			"summary": false
 		},
-	
+
 
 		"cbers:data_type": {
 			"label": "Processing Level",
