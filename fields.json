@@ -59,6 +59,7 @@
 		"table": "Tabular Data",
 		"themes": "Themes",
 		"tiles": "Tiled Assets",
+		"vcs": "Version Control System",
 		"vector": "Vector Data",
 		"view": "View Geometry",
 		"web-map-links": "Web Maps",
@@ -120,6 +121,7 @@
 				"order": "Order details",
 				"3d-tiles": "3D Tiles",
 				"pmtiles": "PMTiles",
+				"vcs": "Version Control System",
 				"tilejson": "TileJSON",
 				"wms": "OGC Web Map Service (WMS)",
 				"wmts": "OGC Web Map Tile Service (WMTS)",
@@ -194,6 +196,25 @@
 	},
 	"metadata": {
 		"id": "Identifier",
+		"vcs:type": {
+			"label": "Type",
+			"mapping": {
+				"git": "Git",
+				"svn": "Subversion",
+				"hg": "Mercurial",
+				"perforce": "Perforce",
+				"bzr": "Bazaar",
+				"cvs": "CVS",
+				"fossil": "Fossil",
+				"tfvc": "TFVC"
+			}
+		},
+		"vcs:branch": "Branch",
+		"vcs:revision": {
+			"label": "Revision",
+			"summary": false
+		},
+		"vcs:tag": "Tag",
 		"externalIds": {
 			"label": "Additional Identifiers",
 			"summary": false,
