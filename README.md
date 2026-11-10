@@ -90,6 +90,8 @@ The following options are available in the object:
   * `id`: Specifies whether the value is the unique primary key (`true`) or not (`false`). Defaults to `false`.
   * `default`: If no value is present, this value will be used instead.
 * `properties`: If the value is an object, specify the properties.
+* `table`: STAC Browser-specific rendering hint. Set to `true` to force a table for an array of objects. Set to
+  `"keyValue"` to render a map as a two-column Name/Value table. Object values are formatted recursively.
 * `null`: The value that should be given instead of `null`. If a value is null but this property is not given, defaults to "n/a".
 * Options related to Collection Summaries:
   * `summary`: Gives an indication how the field should be summarized:
@@ -157,6 +159,11 @@ The most important methods are:
 * Timestamp (ISO8601 timestamp formatted according to local rules)
 * Url (Formats a STAC Link Object)
 * WKT2 (splits a WKT2 string into nicely formatted chunks for better readability - experimental!)
+* ParameterCount (formats parameter counts with K, M, B, T, P suffixes) - use `FileSize` for similar byte-aligned units
+  or `ScientificNotation` or `MetricNotation` for other representations
+  (note: "B" is used instead of "G" because it is common practice  for this range of parameter values, see others below for alternatives)
+* ScientificNotation (formats numbers using standard scientific notation, e.g. `12345` as `1.23e4`) - combines with `spec.unit` after the notation if provided
+* MetricNotation (formats numbers using SI prefixes in steps of three from femto (`f`, 10⁻¹⁵) through Exa (`E`, 10¹⁸), e.g. `12345` as `12.35k`) - combine with `spec.unit` if provided
 * ... (see the source file for more)
 
 ### Custom formatters

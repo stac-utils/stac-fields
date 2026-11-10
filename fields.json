@@ -250,6 +250,264 @@
 			"summary": "r"
 		},
 
+		"mlm:name": "Name",
+		"mlm:architecture": "Architecture",
+		"mlm:tasks": {
+			"label": "Tasks",
+			"format": "CSV"
+		},
+		"mlm:framework": "Framework",
+		"mlm:framework_version": "Framework Version",
+		"mlm:memory_size": {
+			"label": "Memory Size",
+			"format": "FileSize"
+		},
+		"mlm:total_parameters": {
+			"label": "Total Parameters",
+			"format": "ParameterCount"
+		},
+		"mlm:pretrained": "Pretrained",
+		"mlm:pretrained_source": {
+			"label": "Pretrained Source",
+			"null": "none"
+		},
+		"mlm:batch_size_suggestion": "Suggested Batch Size",
+		"mlm:accelerator": {
+			"label": "Accelerator",
+			"null": "any"
+		},
+		"mlm:accelerator_constrained": "Accelerator Constrained",
+		"mlm:accelerator_summary": "Accelerator Summary",
+		"mlm:accelerator_count": "Accelerator Count",
+		"mlm:hyperparameters": {
+			"label": "Hyperparameters",
+			"table": "keyValue",
+			"summary": false
+		},
+		"mlm:input": {
+			"label": "Inputs",
+			"table": true,
+			"summary": false,
+			"items": {
+				"name": {
+					"label": "Name",
+					"id": true,
+					"order": 0
+				},
+				"description": {
+					"alias": "description",
+					"order": 1
+				},
+				"bands": {
+					"label": "Bands",
+					"order": 2,
+					"items": {
+						"name": {
+							"label": "Name",
+							"id": true
+						},
+						"format": {
+							"label": "Format",
+							"order": 1
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 2
+						}
+					}
+				},
+				"variables": {
+					"label": "Variables",
+					"order": 3,
+					"items": {
+						"name": {
+							"label": "Name",
+							"id": true
+						},
+						"format": {
+							"label": "Format",
+							"order": 1
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 2
+						}
+					}
+				},
+				"input": {
+					"label": "Structure",
+					"order": 4,
+					"properties": {
+						"shape": {
+							"label": "Size",
+							"format": "Shape"
+						},
+						"dim_order": {
+							"label": "Dimensions"
+						},
+						"data_type": {
+							"alias": "data_type"
+						}
+					}
+				},
+				"value_scaling": {
+					"label": "Scale",
+					"order": 5,
+					"null": "none",
+					"items": {
+						"type": {
+							"label": "Type",
+							"null": "none",
+							"order": 0
+						},
+						"minimum": {
+							"label": "Min.",
+							"order": 1
+						},
+						"maximum": {
+							"label": "Max.",
+							"order": 2
+						},
+						"mean": {
+							"label": "Average",
+							"order": 3
+						},
+						"stddev": {
+							"label": "Std. Dev.",
+							"order": 4
+						},
+						"value": {
+							"label": "Value",
+							"order": 5
+						},
+						"format": {
+							"label": "Format",
+							"order": 6
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 7
+						}
+					}
+				},
+				"resize_type": {
+					"label": "Resize Method",
+					"order": 6,
+					"null": "none"
+				},
+				"pre_processing_function": {
+					"label": "Processing Instructions",
+					"order": 7,
+					"null": "none",
+					"properties": {
+						"format": "Format",
+						"expression": "Expression",
+						"description": {
+							"alias": "description"
+						}
+					}
+				}
+			}
+		},
+		"mlm:output": {
+			"label": "Outputs",
+			"table": true,
+			"summary": false,
+			"items": {
+				"name": {
+					"label": "Name",
+					"id": true,
+					"order": 0
+				},
+				"description": {
+					"alias": "description",
+					"order": 1
+				},
+				"tasks": {
+					"alias": "mlm:tasks",
+					"order": 2
+				},
+				"bands": {
+					"label": "Bands",
+					"order": 3,
+					"items": {
+						"name": {
+							"label": "Name",
+							"id": true
+						},
+						"format": {
+							"label": "Format",
+							"order": 1
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 2
+						}
+					}
+				},
+				"variables": {
+					"label": "Variables",
+					"order": 4,
+					"items": {
+						"name": {
+							"label": "Name",
+							"id": true
+						},
+						"format": {
+							"label": "Format",
+							"order": 1
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 2
+						}
+					}
+				},
+				"result": {
+					"label": "Structure",
+					"order": 5,
+					"properties": {
+						"shape": {
+							"label": "Size",
+							"format": "Shape"
+						},
+						"dim_order": {
+							"label": "Dimensions"
+						},
+						"data_type": {
+							"alias": "data_type"
+						}
+					}
+				},
+				"classification:classes": {
+					"alias": "classification:classes",
+					"order": 6
+				},
+				"post_processing_function": {
+					"label": "Processing Instructions",
+					"order": 7,
+					"null": "none",
+					"properties": {
+						"format": "Format",
+						"expression": "Expression",
+						"description": {
+							"alias": "description"
+						}
+					}
+				}
+			}
+		},
+		"mlm:artifact_type": "Artifact Type",
+		"mlm:compile_method": {
+			"label": "Compile Method",
+			"mapping": {
+				"null": "none",
+				"aot": "Ahead-of-Time (AOT)",
+				"jit": "Just-in-Time (JIT)"
+			}
+		},
+		"mlm:entrypoint": "Entrypoint",
+
 		"license": {
 			"label": "License",
 			"format": "License",
@@ -816,6 +1074,10 @@
 				"unit": {
 					"alias": "unit",
 					"order": 6
+				},
+				"data_type": {
+					"alias": "data_type",
+					"order": 7
 				}
 			}
 		},
