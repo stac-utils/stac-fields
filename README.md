@@ -79,6 +79,8 @@ The following options are available in the object:
 * `format`: The name of the formatter in formatters.js, but without the leading `format`.
 * `formatter`: A formatter function that is compatible to the formatters defined in formatters.js. Use this if no suitable pre-defined formatter is available to be specified in `format`. See also [Custom Formatters](#custom-formatters) for more details.
 * `ext`: Specify the extension key here, if the field belongs to an extension that has no prefix or so.
+* `order`: The zero-based array position for a field in the rendered list. Negative positions count from the end, as
+  with `Array.prototype.at()`. Fields without `order` fill remaining positions in their original relative order.
 * `unit`: A unit to add after the value.
 * `explain`: A long form for an abbreviation that should be shown in a tooltip. Can also be a http or https link, which shows a link instead of an abbreviation.
 * `mapping`: A map with the keys being the original (stringified lower-case) value and the values being the values shown to users.

@@ -250,11 +250,13 @@
 			"summary": "r"
 		},
 
-		"mlm:name": "Name",
+		"mlm:name": {
+			"label": "Name",
+			"order": 0
+		},
 		"mlm:architecture": "Architecture",
 		"mlm:tasks": {
-			"label": "Tasks",
-			"format": "CSV"
+			"label": "Tasks"
 		},
 		"mlm:framework": "Framework",
 		"mlm:framework_version": "Framework Version",
@@ -281,11 +283,13 @@
 		"mlm:accelerator_count": "Accelerator Count",
 		"mlm:hyperparameters": {
 			"label": "Hyperparameters",
+			"order": -1,
 			"table": "keyValue",
 			"summary": false
 		},
 		"mlm:input": {
 			"label": "Inputs",
+			"order": -3,
 			"table": true,
 			"summary": false,
 			"items": {
@@ -411,6 +415,7 @@
 		},
 		"mlm:output": {
 			"label": "Outputs",
+			"order": -2,
 			"table": true,
 			"summary": false,
 			"items": {
