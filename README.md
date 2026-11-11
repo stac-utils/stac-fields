@@ -87,10 +87,11 @@ The following options are available in the object:
 * `custom`: A structure that can't easily be rendered with any of the pre-defined formatters and thus needs a custom implementation (see `externalRenderer`).
 * `alias`: If a field has multiple keys, declare the field to use the specification of the other field.
 * `listWithKeys`: Set to `true` to allow the option `items` to specify items in an object of objects (like assets). Defaults to `false`.
-* `items`: If the value is an array of objects (or an object of objects if `listWithKeys` has ben set), a table can be created with the details in this object. It has the same structure as specified here, but in addition `sortable` and `id` are allowed:
+* `items`: If the value is an array of objects (or an object of objects if `listWithKeys` has ben set), a table can be created with the details in this object. It has the same structure as specified here, but in addition `sortable`, `id`, and `width` are allowed:
   * `sortable`: Specifies whether the value can be sorted (`true`, e.g. in a table) or not (`false`). Defaults to `false`.
   * `id`: Specifies whether the value is the unique primary key (`true`) or not (`false`). Defaults to `false`.
   * `default`: If no value is present, this value will be used instead.
+  * `width`: STAC Browser-specific column width, specified as a CSS width (e.g. `20%`).
 * `properties`: If the value is an object, specify the properties.
 * `table`: STAC Browser-specific rendering hint. Set to `true` to force a table for an array of objects. Set to
   `"keyValue"` to render a map as a two-column Name/Value table. Object values are formatted recursively.

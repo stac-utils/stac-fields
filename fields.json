@@ -296,15 +296,18 @@
 				"name": {
 					"label": "Name",
 					"id": true,
-					"order": 0
+					"order": 0,
+					"width": "15%"
 				},
 				"description": {
 					"alias": "description",
-					"order": 1
+					"order": 1,
+					"width": "30%"
 				},
 				"bands": {
 					"label": "Bands",
 					"order": 2,
+					"width": "10%",
 					"items": {
 						"name": {
 							"label": "Name",
@@ -323,6 +326,7 @@
 				"variables": {
 					"label": "Variables",
 					"order": 3,
+					"width": "20%",
 					"items": {
 						"name": {
 							"label": "Name",
@@ -341,6 +345,7 @@
 				"input": {
 					"label": "Structure",
 					"order": 4,
+					"width": "25%",
 					"properties": {
 						"shape": {
 							"label": "Size",
@@ -422,19 +427,23 @@
 				"name": {
 					"label": "Name",
 					"id": true,
-					"order": 0
+					"order": 0,
+					"width": "15%"
 				},
 				"description": {
 					"alias": "description",
-					"order": 1
+					"order": 1,
+					"width": "15%"
 				},
 				"tasks": {
 					"alias": "mlm:tasks",
-					"order": 2
+					"order": 2,
+					"width": "15%"
 				},
 				"bands": {
 					"label": "Bands",
 					"order": 3,
+					"width": "10%",
 					"items": {
 						"name": {
 							"label": "Name",
@@ -453,6 +462,7 @@
 				"variables": {
 					"label": "Variables",
 					"order": 4,
+					"width": "20%",
 					"items": {
 						"name": {
 							"label": "Name",
@@ -471,6 +481,7 @@
 				"result": {
 					"label": "Structure",
 					"order": 5,
+					"width": "25%",
 					"properties": {
 						"shape": {
 							"label": "Size",
