@@ -92,6 +92,8 @@ The following options are available in the object:
   * `id`: Specifies whether the value is the unique primary key (`true`) or not (`false`). Defaults to `false`.
   * `default`: If no value is present, this value will be used instead.
   * `width`: STAC Browser-specific column width, specified as a CSS width (e.g. `20%`).
+  * `hidden`: STAC Browser-specific display hint, not an MLM data field. Set to `true` to suppress the
+    item's own table column while keeping its row value available to another cell's formatter.
 * `properties`: If the value is an object, specify the properties.
 * `table`: STAC Browser-specific rendering hint. Set to `true` to force a table for an array of objects. Set to
   `"keyValue"` to render a map as a two-column Name/Value table. Object values are formatted recursively.
@@ -162,6 +164,7 @@ The most important methods are:
 * Timestamp (ISO8601 timestamp formatted according to local rules)
 * Url (Formats a STAC Link Object)
 * WKT2 (splits a WKT2 string into nicely formatted chunks for better readability - experimental!)
+* OrderedList (renders array values as numbered items in their original order)
 * ParameterCount (formats parameter counts with K, M, B, T, P suffixes) - use `FileSize` for similar byte-aligned units
   or `ScientificNotation` or `MetricNotation` for other representations
   (note: "B" is used instead of "G" because it is common practice  for this range of parameter values, see others below for alternatives)

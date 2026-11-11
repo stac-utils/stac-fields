@@ -17,6 +17,13 @@ const Formatters = {
 		return _.toList(value, false, value => _.toLink(value.href, value.title, value.rel));
 	},
 
+	formatOrderedList(value, field, spec = {}) {
+		if (!Array.isArray(value)) {
+			return DataTypes.format(value, spec.unit);
+		}
+		return _.toList(value, false, v => DataTypes.format(v, spec.unit), true);
+	},
+
 	formatMediaType(value, field, spec = {}) {
 		return _.e(_.t(Formatters._formatMediaType(value, field, spec)));
 	},
@@ -591,6 +598,18 @@ const Formatters = {
 			'18': 'E'
 		};
 		return Formatters._formatScaledNotation(value, exponent, units[exponent], spec.unit);
+	},
+
+	formatMLMOutputTasks(value, field, spec = {}, context = null, parent = null) {
+		const formattedTasks = DataTypes.array(value);
+		const classes = parent?.['classification:classes'];
+		if (!Array.isArray(classes) || classes.length === 0) {
+			return formattedTasks;
+		}
+
+		return `${formattedTasks}<div class="mlm-output-classes">` +
+			`<span class="mlm-output-classes-label">${_.e(_.t('Classes'))}</span>` +
+			`${DataTypes.array(classes)}</div>`;
 	},
 
 	formatChecksum(value) {

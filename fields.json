@@ -352,7 +352,8 @@
 							"format": "Shape"
 						},
 						"dim_order": {
-							"label": "Dimensions"
+							"label": "Dimensions",
+							"format": "OrderedList"
 						},
 						"data_type": {
 							"alias": "data_type"
@@ -433,16 +434,11 @@
 				"description": {
 					"alias": "description",
 					"order": 1,
-					"width": "15%"
-				},
-				"tasks": {
-					"alias": "mlm:tasks",
-					"order": 2,
-					"width": "15%"
+					"width": "30%"
 				},
 				"bands": {
 					"label": "Bands",
-					"order": 3,
+					"order": 2,
 					"width": "10%",
 					"items": {
 						"name": {
@@ -461,7 +457,7 @@
 				},
 				"variables": {
 					"label": "Variables",
-					"order": 4,
+					"order": 3,
 					"width": "20%",
 					"items": {
 						"name": {
@@ -480,7 +476,7 @@
 				},
 				"result": {
 					"label": "Structure",
-					"order": 5,
+					"order": 4,
 					"width": "25%",
 					"properties": {
 						"shape": {
@@ -488,16 +484,23 @@
 							"format": "Shape"
 						},
 						"dim_order": {
-							"label": "Dimensions"
+							"label": "Dimensions",
+							"format": "OrderedList"
 						},
 						"data_type": {
 							"alias": "data_type"
 						}
 					}
 				},
+				"tasks": {
+					"alias": "mlm:tasks",
+					"order": 5,
+					"format": "MLMOutputTasks"
+				},
 				"classification:classes": {
 					"alias": "classification:classes",
-					"order": 6
+					"order": 6,
+					"hidden": true
 				},
 				"post_processing_function": {
 					"label": "Processing Instructions",
