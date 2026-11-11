@@ -79,17 +79,24 @@ The following options are available in the object:
 * `format`: The name of the formatter in formatters.js, but without the leading `format`.
 * `formatter`: A formatter function that is compatible to the formatters defined in formatters.js. Use this if no suitable pre-defined formatter is available to be specified in `format`. See also [Custom Formatters](#custom-formatters) for more details.
 * `ext`: Specify the extension key here, if the field belongs to an extension that has no prefix or so.
+* `order`: The zero-based array position for a field in the rendered list. Negative positions count from the end, as
+  with `Array.prototype.at()`. Fields without `order` fill remaining positions in their original relative order.
 * `unit`: A unit to add after the value.
 * `explain`: A long form for an abbreviation that should be shown in a tooltip. Can also be a http or https link, which shows a link instead of an abbreviation.
 * `mapping`: A map with the keys being the original (stringified lower-case) value and the values being the values shown to users.
 * `custom`: A structure that can't easily be rendered with any of the pre-defined formatters and thus needs a custom implementation (see `externalRenderer`).
 * `alias`: If a field has multiple keys, declare the field to use the specification of the other field.
 * `listWithKeys`: Set to `true` to allow the option `items` to specify items in an object of objects (like assets). Defaults to `false`.
-* `items`: If the value is an array of objects (or an object of objects if `listWithKeys` has ben set), a table can be created with the details in this object. It has the same structure as specified here, but in addition `sortable` and `id` are allowed:
+* `items`: If the value is an array of objects (or an object of objects if `listWithKeys` has ben set), a table can be created with the details in this object. It has the same structure as specified here, but in addition `sortable`, `id`, and `width` are allowed:
   * `sortable`: Specifies whether the value can be sorted (`true`, e.g. in a table) or not (`false`). Defaults to `false`.
   * `id`: Specifies whether the value is the unique primary key (`true`) or not (`false`). Defaults to `false`.
   * `default`: If no value is present, this value will be used instead.
+  * `width`: STAC Browser-specific column width, specified as a CSS width (e.g. `20%`).
+  * `hidden`: STAC Browser-specific display hint, not an MLM data field. Set to `true` to suppress the
+    item's own table column while keeping its row value available to another cell's formatter.
 * `properties`: If the value is an object, specify the properties.
+* `table`: STAC Browser-specific rendering hint. Set to `true` to force a table for an array of objects. Set to
+  `"keyValue"` to render a map as a two-column Name/Value table. Object values are formatted recursively.
 * `null`: The value that should be given instead of `null`. If a value is null but this property is not given, defaults to "n/a".
 * Options related to Collection Summaries:
   * `summary`: Gives an indication how the field should be summarized:
@@ -157,6 +164,12 @@ The most important methods are:
 * Timestamp (ISO8601 timestamp formatted according to local rules)
 * Url (Formats a STAC Link Object)
 * WKT2 (splits a WKT2 string into nicely formatted chunks for better readability - experimental!)
+* OrderedList (renders array values as numbered items in their original order)
+* ParameterCount (formats parameter counts with K, M, B, T, P suffixes) - use `FileSize` for similar byte-aligned units
+  or `ScientificNotation` or `MetricNotation` for other representations
+  (note: "B" is used instead of "G" because it is common practice  for this range of parameter values, see others below for alternatives)
+* ScientificNotation (formats numbers using standard scientific notation, e.g. `12345` as `1.23e4`) - combines with `spec.unit` after the notation if provided
+* MetricNotation (formats numbers using SI prefixes in steps of three from femto (`f`, 10⁻¹⁵) through Exa (`E`, 10¹⁸), e.g. `12345` as `12.35k`) - combine with `spec.unit` if provided
 * ... (see the source file for more)
 
 ### Custom formatters

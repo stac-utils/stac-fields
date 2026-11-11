@@ -36,6 +36,7 @@
 			"label": "MGRS",
 			"explain": "Military Grid Reference System"
 		},
+		"mlm": "Machine Learning Model",
 		"noaa_mrms_qpe": {
 			"label": "NOAA MRMS QPE",
 			"explain": "NOAA Multi-Radar Multi-Sensor Quantitative Precipitation Estimation"
@@ -270,7 +271,7 @@
 			"format": "Timestamp",
 			"summary": "r"
 		},
-	
+
 		"published": {
 			"label": "Published",
 			"format": "Timestamp",
@@ -286,6 +287,283 @@
 			"format": "Timestamp",
 			"summary": "r"
 		},
+
+		"mlm:name": {
+			"label": "Name",
+			"order": 0
+		},
+		"mlm:architecture": "Architecture",
+		"mlm:tasks": {
+			"label": "Tasks"
+		},
+		"mlm:framework": "Framework",
+		"mlm:framework_version": "Framework Version",
+		"mlm:memory_size": {
+			"label": "Memory Size",
+			"format": "FileSize"
+		},
+		"mlm:total_parameters": {
+			"label": "Total Parameters",
+			"format": "ParameterCount"
+		},
+		"mlm:pretrained": "Pretrained",
+		"mlm:pretrained_source": {
+			"label": "Pretrained Source",
+			"null": "none"
+		},
+		"mlm:batch_size_suggestion": "Suggested Batch Size",
+		"mlm:accelerator": {
+			"label": "Accelerator",
+			"null": "any"
+		},
+		"mlm:accelerator_constrained": "Accelerator Constrained",
+		"mlm:accelerator_summary": "Accelerator Summary",
+		"mlm:accelerator_count": "Accelerator Count",
+		"mlm:hyperparameters": {
+			"label": "Hyperparameters",
+			"order": -1,
+			"table": "keyValue",
+			"summary": false
+		},
+		"mlm:input": {
+			"label": "Inputs",
+			"order": -3,
+			"table": true,
+			"summary": false,
+			"items": {
+				"name": {
+					"label": "Name",
+					"id": true,
+					"order": 0,
+					"width": "15%"
+				},
+				"description": {
+					"alias": "description",
+					"order": 1,
+					"width": "30%"
+				},
+				"bands": {
+					"label": "Bands",
+					"order": 2,
+					"width": "10%",
+					"items": {
+						"name": {
+							"label": "Name",
+							"id": true
+						},
+						"format": {
+							"label": "Format",
+							"order": 1
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 2
+						}
+					}
+				},
+				"variables": {
+					"label": "Variables",
+					"order": 3,
+					"width": "20%",
+					"items": {
+						"name": {
+							"label": "Name",
+							"id": true
+						},
+						"format": {
+							"label": "Format",
+							"order": 1
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 2
+						}
+					}
+				},
+				"input": {
+					"label": "Structure",
+					"order": 4,
+					"width": "25%",
+					"properties": {
+						"shape": {
+							"label": "Size",
+							"format": "Shape"
+						},
+						"dim_order": {
+							"label": "Dimensions",
+							"format": "OrderedList"
+						},
+						"data_type": {
+							"alias": "data_type"
+						}
+					}
+				},
+				"value_scaling": {
+					"label": "Scale",
+					"order": 5,
+					"null": "none",
+					"items": {
+						"type": {
+							"label": "Type",
+							"null": "none",
+							"order": 0
+						},
+						"minimum": {
+							"label": "Min.",
+							"order": 1
+						},
+						"maximum": {
+							"label": "Max.",
+							"order": 2
+						},
+						"mean": {
+							"label": "Average",
+							"order": 3
+						},
+						"stddev": {
+							"label": "Std. Dev.",
+							"order": 4
+						},
+						"value": {
+							"label": "Value",
+							"order": 5
+						},
+						"format": {
+							"label": "Format",
+							"order": 6
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 7
+						}
+					}
+				},
+				"resize_type": {
+					"label": "Resize Method",
+					"order": 6,
+					"null": "none"
+				},
+				"pre_processing_function": {
+					"label": "Processing Instructions",
+					"order": 7,
+					"null": "none",
+					"properties": {
+						"format": "Format",
+						"expression": "Expression",
+						"description": {
+							"alias": "description"
+						}
+					}
+				}
+			}
+		},
+		"mlm:output": {
+			"label": "Outputs",
+			"order": -2,
+			"table": true,
+			"summary": false,
+			"items": {
+				"name": {
+					"label": "Name",
+					"id": true,
+					"order": 0,
+					"width": "15%"
+				},
+				"description": {
+					"alias": "description",
+					"order": 1,
+					"width": "30%"
+				},
+				"bands": {
+					"label": "Bands",
+					"order": 2,
+					"width": "10%",
+					"items": {
+						"name": {
+							"label": "Name",
+							"id": true
+						},
+						"format": {
+							"label": "Format",
+							"order": 1
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 2
+						}
+					}
+				},
+				"variables": {
+					"label": "Variables",
+					"order": 3,
+					"width": "20%",
+					"items": {
+						"name": {
+							"label": "Name",
+							"id": true
+						},
+						"format": {
+							"label": "Format",
+							"order": 1
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 2
+						}
+					}
+				},
+				"result": {
+					"label": "Structure",
+					"order": 4,
+					"width": "25%",
+					"properties": {
+						"shape": {
+							"label": "Size",
+							"format": "Shape"
+						},
+						"dim_order": {
+							"label": "Dimensions",
+							"format": "OrderedList"
+						},
+						"data_type": {
+							"alias": "data_type"
+						}
+					}
+				},
+				"tasks": {
+					"alias": "mlm:tasks",
+					"order": 5,
+					"format": "MLMOutputTasks"
+				},
+				"classification:classes": {
+					"alias": "classification:classes",
+					"order": 6,
+					"hidden": true
+				},
+				"post_processing_function": {
+					"label": "Processing Instructions",
+					"order": 7,
+					"null": "none",
+					"properties": {
+						"format": "Format",
+						"expression": "Expression",
+						"description": {
+							"alias": "description"
+						}
+					}
+				}
+			}
+		},
+		"mlm:artifact_type": "Artifact Type",
+		"mlm:compile_method": {
+			"label": "Compile Method",
+			"mapping": {
+				"null": "none",
+				"aot": "Ahead-of-Time (AOT)",
+				"jit": "Just-in-Time (JIT)"
+			}
+		},
+		"mlm:entrypoint": "Entrypoint",
 
 		"license": {
 			"label": "License",
@@ -895,6 +1173,10 @@
 				"unit": {
 					"alias": "unit",
 					"order": 6
+				},
+				"data_type": {
+					"alias": "data_type",
+					"order": 7
 				}
 			}
 		},
@@ -1778,7 +2060,7 @@
 			"custom": true,
 			"summary": false
 		},
-		
+
 		"landsat:scene_id": "Scene ID",
 		"landsat:collection_category": "Collection Category",
 		"landsat:collection_number": "Collection Number",
@@ -1805,7 +2087,7 @@
 			"label": "Summary",
 			"summary": false
 		},
-	
+
 
 		"cbers:data_type": {
 			"label": "Processing Level",

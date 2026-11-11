@@ -17,6 +17,13 @@ const Formatters = {
 		return _.toList(value, false, value => _.toLink(value.href, value.title, value.rel));
 	},
 
+	formatOrderedList(value, field, spec = {}) {
+		if (!Array.isArray(value)) {
+			return DataTypes.format(value, spec.unit);
+		}
+		return _.toList(value, false, v => DataTypes.format(v, spec.unit), true);
+	},
+
 	formatMediaType(value, field, spec = {}) {
 		return _.e(_.t(Formatters._formatMediaType(value, field, spec)));
 	},
@@ -504,6 +511,104 @@ const Formatters = {
 		}
 		var i = value == 0 ? 0 : Math.floor( Math.log(value) / Math.log(1024) );
 		return _.unit(( value / Math.pow(1024, i) ).toFixed(2) * 1, Formatters.fileSizeUnits[i]);
+	},
+
+	_getNotationExponent(value, step = 3, minExponent = null, maxExponent = null) {
+		let exponent = Math.floor(Math.log10(Math.abs(value)) / step) * step;
+		if (minExponent !== null) {
+			exponent = Math.max(minExponent, exponent);
+		}
+		if (maxExponent !== null) {
+			exponent = Math.min(maxExponent, exponent);
+		}
+
+		while (maxExponent === null || exponent < maxExponent) {
+			const scaled = Math.abs(value) / Math.pow(10, exponent);
+			if (Math.round(scaled * 100) / 100 < Math.pow(10, step)) {
+				break;
+			}
+			exponent += step;
+		}
+
+		return exponent;
+	},
+
+	_formatScaledNotation(value, exponent, suffix = '', unit = '') {
+		const scaled = value / Math.pow(10, exponent);
+		const formatted = new Intl.NumberFormat(I18N.locales, {
+			maximumFractionDigits: 2
+		}).format(scaled);
+		if (unit) {
+			return _.unit(formatted, `${suffix}${unit}`);
+		}
+		return `${formatted}${suffix}`;
+	},
+
+	formatParameterCount(value) {
+		if (typeof value !== 'number' || !Number.isFinite(value)) {
+			return DataTypes.format(value);
+		}
+
+		if (Math.abs(value) < 1e3) {
+			return DataTypes.number(value);
+		}
+
+		const exponent = Formatters._getNotationExponent(value, 3, 3, 15);
+		const units = {
+			3: 'K',
+			6: 'M',
+			9: 'B',
+			12: 'T',
+			15: 'P'
+		};
+		const compactValue = Formatters._formatScaledNotation(value, exponent, units[exponent]);
+		return `${DataTypes.number(value)} (${compactValue})`;
+	},
+
+	formatScientificNotation(value, field, spec = {}) {
+		if (typeof value !== 'number' || !Number.isFinite(value) || value === 0) {
+			return DataTypes.format(value, spec.unit);
+		}
+
+		const exponent = Formatters._getNotationExponent(value, 1);
+		const mantissa = Formatters._formatScaledNotation(value, exponent);
+		const notation = `${mantissa}e${exponent}`;
+		return spec.unit ? _.unit(notation, spec.unit) : notation;
+	},
+
+	formatMetricNotation(value, field, spec = {}) {
+		if (typeof value !== 'number' || !Number.isFinite(value) || value === 0) {
+			return DataTypes.format(value, spec.unit);
+		}
+
+		const exponent = Formatters._getNotationExponent(value, 3, -15, 18);
+		const units = {
+			'-15': 'f',
+			'-12': 'p',
+			'-9': 'n',
+			'-6': 'μ',
+			'-3': 'm',
+			'0': '',
+			'3': 'k',
+			'6': 'M',
+			'9': 'G',
+			'12': 'T',
+			'15': 'P',
+			'18': 'E'
+		};
+		return Formatters._formatScaledNotation(value, exponent, units[exponent], spec.unit);
+	},
+
+	formatMLMOutputTasks(value, field, spec = {}, context = null, parent = null) {
+		const formattedTasks = DataTypes.array(value);
+		const classes = parent?.['classification:classes'];
+		if (!Array.isArray(classes) || classes.length === 0) {
+			return formattedTasks;
+		}
+
+		return `${formattedTasks}<div class="mlm-output-classes">` +
+			`<span class="mlm-output-classes-label">${_.e(_.t('Classes'))}</span>` +
+			`${DataTypes.array(classes)}</div>`;
 	},
 
 	formatChecksum(value) {

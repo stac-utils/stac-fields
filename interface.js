@@ -146,6 +146,32 @@ function formatGrouped(context, data, type, filter, coreKey) {
 			console.error(`Field '${field}' with value '${value}' resulted in an error`, error);
 		}
 	}
+	for (let ext in groups) {
+		const entries = Object.entries(groups[ext].properties);
+		const orderedProperties = new Array(entries.length);
+		const unorderedProperties = [];
+		for (const entry of entries) {
+			const position = entry[1].spec.order;
+			let index = -1;
+			if (Number.isInteger(position)) {
+				index = position < 0 ? entries.length + position : position;
+			}
+			if (index < 0 || index >= entries.length || orderedProperties[index]) {
+				unorderedProperties.push(entry);
+			}
+			else {
+				orderedProperties[index] = entry;
+			}
+		}
+
+		let unorderedIndex = 0;
+		for (let i = 0; i < orderedProperties.length; i++) {
+			if (!orderedProperties[i]) {
+				orderedProperties[i] = unorderedProperties[unorderedIndex++];
+			}
+		}
+		groups[ext].properties = Object.fromEntries(orderedProperties);
+	}
 	return Object.values(groups).sort((a,b) => I18N.collator.compare(a.extension, b.extension));
 
 }
