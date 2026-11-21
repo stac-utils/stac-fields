@@ -250,283 +250,6 @@
 			"summary": "r"
 		},
 
-		"mlm:name": {
-			"label": "Name",
-			"order": 0
-		},
-		"mlm:architecture": "Architecture",
-		"mlm:tasks": {
-			"label": "Tasks"
-		},
-		"mlm:framework": "Framework",
-		"mlm:framework_version": "Framework Version",
-		"mlm:memory_size": {
-			"label": "Memory Size",
-			"format": "FileSize"
-		},
-		"mlm:total_parameters": {
-			"label": "Total Parameters",
-			"format": "ParameterCount"
-		},
-		"mlm:pretrained": "Pretrained",
-		"mlm:pretrained_source": {
-			"label": "Pretrained Source",
-			"null": "none"
-		},
-		"mlm:batch_size_suggestion": "Suggested Batch Size",
-		"mlm:accelerator": {
-			"label": "Accelerator",
-			"null": "any"
-		},
-		"mlm:accelerator_constrained": "Accelerator Constrained",
-		"mlm:accelerator_summary": "Accelerator Summary",
-		"mlm:accelerator_count": "Accelerator Count",
-		"mlm:hyperparameters": {
-			"label": "Hyperparameters",
-			"order": -1,
-			"table": "keyValue",
-			"summary": false
-		},
-		"mlm:input": {
-			"label": "Inputs",
-			"order": -3,
-			"table": true,
-			"summary": false,
-			"items": {
-				"name": {
-					"label": "Name",
-					"id": true,
-					"order": 0,
-					"width": "15%"
-				},
-				"description": {
-					"alias": "description",
-					"order": 1,
-					"width": "30%"
-				},
-				"bands": {
-					"label": "Bands",
-					"order": 2,
-					"width": "10%",
-					"items": {
-						"name": {
-							"label": "Name",
-							"id": true
-						},
-						"format": {
-							"label": "Format",
-							"order": 1
-						},
-						"expression": {
-							"label": "Expression",
-							"order": 2
-						}
-					}
-				},
-				"variables": {
-					"label": "Variables",
-					"order": 3,
-					"width": "20%",
-					"items": {
-						"name": {
-							"label": "Name",
-							"id": true
-						},
-						"format": {
-							"label": "Format",
-							"order": 1
-						},
-						"expression": {
-							"label": "Expression",
-							"order": 2
-						}
-					}
-				},
-				"input": {
-					"label": "Structure",
-					"order": 4,
-					"width": "25%",
-					"properties": {
-						"shape": {
-							"label": "Size",
-							"format": "Shape"
-						},
-						"dim_order": {
-							"label": "Dimensions",
-							"format": "OrderedList"
-						},
-						"data_type": {
-							"alias": "data_type"
-						}
-					}
-				},
-				"value_scaling": {
-					"label": "Scale",
-					"order": 5,
-					"null": "none",
-					"items": {
-						"type": {
-							"label": "Type",
-							"null": "none",
-							"order": 0
-						},
-						"minimum": {
-							"label": "Min.",
-							"order": 1
-						},
-						"maximum": {
-							"label": "Max.",
-							"order": 2
-						},
-						"mean": {
-							"label": "Average",
-							"order": 3
-						},
-						"stddev": {
-							"label": "Std. Dev.",
-							"order": 4
-						},
-						"value": {
-							"label": "Value",
-							"order": 5
-						},
-						"format": {
-							"label": "Format",
-							"order": 6
-						},
-						"expression": {
-							"label": "Expression",
-							"order": 7
-						}
-					}
-				},
-				"resize_type": {
-					"label": "Resize Method",
-					"order": 6,
-					"null": "none"
-				},
-				"pre_processing_function": {
-					"label": "Processing Instructions",
-					"order": 7,
-					"null": "none",
-					"properties": {
-						"format": "Format",
-						"expression": "Expression",
-						"description": {
-							"alias": "description"
-						}
-					}
-				}
-			}
-		},
-		"mlm:output": {
-			"label": "Outputs",
-			"order": -2,
-			"table": true,
-			"summary": false,
-			"items": {
-				"name": {
-					"label": "Name",
-					"id": true,
-					"order": 0,
-					"width": "15%"
-				},
-				"description": {
-					"alias": "description",
-					"order": 1,
-					"width": "30%"
-				},
-				"bands": {
-					"label": "Bands",
-					"order": 2,
-					"width": "10%",
-					"items": {
-						"name": {
-							"label": "Name",
-							"id": true
-						},
-						"format": {
-							"label": "Format",
-							"order": 1
-						},
-						"expression": {
-							"label": "Expression",
-							"order": 2
-						}
-					}
-				},
-				"variables": {
-					"label": "Variables",
-					"order": 3,
-					"width": "20%",
-					"items": {
-						"name": {
-							"label": "Name",
-							"id": true
-						},
-						"format": {
-							"label": "Format",
-							"order": 1
-						},
-						"expression": {
-							"label": "Expression",
-							"order": 2
-						}
-					}
-				},
-				"result": {
-					"label": "Structure",
-					"order": 4,
-					"width": "25%",
-					"properties": {
-						"shape": {
-							"label": "Size",
-							"format": "Shape"
-						},
-						"dim_order": {
-							"label": "Dimensions",
-							"format": "OrderedList"
-						},
-						"data_type": {
-							"alias": "data_type"
-						}
-					}
-				},
-				"tasks": {
-					"alias": "mlm:tasks",
-					"order": 5,
-					"format": "MLMOutputTasks"
-				},
-				"classification:classes": {
-					"alias": "classification:classes",
-					"order": 6,
-					"hidden": true
-				},
-				"post_processing_function": {
-					"label": "Processing Instructions",
-					"order": 7,
-					"null": "none",
-					"properties": {
-						"format": "Format",
-						"expression": "Expression",
-						"description": {
-							"alias": "description"
-						}
-					}
-				}
-			}
-		},
-		"mlm:artifact_type": "Artifact Type",
-		"mlm:compile_method": {
-			"label": "Compile Method",
-			"mapping": {
-				"null": "none",
-				"aot": "Ahead-of-Time (AOT)",
-				"jit": "Just-in-Time (JIT)"
-			}
-		},
-		"mlm:entrypoint": "Entrypoint",
-
 		"license": {
 			"label": "License",
 			"format": "License",
@@ -1438,6 +1161,274 @@
 		"mgrs:latitude_band": "Latitude Band",
 		"mgrs:grid_square": "Grid Square",
 		"mgrs:utm_zone": "UTM Zone",
+
+		"mlm:name": {
+			"label": "Name"
+		},
+		"mlm:architecture": "Architecture",
+		"mlm:tasks": {
+			"label": "Tasks"
+		},
+		"mlm:framework": "Framework",
+		"mlm:framework_version": "Framework Version",
+		"mlm:memory_size": {
+			"label": "Memory Size",
+			"format": "FileSize"
+		},
+		"mlm:total_parameters": {
+			"label": "Total Parameters",
+			"format": "CompactNumber"
+		},
+		"mlm:pretrained": {
+			"label": "Pretrained",
+			"explain": "Indicates if the model was pretrained. If the model was pretrained, consider providing pretrained_source if it is known."
+		},
+		"mlm:pretrained_source": {
+			"label": "Pretrained Source",
+			"explain": "The source of the pretraining. Can refer to popular pretraining datasets by name (i.e. Imagenet) or less known datasets by URL and description. If trained from scratch (i.e.: pretrained = false), the null value should be set explicitly.",
+			"null": "none"
+		},
+		"mlm:batch_size_suggestion": "Suggested Batch Size",
+		"mlm:accelerator": {
+			"label": "Accelerator",
+			"explain": "The intended computational hardware that runs inference. If undefined or set to null explicitly, the model does not require any specific accelerator.",
+			"null": "any"
+		},
+		"mlm:accelerator_constrained": {
+			"label": "Accelerator Constrained",
+			"explain": "Indicates if the intended accelerator is the only accelerator that can run inference. If undefined, it should be assumed false."
+		},
+		"mlm:accelerator_summary": "Accelerator Summary",
+		"mlm:accelerator_count": "Accelerator Count",
+		"mlm:hyperparameters": {
+			"label": "Hyperparameters",
+			"summary": false
+		},
+		"mlm:input": {
+			"label": "Inputs",
+			"summary": false,
+			"items": {
+				"name": {
+					"label": "Name",
+					"id": true,
+					"order": 0
+				},
+				"description": {
+					"alias": "description",
+					"order": 1
+				},
+				"bands": {
+					"label": "Bands",
+					"order": 2,
+					"items": {
+						"name": {
+							"label": "Name",
+							"id": true
+						},
+						"format": {
+							"label": "Format",
+							"order": 1
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 2
+						}
+					}
+				},
+				"variables": {
+					"label": "Variables",
+					"order": 3,
+					"items": {
+						"name": {
+							"label": "Name",
+							"id": true
+						},
+						"format": {
+							"label": "Format",
+							"order": 1
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 2
+						}
+					}
+				},
+				"input": {
+					"label": "Structure",
+					"order": 4,
+					"properties": {
+						"shape": {
+							"label": "Size",
+							"format": "Shape"
+						},
+						"dim_order": {
+							"label": "Dimensions",
+							"format": "OrderedList"
+						},
+						"data_type": {
+							"alias": "data_type"
+						}
+					}
+				},
+				"value_scaling": {
+					"label": "Scale",
+					"order": 5,
+					"null": "none",
+					"items": {
+						"type": {
+							"label": "Type",
+							"null": "none",
+							"order": 0
+						},
+						"minimum": {
+							"label": "Min.",
+							"order": 1
+						},
+						"maximum": {
+							"label": "Max.",
+							"order": 2
+						},
+						"mean": {
+							"label": "Average",
+							"order": 3
+						},
+						"stddev": {
+							"label": "Std. Dev.",
+							"order": 4
+						},
+						"value": {
+							"label": "Value",
+							"order": 5
+						},
+						"format": {
+							"label": "Format",
+							"order": 6
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 7
+						}
+					}
+				},
+				"resize_type": {
+					"label": "Resize Method",
+					"order": 6,
+					"null": "none"
+				},
+				"pre_processing_function": {
+					"label": "Processing Instructions",
+					"order": 7,
+					"null": "none",
+					"properties": {
+						"format": "Format",
+						"expression": "Expression",
+						"description": {
+							"alias": "description"
+						}
+					}
+				}
+			}
+		},
+		"mlm:output": {
+			"label": "Outputs",
+			"summary": false,
+			"items": {
+				"name": {
+					"label": "Name",
+					"id": true,
+					"order": 0
+				},
+				"description": {
+					"alias": "description",
+					"order": 1
+				},
+				"bands": {
+					"label": "Bands",
+					"order": 2,
+					"items": {
+						"name": {
+							"label": "Name",
+							"id": true
+						},
+						"format": {
+							"label": "Format",
+							"order": 1
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 2
+						}
+					}
+				},
+				"variables": {
+					"label": "Variables",
+					"order": 3,
+					"items": {
+						"name": {
+							"label": "Name",
+							"id": true
+						},
+						"format": {
+							"label": "Format",
+							"order": 1
+						},
+						"expression": {
+							"label": "Expression",
+							"order": 2
+						}
+					}
+				},
+				"result": {
+					"label": "Structure",
+					"order": 4,
+					"properties": {
+						"shape": {
+							"label": "Size",
+							"format": "Shape"
+						},
+						"dim_order": {
+							"label": "Dimensions",
+							"format": "OrderedList"
+						},
+						"data_type": {
+							"alias": "data_type"
+						}
+					}
+				},
+				"tasks": {
+					"alias": "mlm:tasks",
+					"order": 5,
+					"format": "MLMOutputTasks"
+				},
+				"classification:classes": {
+					"alias": "classification:classes",
+					"label": "Classes",
+					"order": 6
+				},
+				"post_processing_function": {
+					"label": "Processing Instructions",
+					"order": 7,
+					"null": "none",
+					"properties": {
+						"format": "Format",
+						"expression": "Expression",
+						"description": {
+							"alias": "description"
+						}
+					}
+				}
+			}
+		},
+		"mlm:artifact_type": "Artifact Type",
+		"mlm:compile_method": {
+			"label": "Compile Method",
+			"mapping": {
+				"null": "none",
+				"aot": "Ahead-of-Time (AOT)",
+				"jit": "Just-in-Time (JIT)"
+			}
+		},
+		"mlm:entrypoint": "Entrypoint",
 
 		"noaa_mrms_qpe:pass": {
 			"label": "Pass Number",
