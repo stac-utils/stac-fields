@@ -17,13 +17,6 @@ const Formatters = {
 		return _.toList(value, false, value => _.toLink(value.href, value.title, value.rel));
 	},
 
-	formatOrderedList(value, field, spec = {}) {
-		if (!Array.isArray(value)) {
-			return DataTypes.format(value, spec.unit);
-		}
-		return _.toList(value, false, v => DataTypes.format(v, spec.unit), true);
-	},
-
 	formatMediaType(value, field, spec = {}) {
 		return _.e(_.t(Formatters._formatMediaType(value, field, spec)));
 	},
@@ -520,15 +513,12 @@ const Formatters = {
 
 		const formatted = new Intl.NumberFormat(I18N.locales, {
 			notation: "compact",
+			compactDisplay: "long",
 			maximumFractionDigits: 2
 		}).format(value);
 		const fullNumber = _.e(I18N.numberFormatter.format(value));
 		const compactNumber = spec.unit ? _.unit(formatted, spec.unit) : formatted;
 		return `<abbr title="${fullNumber}">${compactNumber}</abbr>`;
-	},
-
-	formatMLMOutputTasks(value) {
-		return DataTypes.array(value);
 	},
 
 	formatChecksum(value) {

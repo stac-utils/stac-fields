@@ -48,7 +48,7 @@ const _ = {
 		if (list.length === 0) {
 			return _.toNothing();
 		}
-		else if (list.length === 1 && ordered !== true) {
+		else if (list.length === 1) {
 			return list[0];
 		}
 		else {

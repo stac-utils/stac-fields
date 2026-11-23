@@ -1259,24 +1259,20 @@
 			"label": "Total Parameters",
 			"format": "CompactNumber"
 		},
-		"mlm:pretrained": {
-			"label": "Pretrained",
-			"explain": "Indicates if the model was pretrained. If the model was pretrained, consider providing pretrained_source if it is known."
-		},
+		"mlm:pretrained": "Pretrained",
 		"mlm:pretrained_source": {
 			"label": "Pretrained Source",
-			"explain": "The source of the pretraining. Can refer to popular pretraining datasets by name (i.e. Imagenet) or less known datasets by URL and description. If trained from scratch (i.e.: pretrained = false), the null value should be set explicitly.",
 			"null": "none"
 		},
 		"mlm:batch_size_suggestion": "Suggested Batch Size",
 		"mlm:accelerator": {
 			"label": "Accelerator",
-			"explain": "The intended computational hardware that runs inference. If undefined or set to null explicitly, the model does not require any specific accelerator.",
+			"explain": "The hardware that the model is intended to run on",
 			"null": "any"
 		},
 		"mlm:accelerator_constrained": {
 			"label": "Accelerator Constrained",
-			"explain": "Indicates if the intended accelerator is the only accelerator that can run inference. If undefined, it should be assumed false."
+			"explain": "Whether the model can only run on the specified accelerator"
 		},
 		"mlm:accelerator_summary": "Accelerator Summary",
 		"mlm:accelerator_count": "Accelerator Count",
@@ -1343,7 +1339,7 @@
 						},
 						"dim_order": {
 							"label": "Dimensions",
-							"format": "OrderedList"
+							"format": "Shape"
 						},
 						"data_type": {
 							"alias": "data_type"
@@ -1468,7 +1464,7 @@
 						},
 						"dim_order": {
 							"label": "Dimensions",
-							"format": "OrderedList"
+							"format": "Shape"
 						},
 						"data_type": {
 							"alias": "data_type"
@@ -1477,8 +1473,7 @@
 				},
 				"tasks": {
 					"alias": "mlm:tasks",
-					"order": 5,
-					"format": "MLMOutputTasks"
+					"order": 5
 				},
 				"classification:classes": {
 					"alias": "classification:classes",
