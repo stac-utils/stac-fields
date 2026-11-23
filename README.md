@@ -2,7 +2,7 @@
 
 A minimal STAC library that contains a list of STAC fields with some metadata (title, unit, prefix) and helper functions for styling as HTML.
 
-Version: **1.5.9**
+Version: ![NPM Version](https://img.shields.io/npm/v/%40radiantearth%2Fstac-fields)
 
 ## Usage
 
