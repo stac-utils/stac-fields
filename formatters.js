@@ -521,15 +521,12 @@ const Formatters = {
 
 		const formatted = new Intl.NumberFormat(I18N.locales, {
 			notation: "compact",
+			compactDisplay: "long",
 			maximumFractionDigits: 2
 		}).format(value);
 		const fullNumber = _.e(I18N.numberFormatter.format(value));
 		const compactNumber = spec.unit ? _.unit(formatted, spec.unit) : formatted;
 		return `<abbr title="${fullNumber}">${compactNumber}</abbr>`;
-	},
-
-	formatMLMOutputTasks(value) {
-		return DataTypes.array(value);
 	},
 
 	formatChecksum(value) {

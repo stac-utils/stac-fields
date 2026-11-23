@@ -158,7 +158,7 @@ The most important methods are:
 * Url (Formats a STAC Link Object)
 * WKT2 (splits a WKT2 string into nicely formatted chunks for better readability - experimental!)
 * OrderedList (renders array values as numbered items in their original order)
-* CompactNumber (formats a number using localized compact notation, e.g. `12345` as `12.35K` in English)
+* CompactNumber (formats a number using localized compact notation, e.g. `12345` as `12.35 thousand` in English)
 * ... (see the source file for more)
 
 ### Custom formatters
