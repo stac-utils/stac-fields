@@ -85,7 +85,7 @@ The following options are available in the object:
 * `custom`: A structure that can't easily be rendered with any of the pre-defined formatters and thus needs a custom implementation (see `externalRenderer`).
 * `alias`: If a field has multiple keys, declare the field to use the specification of the other field.
 * `listWithKeys`: Set to `true` to allow the option `items` to specify items in an object of objects (like assets). Defaults to `false`.
-* `items`: If the value is an array of objects (or an object of objects if `listWithKeys` has ben set), a table can be created with the details in this object. It has the same structure as specified here, but in addition `sortable` and `id` are allowed:
+* `items`: If the value is an array of objects (or an object of objects if `listWithKeys` has been set), the details can be defined here. It has the same structure as specified here, but in addition `sortable` and `id` are allowed:
   * `sortable`: Specifies whether the value can be sorted (`true`, e.g. in a table) or not (`false`). Defaults to `false`.
   * `id`: Specifies whether the value is the unique primary key (`true`) or not (`false`). Defaults to `false`.
   * `default`: If no value is present, this value will be used instead.
@@ -157,6 +157,8 @@ The most important methods are:
 * Timestamp (ISO8601 timestamp formatted according to local rules)
 * Url (Formats a STAC Link Object)
 * WKT2 (splits a WKT2 string into nicely formatted chunks for better readability - experimental!)
+* OrderedList (renders array values as numbered items in their original order)
+* CompactNumber (formats a number using localized compact notation, e.g. `12345` as `12.35K` in English)
 * ... (see the source file for more)
 
 ### Custom formatters
